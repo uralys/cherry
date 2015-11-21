@@ -1,0 +1,133 @@
+-- Supported values for orientation:
+-- portrait, portraitUpsideDown, landscapeLeft, landscapeRight
+
+settings = {
+
+    orientation = {
+        default = "landscapeRight",
+        supported = { "landscapeLeft", "landscapeRight" },
+    },
+
+    iphone = {
+        components = {},
+        plist = {
+            CFBundleDisplayName = "Phantoms",
+            CFBundleName = "Phantoms",
+            UIPrerenderedIcon = true,
+            UIStatusBarHidden = true,
+            MinimumOSVersion = "7.0",
+            UIApplicationExitsOnSuspend = false,
+
+            FacebookAppID = "XXXXXXXXX",
+
+            CFBundleIconFiles = {
+                "Icon-167.png",
+                "Icon-60.png",
+                "Icon-60@2x.png",
+                "Icon-60@3x.png",
+                "Icon-76.png",
+                "Icon-76@2x.png",
+                "Icon-Small-40.png",
+                "Icon-Small-40@2x.png",
+                "Icon-Small-40@3x.png",
+                "Icon-Small@3x.png"
+            },
+
+            -- Launch image files table
+            UILaunchImages = {
+                {  -- iPhone 4 LandscapeLeft
+                    ["UILaunchImageMinimumOSVersion"] = "7.0",
+                    ["UILaunchImageName"] = "Default",
+                    ["UILaunchImageOrientation"] = "LandscapeLeft",
+                    ["UILaunchImageSize"] = "{320, 480}"
+                },
+                {  -- iPhone 4 LandscapeRight
+                    ["UILaunchImageMinimumOSVersion"] = "7.0",
+                    ["UILaunchImageName"] = "Default",
+                    ["UILaunchImageOrientation"] = "LandscapeRight",
+                    ["UILaunchImageSize"] = "{320, 480}"
+                },
+                {  -- iPhone 5 LandscapeLeft
+                    ["UILaunchImageMinimumOSVersion"] = "7.0",
+                    ["UILaunchImageName"] = "Default-568h",
+                    ["UILaunchImageOrientation"] = "LandscapeLeft",
+                    ["UILaunchImageSize"] = "{320, 568}"
+                },
+                {  -- iPhone 5 LandscapeRight
+                    ["UILaunchImageMinimumOSVersion"] = "7.0",
+                    ["UILaunchImageName"] = "Default-568h",
+                    ["UILaunchImageOrientation"] = "LandscapeRight",
+                    ["UILaunchImageSize"] = "{320, 568}"
+                },
+                {  -- iPad LandscapeLeft
+                    ["UILaunchImageMinimumOSVersion"] = "7.0",
+                    ["UILaunchImageName"] = "Default-Landscape",
+                    ["UILaunchImageOrientation"] = "LandscapeLeft",
+                    ["UILaunchImageSize"] = "{768, 1024}"
+                },
+                {  -- iPad LandscapeRight
+                    ["UILaunchImageMinimumOSVersion"] = "7.0",
+                    ["UILaunchImageName"] = "Default-Landscape",
+                    ["UILaunchImageOrientation"] = "LandscapeRight",
+                    ["UILaunchImageSize"] = "{768, 1024}"
+                },
+                {  -- iPhone 6 LandscapeLeft
+                    ["UILaunchImageMinimumOSVersion"] = "8.0",
+                    ["UILaunchImageName"] = "Default-667h",
+                    ["UILaunchImageOrientation"] = "LandscapeLeft",
+                    ["UILaunchImageSize"] = "{375, 667}"
+                },
+                {  -- iPhone 6 LandscapeRight
+                    ["UILaunchImageMinimumOSVersion"] = "8.0",
+                    ["UILaunchImageName"] = "Default-667h",
+                    ["UILaunchImageOrientation"] = "LandscapeRight",
+                    ["UILaunchImageSize"] = "{375, 667}"
+                },
+                {  -- iPhone 6 Plus LandscapeLeft
+                    ["UILaunchImageMinimumOSVersion"] = "8.0",
+                    ["UILaunchImageName"] = "Default-Landscape-736h",
+                    ["UILaunchImageOrientation"] = "LandscapeLeft",
+                    ["UILaunchImageSize"] = "{414, 736}"
+                },
+                {  -- iPhone 6 Plus LandscapeRight
+                    ["UILaunchImageMinimumOSVersion"] = "8.0",
+                    ["UILaunchImageName"] = "Default-Landscape-736h",
+                    ["UILaunchImageOrientation"] = "LandscapeRight",
+                    ["UILaunchImageSize"] = "{414, 736}"
+                }
+            },
+
+            UIAppFonts =
+            {
+                "y2kboogie.ttf"
+            },
+
+            CFBundleURLTypes =
+            {
+                {
+                    CFBundleURLSchemes =
+                    {
+                        "fbXXXXXXXXX", -- replace XXXXXXXXX with your facebook appId
+                    }
+                }
+            },
+
+            NSAppTransportSecurity =
+            {
+                NSAllowsArbitraryLoads = true
+            }
+        }
+    },
+
+    android = {
+        versionCode = "10",
+        usesPermissions =
+        {
+            "android.permission.INTERNET"
+        },
+    },
+
+    excludeFiles = {
+        all = { "docs/*" }
+    }
+}
