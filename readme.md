@@ -117,7 +117,7 @@ Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the
 `https://soundcloud.com/velvetcoffee`
 
 ## BSD License
-You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [license](http://www.linfo.org/bsdlicense.html) crediting requirements.
+You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [BSD](http://www.linfo.org/bsdlicense.html) crediting requirements, provided in the project [LICENSE](https://github.com/chrisdugne/cherry/blob/master/LICENSE)
 
 ## Third Parties
 
