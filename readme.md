@@ -8,7 +8,7 @@ You may use Cherry as a base to start your own game, with the following faciliti
 
 #### Game worflow
 
-Avoid developing your screens by using many pre-defined screens to go straight to the point :
+Avoid developing your screens by using many pre-defined `screens` to go straight to the point :
 
 - Home + Options
 - Level Selection
@@ -45,14 +45,14 @@ Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the
 
 `https://soundcloud.com/velvetcoffee`
 
-## Adding a new View
+## Adding a new Screen
 
-A View implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
+A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
 
-- Start by creating a new `view`, for instance duplicate the simplest one `src/views/Playground.lua`
-- Register your new view in the [Router](https://github.com/chrisdugne/cherry/blob/master/src/Router.lua#L12)  : `YOUR_NEW_VIEW = 'YourNewView'`
-- Now you can open your view from anywhere calling :
-    `Router:open(Router.YOUR_NEW_VIEW)`
+- Start by creating a new `screen`, for instance duplicate the simplest one `src/screens/Playground.lua`
+- Register your new screen in the [Router](https://github.com/chrisdugne/cherry/blob/master/src/Router.lua#L12)  : `YOUR_NEW_SCREEN = 'YourNewScreen'`
+- Now you can open your screen from anywhere calling :
+    `Router:open(Router.YOUR_NEW_SCREEN)`
 
 ## Adding a new Model
 - Each `model` should implement `new` and `show` functions, read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.

@@ -22,7 +22,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function Router:openView(id, class, params)
+function Router:openScreen(id, class, params)
     local options = {
         params = params
     }
@@ -30,7 +30,7 @@ function Router:openView(id, class, params)
     analytics.pageview(id)
 
     Router.view = id
-    print('Router : openView : ' .. Router.view )
+    print('Router : openScreen : ' .. Router.view )
 
     composer.gotoScene( class, options )
 end
@@ -38,7 +38,7 @@ end
 --------------------------------------------------------------------------------
 
 function Router:open(id, params)
-    self:openView(id, 'src.views.' .. id, params)
+    self:openScreen(id, 'src.screens.' .. id, params)
 end
 
 --------------------------------------------------------------------------------
