@@ -1,6 +1,6 @@
 
 ## Cherry.lua
-Cherry is the `CoronaSDK App` starter for [Uralys](http://uralys.com/games) mobile games provided as a ready-to go Corona Application.
+Cherry is the `CoronaSDK App` starter for [Uralys](http://uralys.com/games) mobile games provided as a preset Corona Game.
 
 ![cherry](/docs/cherry.jpg)
 

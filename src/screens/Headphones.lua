@@ -37,11 +37,14 @@ function scene:create( event )
         Router:open(nextView)
     end)
 
-    utils.onTap(text, function()
+    local next = function()
         analytics.event('game', 'text-headphone')
         timer.cancel(delay)
         Router:open(nextView)
-    end)
+    end
+
+    utils.onTap(title, next)
+    utils.onTap(text, next)
 end
 
 --------------------------------------------------------------------------------
