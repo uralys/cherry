@@ -41,13 +41,9 @@ Many libraries to provide easy tooling for your app :
 
 #### Components
 
-Either use these components within the full workflow or pick them one by one to use it in your own game :
+Either use these components within the full workflow or pick them one by one to use it in your own game.
 
-- Focus
-- Progress Bar
-- Scroller
-
-See [below](#components-documentation) for the complete documentation for each component.
+See [below](#components-documentation) for the complete list and documentation for each component.
 
 ## Usage
 
@@ -74,7 +70,9 @@ An animated progress bar.
 
 ![progress-bar](/docs/progress-bar.png)
 
-- copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry)
+- Code : copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry) and `src/components/Icon.lua`
+
+- assets : you need to copy the assets from `assets/images/gui/progress-bar` (and credit GraphicBurger see [Third Parties](#third-parties))
 
 - init the ProgressBar
 ```
