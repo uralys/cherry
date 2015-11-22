@@ -164,10 +164,7 @@ end
 --------------------------------------------------------------------------------
 
 function Profile:status(options)
-    local path = nil
-    if(options.item) then
-        path = 'assets/images/gui/items/'.. options.item ..'.icon.png'
-    end
+    local path = 'assets/images/game/item/gem.png'
 
     local progress = ProgressBar:new()
     progress:draw(_.extend({

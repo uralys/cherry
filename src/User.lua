@@ -218,7 +218,7 @@ function User:chapterJson(profile, chapterNum)
 end
 
 function User:totalPercentage(profile)
-    return 45
+    return 88
 end
 
 --------------------------------------------------------------------------------

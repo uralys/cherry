@@ -114,9 +114,9 @@ function ProgressBar:icon(options)
 end
 
 function ProgressBar:text(options)
-    self.text = utils.text({
+    self.text = display.newText({
         parent   = self.display,
-        value    = '',
+        text    = '',
         x        = 0,
         y        = 0,
         font     = FONT,
@@ -145,14 +145,14 @@ end
 --------------------------------------------------------------------------------
 
 function ProgressBar:set(value)
-    self.text:setText(value .. '%')
+    self.text.text = value .. '%'
     self.progress.maskX = self:maskX(value)
     if(value == 100) then self:showGreenBG() end
 end
 
 function ProgressBar:reach(value)
 
-    self.text:setText(value .. '%')
+    self.text.text = value .. '%'
 
     transition.to(self.progress, {
         maskX      = self:maskX(value),

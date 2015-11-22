@@ -59,12 +59,56 @@ A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/libra
     `Router:open(Router.YOUR_NEW_SCREEN)`
 
 #### Adding a new Model
-- Each `model` should implement `new` and `show` functions, read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
+- Each `model` should implement `new` and `show` functions, for instance read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
 - Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'src.game.models.YourModel'`
 - Use `YourModel:new()` during the `LevelDrawer` parsing
 - Use `YourModel:show()` during the `Game` rendering
 
-#### Components Documentation
+## Components Documentation
+
+#### ProgressBar
+
+An animated progress bar.
+
+![progress-bar](/docs/progress-bar.png)
+
+- copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry)
+
+- init the ProgressBar
+```
+    local progress = ProgressBar:new()
+```
+
+- use parameters to draw the ProgressBar
+```
+    progress:draw({
+        parent = self.display,
+        x      = 30,
+        y      = 30,
+        width  = 200,
+        height = 30,
+        path   = 'assets/images/game/item/gem.png'
+    })
+```
+
+- either add the `value` within the previous parameters for a static bar, or init the bar from a startup percentage :
+```
+    progress:set(0)
+```
+
+- then ask the animation to start and reach the required percentage (here 88%)
+```
+    progress:reach(88)
+```
+
+#### Focus
+#### Scroller
+#### Background
+
+Use 2 background images to switch between `dark` and `light` modes.
+- copy and require `src/components/Background.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L38) in Cherry)
+- Background:init() at your [App startup](https://github.com/chrisdugne/cherry/blob/master/src/App.lua#L45) to prepare your 2 pictures.
+- use `Background:darken()` and `Background:lighten()` wherever you need in your app to switch modes.
 
 ## Music and Sounds
 
