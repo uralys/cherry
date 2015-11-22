@@ -1,8 +1,16 @@
 
 ## Cherry.lua
-Cherry is the `CoronaSDK App` starter for [Uralys](http://uralys.com/games) mobile games provided as a preset Corona Game.
+- [Introduction](#introduction)
+- [Usage](#usage)
+- [Components](#components-documentation)
+- [Music and Sounds](#music-and-sounds)
+- [License](#bsd-license)
+- [Third Parties](#third-parties)
 
 ![cherry](/docs/cherry.jpg)
+
+## Introduction
+Cherry is the `CoronaSDK App` starter for [Uralys](http://uralys.com/games) mobile games provided as a preset Corona Game.
 
 You may use Cherry as a base to start your own game, with the following facilities:
 
@@ -39,13 +47,9 @@ Either use these components within the full workflow or pick them one by one to 
 
 See [below](#components-documentation) for the complete documentation for each component.
 
-## Music and Sounds
+## Usage
 
-Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the samples from `/assets/sounds` for your own game, providing you credit VelvetCoffee for the work and link to :
-
-`https://soundcloud.com/velvetcoffee`
-
-## Adding a new Screen
+#### Adding a new Screen
 
 A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
 
@@ -54,13 +58,19 @@ A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/libra
 - Now you can open your screen from anywhere calling :
     `Router:open(Router.YOUR_NEW_SCREEN)`
 
-## Adding a new Model
+#### Adding a new Model
 - Each `model` should implement `new` and `show` functions, read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
 - Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'src.game.models.YourModel'`
 - Use `YourModel:new()` during the `LevelDrawer` parsing
 - Use `YourModel:show()` during the `Game` rendering
 
-## Components Documentation
+#### Components Documentation
+
+## Music and Sounds
+
+Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the samples from `/assets/sounds` for your own game, providing you credit VelvetCoffee for the work and link to :
+
+`https://soundcloud.com/velvetcoffee`
 
 ## BSD License
 You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [license](http://www.linfo.org/bsdlicense.html) crediting requirements.
