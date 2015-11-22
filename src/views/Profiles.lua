@@ -24,9 +24,11 @@ function scene:create( event )
 
 end
 
-function scene:show()
-    utils.easeDisplay(self.back)
-    GUI:refreshMiniProfile(self.view)
+function scene:show( event )
+    if ( event.phase == 'did' ) then
+        utils.easeDisplay(self.back)
+        GUI:refreshMiniProfile(self.view)
+    end
 end
 
 --------------------------------------------------------------------------------

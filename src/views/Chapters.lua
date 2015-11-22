@@ -18,18 +18,20 @@ end
 
 --------------------------------------------------------------------------------
 
-function scene:show()
-    utils.easeDisplay(self.backButton)
+function scene:show( event )
+    if ( event.phase == 'did' ) then
+        utils.easeDisplay(self.backButton)
 
-    GUI:refreshAvatar({
-        parent = self.view,
-        link   = true
-    })
+        GUI:refreshAvatar({
+            parent = self.view,
+            link   = true
+        })
 
-    User:resetLevelSelection()
-    Chapters:draw({
-        parent = self.view
-    })
+        User:resetLevelSelection()
+        Chapters:draw({
+            parent = self.view
+        })
+    end
 end
 
 function scene:hide( event )

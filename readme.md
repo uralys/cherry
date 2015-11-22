@@ -35,11 +35,30 @@ Either use these components within the full workflow or pick them one by one to 
 - Progress Bar
 - Scroller
 
+See [below](#components-documentation) for the complete documentation for each component.
+
 ## Music and Sounds
 
 Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the samples from `/assets/sounds` for your own game, providing you credit VelvetCoffee for the work and link to :
 
 `https://soundcloud.com/velvetcoffee`
+
+## Adding a new View
+
+A View implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
+
+- Start by creating a new `view`, for instance duplicate the simplest one `src/views/Playground.lua`
+- Register your new view in the [Router](https://github.com/chrisdugne/cherry/blob/master/src/Router.lua#L12)  : `YOUR_NEW_VIEW = 'YourNewView'`
+- Now you can open your view from anywhere calling :
+    `Router:open(Router.YOUR_NEW_VIEW)`
+
+## Adding a new Model
+- Each `model` should implement `new` and `show` functions, read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
+- Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'src.game.models.YourModel'`
+- Use `YourModel:new()` during the `LevelDrawer` parsing
+- Use `YourModel:show()` during the `Game` rendering
+
+## Components Documentation
 
 ## BSD License
 You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [license](http://www.linfo.org/bsdlicense.html) crediting requirements.

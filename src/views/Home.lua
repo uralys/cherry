@@ -13,13 +13,15 @@ function scene:create( event )
     self.playButton     = self:drawPlayButton()
 end
 
-function scene:show()
-    utils.bounce(self.title)
-    utils.bounce(self.playButton, 1.6)
-    utils.bounce(self.toggleActionsButton, .7)
-    utils.bounce(self.chaptersButton, .7)
+function scene:show( event )
+    if ( event.phase == 'did' ) then
+        utils.bounce(self.title)
+        utils.bounce(self.playButton, 1.6)
+        utils.bounce(self.toggleActionsButton, .7)
+        utils.bounce(self.chaptersButton, .7)
 
-    GUI:refreshMiniProfile(self.view)
+        GUI:refreshMiniProfile(self.view)
+    end
 end
 
 --------------------------------------------------------------------------------

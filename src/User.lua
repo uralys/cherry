@@ -185,13 +185,10 @@ end
 --------------------------------------------------------------------------------
 
 function User:isLevelAvailable(chapterNum, level)
-    print('isLevelAvailable ? ', chapterNum, level)
     local chapter = self:chapterJson(self.profile, chapterNum)
     if(not chapter) then
-        print('A')
         return level == 1
     else
-        print('B', #chapter+1)
         return level <= #chapter+1
     end
 end
