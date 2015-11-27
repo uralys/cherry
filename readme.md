@@ -1,7 +1,7 @@
 
 ## Cherry.lua
 
-Cherry is a `CoronaSDK App` starter provided as a preset of `Lua` tools to help building your CoronaSDK Game.
+Cherry is an open source starter provided as a `CoronaSDK App` to help building your Game.
 
 - [Introduction](#introduction-to-cherry)
 - [Usage](#usage)
