@@ -45,6 +45,7 @@ Icon                = require 'src.components.Icon'
 ProgressBar         = require 'src.components.ProgressBar'
 Scroller            = require 'src.components.Scroller'
 Screen              = require 'src.components.Screen'
+Focus               = require 'src.components.Focus'
 
 Chapters            = require 'src.components.Chapters'
 Profiles            = require 'src.components.Profiles'

@@ -70,9 +70,13 @@ An animated progress bar.
 
 ![progress-bar](/docs/progress-bar.png)
 
+##### Requirements
+
 - Code : copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry) and `src/components/Icon.lua`
 
 - assets : you need to copy the assets from `assets/images/gui/progress-bar` (and credit GraphicBurger see [Third Parties](#third-parties))
+
+##### API
 
 - init the ProgressBar
 ```
@@ -102,7 +106,105 @@ An animated progress bar.
 ```
 
 #### Focus
+
+Apply animated arrows tso focus any DisplayObject.
+You can choose one to 4 arrows, `showing` your item or `from` your item.
+
+##### Requirements
+
+- Code : copy and require `src/components/Focus.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L48) in Cherry).
+
+- assets : you need to copy the assets from `assets/images/gui/items/arrow.right.png` (and credit GraphicBurger see [Third Parties](#third-parties))
+
+##### API
+
+The simplest focus :
+```
+Focus(item, true)
+```
+
+![default-focus](/docs/default-focus.png)
+
+Choose arrow positions : set `all` to false, and set the ones you want in `[up, down, left, right]`
+```
+Focus(item, {
+    all    = false,
+    bottom = true,
+    up     = true
+})
+```
+
+![up-bottom-focus](/docs/up-bottom-focus.png)
+
+Choose arrow ways : set `type` to `from-center` or `show-center` (default)
+```
+Focus(item, {
+    all   = false,
+    right = true,
+    type  = 'from-center'
+})
+```
+
+![right-from-center-focus](/docs/right-from-center-focus.png)
+
+You can combine focus to place arrows to/from and where you want:
+```
+    Focus(item, {
+        all   = false,
+        right = true,
+        type  = 'from-center'
+    })
+
+    Focus(item, {
+        all  = false,
+        left = true,
+        type = 'show-center'
+    })
+```
+
+![special-focus](/docs/special-focus.png)
+
 #### Scroller
+
+A custom ScrollView with an API to add and remove elements, and, *wait for it...* an animated attached `scrollbar` !
+
+![scroller](/docs/scroller.png)
+
+##### Requirements
+
+- Code : copy and require `src/components/Scroller.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L46) in Cherry)
+
+- assets : you need to copy the assets from `assets/images/gui/scroller` (and credit GraphicBurger see [Third Parties](#third-parties))
+
+##### API
+
+Init a Scroller with the same parameters than [`ScrollView`](https://docs.coronalabs.com/api/library/widget/newScrollView.html)
+
+You may add the following parameters :
+ - `handleHeight` : if set, your scrollbar height is fixed the value. if not, the height depends on the number of elements you have inserted.
+ - `gap` : the height between the elements
+```
+local scroller = Scroller:new({
+    parent                   = self.parent,
+    top                      = self.top + 7,
+    left                     = self.x - self.width * 0.45,
+    width                    = self.width * 0.9,
+    height                   = self.height - 22,
+    gap                      = display.contentHeight*0.05,
+    handleHeight             = display.contentHeight*0.07,
+    horizontalScrollDisabled = true,
+    hideBackground           = true
+})
+```
+
+You can now insert/remove whatever you need in the `scroller`, the scrollbar is refreshed dynamically
+
+```
+local element = scroller:insert(anyDisplayGroup)
+scroller:remove(element)
+scroller:removeAll()
+```
+
 #### Background
 
 Use 2 background images to switch between `dark` and `light` modes.

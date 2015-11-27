@@ -27,7 +27,7 @@ function Item:show()
     self.display.rotation = self.rotation
 
     if(self.focus) then
-        self.focus = utils.focus(self.display, self.focus)
+        self.focus = Focus(self.display, self.focus)
     end
 
     utils.onTap(self.display, function()

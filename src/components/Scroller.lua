@@ -140,7 +140,7 @@ function Scroller:scrollbarBase()
 
     self.scrollbar.base = display.newImageRect(
         self.scrollbar,
-        'assets/images/gui/scroll-bar/scroll.base.png',
+        'assets/images/gui/scroller/scroll.base.png',
         20, self.options.height*0.8
     )
 
@@ -153,7 +153,7 @@ end
 function Scroller:scrollbarHandle()
     self.scrollbar.handle = display.newImageRect(
         self.scrollbar,
-        'assets/images/gui/scroll-bar/scroll.handle.png',
+        'assets/images/gui/scroller/scroll.handle.png',
         20, 0
     )
 
