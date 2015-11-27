@@ -1,9 +1,7 @@
 
 ## Cherry.lua
 
-Cherry is the `CoronaSDK App` starter for [Uralys](http://uralys.com/games) mobile games provided as a preset Corona Game.
-
-You may use Cherry as a base to start your own game, with the following facilities:
+Cherry is the `CoronaSDK App` starter provided as a preset to help building your Corona Game.
 
 - [Introduction](#introduction-to-cherry)
 - [Usage](#usage)
@@ -11,10 +9,13 @@ You may use Cherry as a base to start your own game, with the following faciliti
 - [Music and Sounds](#music-and-sounds)
 - [License](#bsd-license)
 - [Third Parties](#third-parties)
+- [Games using Cherry](#games-using-cherry)
 
 ![cherry](/docs/cherry.jpg)
 
 ## Introduction to Cherry
+
+You may use Cherry as a base to start your own game, with the following facilities:
 
 #### Game worflow
 
@@ -107,7 +108,8 @@ An animated progress bar.
 
 #### Focus
 
-Apply animated arrows tso focus any DisplayObject.
+Apply animated arrows to focus any DisplayObject.
+
 You can choose one to 4 arrows, `showing` your item or `from` your item.
 
 ##### Requirements
@@ -178,7 +180,7 @@ A custom ScrollView with an API to add and remove elements, and, *wait for it...
 
 ##### API
 
-Init a Scroller with the same parameters than [`ScrollView`](https://docs.coronalabs.com/api/library/widget/newScrollView.html)
+Init a Scroller with the same parameters as a [`ScrollView`](https://docs.coronalabs.com/api/library/widget/newScrollView.html)
 
 You may add the following parameters :
  - `handleHeight` : if set, your scrollbar height is fixed the value. if not, the height depends on the number of elements you have inserted.
@@ -208,8 +210,15 @@ scroller:removeAll()
 #### Background
 
 Use 2 background images to switch between `dark` and `light` modes.
+
+##### Requirements
+
 - copy and require `src/components/Background.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L38) in Cherry)
+
+##### API
+
 - Background:init() at your [App startup](https://github.com/chrisdugne/cherry/blob/master/src/App.lua#L45) to prepare your 2 pictures.
+
 - use `Background:darken()` and `Background:lighten()` wherever you need in your app to switch modes.
 
 ## Music and Sounds
@@ -228,3 +237,7 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 - Mobile GUI assets from [GraphicBurger](http://graphicburger.com/mobile-game-gui/)
 - Avatars from [Tiny Speck](http://www.glitchthegame.com/public-domain-game-art/)
 - [Profile](https://thenounproject.com/search/?q=profile&i=77971) icon designed by [Miguel C Balandrano](https://thenounproject.com/acider/)
+
+## Games using Cherry
+
+- [Phantoms](http://www.uralys.com/projects/phantoms/) released on November 2015 as the actual source for Cherry.
