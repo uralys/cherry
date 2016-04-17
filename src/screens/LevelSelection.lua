@@ -36,7 +36,7 @@ end
 function scene:resetContent( event )
     if(self.levels) then
         display.remove(self.banner)
-        display.remove(self.house)
+        display.remove(self.avatar)
 
         for i = 1, #self.levels do
             self.levels[i]:destroy()
