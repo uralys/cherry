@@ -18,6 +18,7 @@ function Router:resetScreen()
     Effects:stop(true)
     utils.emptyGroup(App.hud)
     Effects:start()
+    if(Screen.reset) then Screen:reset() end
 end
 
 --------------------------------------------------------------------------------

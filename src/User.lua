@@ -23,6 +23,7 @@ end
 
 function User:resetSavedData()
     self.savedData = {
+        version = App.VERSION,
         selectedProfile = 1,
         profiles = {
             initPlayer(1),
@@ -72,7 +73,7 @@ function User:currentGame()
             self:setChapter(1)
             self:setLevel(1)
         else
-            self:setChapter(#self.profile.chapters - 1)
+            self:setChapter(#self.profile.chapters)
             self:setLevel(self:latestLevel() + 1)
         end
     end
@@ -83,30 +84,23 @@ end
 --------------------------------------------------------------------------------
 
 function User:recordLevel(chapter, level, score)
-    ---- score recording
-    if(not self.profile.chapters[chapter+1]) then
-        self.profile.chapters[chapter+1] = {}
+    -- just finished tutorial
+    if(chapter == 0) then
+        self.profile.tutorial = true
+        self:save()
+        return
     end
 
-    self.profile.chapters[chapter+1][level] = score
+    ---- score recording
+    if(not self.profile.chapters[chapter]) then
+        self.profile.chapters[chapter] = {}
+    end
+
+    self.profile.chapters[chapter][level] = score
 
     -------- analytics
-    if(not self.profile.analytics[chapter+1]) then
-        self.profile.analytics[chapter+1] = {}
-    end
-
-    if(not self.profile.analytics[chapter+1][level]) then
-        self.profile.analytics[chapter+1][level] = {}
-        self.profile.analytics[chapter+1][level] = {
-            tries = 0
-        }
-    end
-
-    self.profile.analytics[chapter+1][level].tries = self.profile.analytics[chapter+1][level].tries + 1
-
-    local tries = self.profile.analytics[chapter+1][level].tries
     local gems = score.gems
-    local value = chapter .. ':' .. level .. ':' .. tries .. ':' .. gems
+    local value = chapter .. ':' .. level .. ':' .. gems
     analytics.event('game', 'score', value)
 
     -----------
@@ -124,11 +118,11 @@ end
 --------------------------------------------------------------------------------
 
 function User:isNew()
-    return #self.profile.chapters == 0
+    return not self.profile.tutorial
 end
 
 function User:previousScore(chapter, level)
-    local chapterJson = self.profile.chapters[chapter+1]
+    local chapterJson = self.profile.chapters[chapter]
     local record = nil
 
     if(chapterJson) then
@@ -202,19 +196,23 @@ function User:isLevelDone(chapterNum, level)
     end
 end
 
-function User:gems(profile, chapterNum, level)
+function User:items(profile, chapterNum, level, item)
     local chapter = self:chapterJson(profile, chapterNum)
     if(chapter and chapter[level]) then
-        return chapter[level].gems
+        return chapter[level][item]
     else
         return 0
     end
 end
 
+function User:gems(profile, chapterNum, level)
+    return self:items(profile, chapterNum, level, 'gems')
+end
+
 --------------------------------------------------------------------------------
 
 function User:chapterJson(profile, chapterNum)
-    return profile.chapters[chapterNum+1]
+    return profile.chapters[chapterNum]
 end
 
 function User:totalPercentage(profile)

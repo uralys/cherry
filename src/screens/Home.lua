@@ -112,7 +112,7 @@ function scene:drawActions()
         parent = self.actions,
         type   = 'profile',
         x      = 110,
-        y      = 0,
+        y      = 01,
         scale  = .7,
         action = function()
             analytics.event('user', 'open-profiles', 'button:home')

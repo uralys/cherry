@@ -121,21 +121,23 @@ end
 
 --------------------------------------------------------------------------------
 
-function scene:show()
-    self:build()
+-- real show...would be awsome to refresh the dynamical content part by part
+-- and actually use :create
+function scene:show(event)
+    if ( event.phase == 'did' ) then
+        self:build()
 
-    -- real show...would be awsome to refresh the dynamical content part by part
-    -- and actually use :create
-    utils.easeDisplay(self.panel)
-    utils.easeDisplay(self.banner)
-    utils.easeDisplay(self.closeButton)
-    utils.easeDisplay(self.avatar, .7)
-    self:showLevels()
+        utils.easeDisplay(self.panel)
+        utils.easeDisplay(self.banner)
+        utils.easeDisplay(self.closeButton)
+        utils.easeDisplay(self.avatar, .7)
+        self:showLevels()
 
-    GUI:refreshAvatar({
-        parent = self.view,
-        link = true
-    })
+        GUI:refreshAvatar({
+            parent = self.view,
+            link = true
+        })
+    end
 end
 
 function scene:hide( event )

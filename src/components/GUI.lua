@@ -39,6 +39,32 @@ end
 
 --------------------------------------------------------------------------------
 
+function GUI:iconText(options)
+    local icon = display.newGroup()
+    icon.x = options.x
+    icon.y = options.y
+    options.parent:insert(icon)
+
+    local bg = display.newImage(
+        icon,
+        'assets/images/gui/items/circle.container.on.png',
+        0, 0
+    )
+
+    local text = utils.text({
+        parent   = icon,
+        value    = options.value,
+        x        = 0,
+        y        = 0,
+        font     = options.font or FONT,
+        fontSize = options.fontSize or 65
+    })
+
+    return icon
+end
+
+--------------------------------------------------------------------------------
+
 -- only one shared by every scenes
 function GUI:refreshMiniProfile(view)
     if(self.mini) then
@@ -132,7 +158,7 @@ function GUI:multiplier(options)
         x        = options.x + icon.width * 1.1,
         y        = options.y,
         font     = options.font or FONT,
-        fontSize = options.fontSize or 75,
+        fontSize = options.fontSize or 75
     })
 
     utils.bounce(num)

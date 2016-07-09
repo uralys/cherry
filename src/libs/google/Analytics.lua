@@ -13,12 +13,12 @@ params = {}
 ----------------------------------------------------------------------------------------------------
 
 function init(version, trackingId, profileId, AppName, AppVersion)
-    params.version   = version
-    params.trackingId  = trackingId
-    params.profileId   = profileId
+    params.version    = version
+    params.trackingId = trackingId
+    params.profileId  = profileId
 
-    params.AppName   = AppName
-    params.AppVersion  = AppVersion
+    params.AppName    = AppName
+    params.AppVersion = AppVersion
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -50,8 +50,8 @@ function event(category, action, label)
     data = data .. "&ec="   .. category
     data = data .. "&ea="   .. action
 
-    if(value) then
-        data = data .. "&el="  .. value
+    if(label) then
+        data = data .. "&el="  .. label
     end
 
     utils.post(ANALYTICS_URL, data, nil, 'urlencoded')

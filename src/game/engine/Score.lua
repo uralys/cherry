@@ -70,45 +70,11 @@ function Score:createBar()
     self.barBG:setFillColor(0)
 
     if(not User:isNew()) then
-        local back = Button:icon({
-            parent = self.bar,
-            type   = 'close',
-            x      = display.contentWidth*0.5 - 50,
-            y      = 0,
-            scale  = 0.7,
-            action = function ()
-                ---- analytics
-                local chapter = User:selectedChapter()
-                local level   = User:selectedLevel()
-                local value   = chapter .. ':' .. level
-                analytics.event('game', 'close-playground', value)
-                ---------
-                App.game:stop(true)
-                User:setChapter(chapter)
-                Router:open(Router.LEVEL_SELECTION)
-            end
-        })
-
-        local restart = Button:icon({
-            parent = self.bar,
-            type   = 'restart',
-            x      = display.contentWidth*0.5 - 135,
-            y      = 0,
-            scale  = 0.54,
-            action = function ()
-                ---- analytics
-                local chapter = User:selectedChapter()
-                local level   = User:selectedLevel()
-                local value   = chapter .. ':' .. level
-                analytics.event('game', 'restart', value)
-                ---------
-                App.game:stop(true)
-                User:setChapter(chapter)
-                User:setLevel(level)
-                Router:open(Router.PLAYGROUND)
-            end
-        })
+        self:displayButtons()
     end
+
+    self:displayTitle()
+    self:showBar()
 
     GUI:refreshAvatar({
         parent = self.bar,
@@ -116,9 +82,73 @@ function Score:createBar()
         x      = - display.contentWidth*0.47,
         y      = 10
     })
-
-    self:showBar()
 end
+
+--------------------------------------------------------------------------------
+
+function Score:displayButtons()
+    local back = Button:icon({
+        parent = self.bar,
+        type   = 'close',
+        x      = display.contentWidth*0.5 - 50,
+        y      = 0,
+        scale  = 0.7,
+        action = function ()
+            ---- analytics
+            local chapter = User:selectedChapter()
+            local level   = User:selectedLevel()
+            local value   = chapter .. ':' .. level
+            analytics.event('game', 'close-playground', value)
+            ---------
+            App.game:stop(true)
+            User:setChapter(chapter)
+            Router:open(Router.LEVEL_SELECTION)
+        end
+    })
+
+    local restart = Button:icon({
+        parent = self.bar,
+        type   = 'restart',
+        x      = display.contentWidth*0.5 - 135,
+        y      = 0,
+        scale  = 0.54,
+        action = function ()
+            ---- analytics
+            local chapter = User:selectedChapter()
+            local level   = User:selectedLevel()
+            local value   = chapter .. ':' .. level
+            analytics.event('game', 'restart', value)
+            ---------
+            App.game:stop(true)
+            User:setChapter(chapter)
+            User:setLevel(level)
+            Router:open(Router.PLAYGROUND)
+        end
+    })
+end
+
+--------------------------------------------------------------------------------
+
+function Score:displayTitle()
+    if(not App.game.title) then return end
+
+    local text = display.newText(
+        self.bar,
+        App.game.title,
+        display.contentWidth*0.5 - 195, 0,
+        FONT, 35
+    )
+
+    text.anchorX = 1
+    text.alpha = 0
+
+    transition.to(text, {
+        alpha = 1,
+        time  = 2000,
+        delay = 4000
+    })
+end
+
 
 --------------------------------------------------------------------------------
 
@@ -139,6 +169,15 @@ function Score:hideBar()
         time  = 800,
         alpha = 0
     })
+end
+
+--------------------------------------------------------------------------------
+
+function Score:calculate(chapter, level)
+    local previousScore = User:previousScore(chapter, level)
+    local newScore      = self:enhance(previousScore)
+
+    User:recordLevel ( chapter, level, newScore )
 end
 
 --------------------------------------------------------------------------------

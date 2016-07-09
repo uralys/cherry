@@ -616,7 +616,11 @@ function loadUserData(file)
 end
 
 function loadFile(path)
-    return loadTable(system.pathForFile( path , system.ResourceDirectory))
+    local resource = system.pathForFile( path , system.ResourceDirectory)
+    if(not resource) then
+        return false
+    end
+    return loadTable(resource)
 end
 
 --------------------------------------------------------
