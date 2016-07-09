@@ -9,7 +9,6 @@ function scene:create( event )
     self:drawActions()
 
     self.title          = GUI:gameTitle    (self.view)
-    self.chaptersButton = self:drawChapters()
     self.playButton     = self:drawPlayButton()
 end
 
@@ -18,76 +17,12 @@ function scene:show( event )
         utils.bounce(self.title)
         utils.bounce(self.playButton, 1.6)
         utils.bounce(self.toggleActionsButton, .7)
-        utils.bounce(self.chaptersButton, .7)
 
         GUI:refreshMiniProfile(self.view)
     end
 end
 
 --------------------------------------------------------------------------------
-
-function scene:toggleActions()
-    if(self.actions.lock) then return end
-    self.actions.lock = true
-
-    if(self.actions.open) then
-        self:closeActions()
-    else
-        self:openActions()
-    end
-end
-
-function scene:openActions()
-    transition.to(self.actions, {
-        x = self.actions.x - 330,
-        time = 500,
-        onComplete = function()
-            self.actions.open = true
-            self.actions.lock = false
-        end
-    })
-
-    transition.to(self.toggleButton, {
-        rotation = -360,
-        time = 500
-    })
-end
-
-function scene:closeActions()
-    transition.to(self.actions, {
-        x = self.actions.x + 330,
-        time = 500,
-        onComplete = function()
-            self.actions.open = false
-            self.actions.lock = false
-        end
-    })
-
-    transition.to(self.toggleButton, {
-        rotation = 0,
-        time = 500
-    })
-end
-
---------------------------------------------------------------------------------
-
-function scene:drawChapters()
-    return Button:icon({
-        parent = self.view,
-        type   = 'chapters',
-        x      = self.actions.x,
-        y      = self.actions.y - 100,
-        scale  = .7,
-        action = function()
-            if(User:isNew()) then
-                Router:open(Router.PLAYGROUND)
-            else
-                analytics.event('home-action', 'open-chapter')
-                Router:open(Router.CHAPTERS)
-            end
-        end
-    })
-end
 
 function scene:drawActions()
     self.actions      = display.newGroup()
@@ -108,29 +43,71 @@ function scene:drawActions()
         end
     })
 
-    Button:icon({
-        parent = self.actions,
-        type   = 'profile',
-        x      = 110,
-        y      = 01,
-        scale  = .7,
-        action = function()
-            analytics.event('user', 'open-profiles', 'button:home')
-            Router:open(Router.PROFILES)
-        end
-    })
-
     self:redrawMusicButton()
 
-    Button:icon({
+    self.infoButton = Button:icon({
         parent = self.actions,
         type   = 'info',
-        x      = 330,
+        x      = 110,
         y      = 0,
         scale  = .7,
         action = function()
             Screen:openCredits()
         end
+    })
+end
+
+--------------------------------------------------------------------------------
+
+function scene:toggleActions()
+    if(self.actions.lock) then return end
+    self.actions.lock = true
+
+    if(self.actions.open) then
+        self:closeActions()
+    else
+        self:openActions()
+    end
+end
+
+function scene:openActions()
+    transition.to(self.actions, {
+        x = self.actions.x - 330,
+        time = 850,
+        transition = easing.inOutBack,
+        onComplete = function()
+            self.actions.open = true
+            self.actions.lock = false
+        end
+    })
+
+    self:rotateButton(self.toggleActionsButton)
+    self:rotateButton(self.infoButton)
+    self:rotateButton(self.musicButton)
+end
+
+function scene:closeActions()
+    transition.to(self.actions, {
+        x = self.actions.x + 330,
+        time = 850,
+        transition = easing.inOutBack,
+        onComplete = function()
+            self.actions.open = false
+            self.actions.lock = false
+        end
+    })
+
+    self:rotateButton(self.toggleActionsButton, true)
+    self:rotateButton(self.infoButton, true)
+    self:rotateButton(self.musicButton, true)
+end
+
+function scene:rotateButton(button, back)
+    local rotation = function() if (back) then return 0 else return -360 end end
+    transition.to(button, {
+        rotation = rotation(),
+        time = 850,
+        transition = easing.inOutBack
     })
 end
 
