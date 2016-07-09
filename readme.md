@@ -11,7 +11,7 @@ Cherry is an open source starter provided as a `CoronaSDK App` to help building 
 - [Third Parties](#third-parties)
 - [Games using Cherry](#games-using-cherry)
 
-![cherry](/docs/cherry.jpg)
+![cherry](/docs/cherry.png)
 
 ## Introduction to Cherry
 
