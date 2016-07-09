@@ -171,7 +171,10 @@ function scene:drawPlayButton()
         bounce = true,
         action = function ()
             analytics.event('game', 'home-play-button')
-            Router:open(Router.PLAYGROUND)
+            if(self.actions.open) then
+                self:closeActions()
+            end
+            Router:open(Router.CHAPTERS)
         end
     })
 end

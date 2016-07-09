@@ -68,16 +68,6 @@ function User:setLevel(level)
 end
 
 function User:currentGame()
-    if(not self.levelSelection) then
-        if(self:justFinishedTutorial()) then
-            self:setChapter(1)
-            self:setLevel(1)
-        else
-            self:setChapter(#self.profile.chapters)
-            self:setLevel(self:latestLevel() + 1)
-        end
-    end
-
     return self.levelSelection.chapter, self.levelSelection.level
 end
 
@@ -160,20 +150,15 @@ function User:chapterStatus(profile, chapter)
 end
 
 function User:isOpen(chapter)
-    local nbLevelPlayedForPreviousChapter = self.profile.chapters[chapter] and #self.profile.chapters[chapter]
-    local maxLevelForPreviousChapter = NB_LEVELS[chapter-1]
-    local levelsCompleted = nbLevelPlayedForPreviousChapter == maxLevelForPreviousChapter
+    if(chapter == 1) then
+        return self.profile.tutorial
+    end
 
-    return levelsCompleted
+    return false
 end
 
 function User:justFinishedTutorial()
     return #self.profile.chapters == 1
-end
-
--- getting the number of scores recorded for the latest chapter recorded
-function User:latestLevel()
-    return #self.profile.chapters[#self.profile.chapters]
 end
 
 --------------------------------------------------------------------------------
