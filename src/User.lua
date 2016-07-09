@@ -68,6 +68,11 @@ function User:setLevel(level)
 end
 
 function User:currentGame()
+    if(not self.levelSelection) then
+        self:setChapter(1)
+        self:setLevel(1)
+    end
+
     return self.levelSelection.chapter, self.levelSelection.level
 end
 

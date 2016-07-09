@@ -2,40 +2,52 @@
 
 local App = {
     NAME    = 'Cherry',
-    VERSION = '1.0',
+    VERSION = '1.1',
+
+    -----------------------------------------
+    -- 'production', 'development', 'editor'
+    ENV = 'editor',
+    -----------------------------------------
+
     display = display.newGroup(),
-    hud     = display.newGroup(),
-
-    ----------------------------------
-    -- Dev overiddes
-    ----------------------------------
-    -- SOUND_OFF = true,
-
-    ----------------------------------
-    -- TESTING
-    ----------------------------------
-    -- either
-
-    -- EDITOR_TESTING = true,
-    ----------------------------------
-    -- or
-
-    -- LEVEL_TESTING   = true,
-    -- TESTING_CHAPTER = 2,
-    -- TESTING_LEVEL   = 6,
-
-    -- optional
-    -- TESTING_STEPS   = 2
-    ----------------------------------
+    hud     = display.newGroup()
 }
 
 --------------------------------------------------------------------------------
 
 function App:start()
-    print('---------------------- ' .. App.NAME .. ' ----------------')
+    print('---------------------- ' .. App.NAME .. ' [ ' .. App.ENV .. ' ] ----------------')
     self:deviceSetup()
     self:setup()
+    self:loadSettings()
     self:ready()
+end
+
+--------------------------------------------------------------------------------
+
+function App:loadSettings()
+    print('---------- SETTINGS ------------')
+    local path = 'env/' .. App.ENV .. '.json'
+    local resource = system.pathForFile( path, system.ResourcesDirectory )
+
+    local file     = io.open(resource, 'r')
+    local contents = file:read( '*a' )
+    local settings = json.decode(contents)
+
+    utils.tprint(settings)
+    print('--------------------------------')
+
+    App.SOUND_OFF      = settings.silent
+    App.EDITOR_TESTING = settings.editor
+    App.EDITOR_PLAY    = settings.play
+    App.VIEW_TESTING   = settings['view-testing']
+    App.LEVEL_TESTING  = settings['level-testing']
+
+    if(App.LEVEL_TESTING) then
+        App.TESTING_CHAPTER = App.LEVEL_TESTING.chapter
+        App.TESTING_LEVEL   = App.LEVEL_TESTING.level
+        App.TESTING_STEPS   = App.LEVEL_TESTING.step
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -48,8 +60,14 @@ function App:ready()
         Sound:playMusic()
     end
 
-    if(App.EDITOR_TESTING or App.LEVEL_TESTING) then
-        print('----------- TESTING')
+    if(App.VIEW_TESTING) then
+        print(' --> forced view : ' .. App.VIEW_TESTING)
+        print('--------------------------------')
+        Router:open(App.VIEW_TESTING)
+
+    elseif(App.EDITOR_TESTING or App.LEVEL_TESTING) then
+        print(' --> forced playground')
+        print('--------------------------------')
         Router:open(Router.PLAYGROUND)
 
     else

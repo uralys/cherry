@@ -130,6 +130,7 @@ function Game:loadLevel()
     return self:loadContent(path)
 end
 
+--------------------------------------------------------------------------------
 
 function Game:loadNextStep(step)
     local from
