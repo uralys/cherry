@@ -216,7 +216,14 @@ function User:chapterJson(profile, chapterNum)
 end
 
 function User:totalPercentage(profile)
-    return 88
+    local nbGems  = 12
+    local maxGems = 28
+    local percent = math.min(100, round ( nbGems / maxGems  * 100))
+
+    return  {
+        value = percent,
+        text = nbGems .. '/' .. maxGems
+    }
 end
 
 --------------------------------------------------------------------------------

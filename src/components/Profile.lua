@@ -68,7 +68,7 @@ function Profile:draw(options)
         width  = barWidth,
         height = barHeight,
         parent = self.display,
-        value  = User:totalPercentage(options.profile)
+        step   = User:totalPercentage(options.profile)
     }, options))
 
 
@@ -100,7 +100,7 @@ function Profile:mini(options)
         width  = options.width,
         height = 50,
         parent = self.display,
-        value  = User:totalPercentage(User.profile)
+        step   = User:totalPercentage(User.profile)
     }, options))
 
     -- ---------------------------------
@@ -172,7 +172,7 @@ function Profile:status(options)
     }, options))
 
     progress:set(0)
-    progress:reach(options.value)
+    progress:reach(options.step)
 end
 
 --------------------------------------------------------------------------------

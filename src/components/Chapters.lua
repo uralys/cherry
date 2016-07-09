@@ -116,7 +116,7 @@ function Chapters:hellBarEntrance(options)
         width    = panel.width * 0.36,
         height   = panel.height * 0.15,
         item     = 'fb',
-        value    = 59
+        step     = 59
     })
 
     local fb = Button:icon({
@@ -224,7 +224,7 @@ function Chapters:summary(options)
                 width    = panel.width * 0.4,
                 height   = panel.height * 0.15,
                 item     = 'gem',
-                value    = options.percentGems,
+                step     = options.percentGems,
                 disabled = (options.status == 'off')
             })
 

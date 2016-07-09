@@ -150,9 +150,18 @@ function ProgressBar:set(value)
     if(value == 100) then self:showGreenBG() end
 end
 
-function ProgressBar:reach(value)
+function ProgressBar:reach(step)
+    local value, text
 
-    self.text.text = value .. '%'
+    if('table' == type(step)) then
+        value = step.value
+        text = step.text
+    else
+        value = step
+        text = value .. '%'
+    end
+
+    self.text.text = text
 
     transition.to(self.progress, {
         maskX      = self:maskX(value),
