@@ -5,6 +5,8 @@ Cherry is an open source starter provided as a `CoronaSDK App` to help building 
 
 - [Introduction](#introduction-to-cherry)
 - [Usage](#usage)
+- [Libraries](#libraries)
+- [Starters](#starters)
 - [Components](#components-documentation)
 - [Music and Sounds](#music-and-sounds)
 - [License](#bsd-license)
@@ -28,6 +30,18 @@ Avoid developing your screens by using many pre-defined `screens` to go straight
 - Score
 - Profiles
 - Credits
+
+#### Starters
+
+Each branch gives a fresh starter depending on your game requirements
+
+- `master`: level based Game
+    - many profiles management
+    - provide chapter + levels loading before to render Playground
+
+- [one-profile-just-playground](https://github.com/chrisdugne/cherry/tree/one-profile-just-playground):
+    - game renders the Playground directly
+    - one player = no profiles screens/switches
 
 #### Libraries
 
