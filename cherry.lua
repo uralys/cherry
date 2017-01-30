@@ -2,6 +2,9 @@
 VERSION = '2.0'
 --------------------------------------------------------------------------------
 -- libs
+json          = require 'json'
+composer      = require 'composer'
+
 _             = require 'Cherry.libs.Underscore'
 utils         = require 'Cherry.libs.Utils'
 Vector2D      = require 'Cherry.libs.Vector2D'

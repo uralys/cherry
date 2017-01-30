@@ -20,40 +20,72 @@ Cherry is an open source starter provided as a `CoronaSDK App` to help building 
 You may use Cherry as a base, or to pick components from, in order to start your own game.
 Cherry provides the following facilities and libraries:
 
-#### Game worflow
+#### Using Cherry
+- clone Cherry next to your project, and symlink it to your project root
+`ln -s ../Cherry Cherry`
+- add your env folder with your en settings
+- add a `main.lua` with just `require 'src.app'`
+- add a `src/app.lua` and require `Cherry` inside
+```
+CHERRY   = require 'Cherry.cherry'
+```
+- then call `App.start()` with your options
+```
+App:start({
+  name    = 'YourGame',
+  version = '1.0',
+})
+```
 
-Avoid developing your screens by using many pre-defined `screens` to go straight to the point :
 
-- Home + Options
-- Level Selection
-- Playground
-- Score
-- Profiles
-- Credits
+A typical tree should be :
 
-#### Starters
+```
+├── Cherry
+│   ├── _images
+│   ├── app
+│   ├── cherry.lua
+│   ├── components
+│   ├── engine
+│   ├── libs
+│   ├── screens
+│
+├── YourGame
+│   ├── CBE
+│   ├── Cherry -> ../Cherry
+│   ├── assets
+│   ├── build.settings
+│   ├── config.lua
+│   ├── env
+│   ├── main.lua
+```
 
-Each branch gives a fresh starter depending on your game requirements
+#### Doc to provide
+##### waiting for the doc, read the code
+- Look in Cherry.app.App to see what you may override with `App:start(options)`
+- Look in Cherry.engine.Game to see what you may override with `Game:YourStuff()`
 
-- `master`: level based Game
-    - many profiles management
-    - provide chapter + levels loading before to render Playground
+##### core
+- env files
+simple example: development.json
+```
+{
+    "silent": true,
+    "view-testing": "Playground"
+}
+```
 
-- [one-profile-just-playground](https://github.com/chrisdugne/cherry/tree/one-profile-just-playground):
-    - game renders the Playground directly
-    - one player = no profiles screens/switches
+- adding custom screens
+- extending/overriding `engine.Game`
 
-#### Libraries
-
-Many libraries to provide easy tooling for your app :
-
-- screen **routing**
-- game **Camera**
-- **touch** controller
-- **sound** library (music + effects)
-- a sublevel to register **effects** from [CBEffects](https://github.com/GymbylCoding/CBEffects).
-- **user** profile and game status
-- google **analytics** events (a lot are already plugged in the workflow)
+##### less important misc
+- defining custom globals
+- setting custom bg
+- setting custom gravity
+- defining colors
+- defining analytics ids
+- defining facebook ids
+- defining ios id
 
 #### Components
 
@@ -235,6 +267,33 @@ Use 2 background images to switch between `dark` and `light` modes.
 - Background:init() at your [App startup](https://github.com/chrisdugne/cherry/blob/master/src/App.lua#L45) to prepare your 2 pictures.
 
 - use `Background:darken()` and `Background:lighten()` wherever you need in your app to switch modes.
+
+
+#### Cooldown
+todo, read the code to understand the API
+#### Chapters
+todo, read the code to understand the API
+#### Levels
+todo, read the code to understand the API
+
+
+## Libraries
+
+Many libraries to provide easy tooling for your app :
+
+- screen **routing**
+- game **Camera**
+- **touch** controller
+- **sound** library (music + effects)
+- an API to register **effects** from [CBEffects](https://github.com/GymbylCoding/CBEffects).
+- **user** profile and game status
+- google **analytics** events (a lot are already plugged in the workflow)
+
+
+
+
+
+
 
 ## Music and Sounds
 

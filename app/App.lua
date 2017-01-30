@@ -137,8 +137,6 @@ function App:setup()
         yellow = 'ff00ff'
     })
 
-    utils.tprint(COLORS)
-
     colorize = function(color)
         return utils.toColor(COLORS[color])
     end
