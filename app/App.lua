@@ -20,6 +20,9 @@ local App = {
         dark = 'cherry/_images/background-dark.jpg'
     },
 
+    xGravity = 0,
+    yGravity = 0,
+
     -----------------------------------------
 
     FACEBOOK_PAGE_ID = '379432705492888',
@@ -122,29 +125,25 @@ function App:setup()
     ----------------------------------------------------------------------------
     ---- App globals
 
-    GLOBALS = {
+    GLOBALS = _.extend({
         savedData = utils.loadUserData('savedData.json'),
-        options   = utils.loadUserData('options.json'),
-        enemies   = utils.loadFile('assets/enemies.json'),
-        levels    = {{
-            pointsRequired = 20
-        },{
-            pointsRequired = 50
-        },{
-            pointsRequired = 120
-        }}
-    }
+        options   = utils.loadUserData('options.json')
+    }, App.globals)
 
     ----------------------------------------------------------------------------
 
-    COLORS = {
+    COLORS = _.defaults(App.colors or {}, {
         red = '7f00ff',
         yellow = 'ff00ff'
-    }
+    })
+
+    utils.tprint(COLORS)
 
     colorize = function(color)
         return utils.toColor(COLORS[color])
     end
+
+    ----------------------------------------------------------------------------
 
     analytics.init(
         App.ANALYTICS_VERSION,
@@ -185,7 +184,6 @@ function App:setup()
     round  = math.round
 
     ----------------------------------------------------------------------------
-
 end
 
 --------------------------------------------------------------------------------
