@@ -40,6 +40,15 @@ function Options:drawActions(view)
             Screen:openCredits()
         end
     })
+
+    self.version = utils.simpleText({
+        parent = self.actions,
+        value  = 'v' .. App.version,
+        x      = 320,
+        y      = 0,
+        color  = 1,
+        font   = FONT
+    })
 end
 
 --------------------------------------------------------------------------------
@@ -58,7 +67,7 @@ end
 function Options:openActions()
     transition.cancel(self.actions)
     transition.to(self.actions, {
-        x = initActionX - 280,
+        x = initActionX - 330,
         time = 850,
         transition = easing.inOutBack,
         onComplete = function()

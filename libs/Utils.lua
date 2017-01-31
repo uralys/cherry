@@ -98,6 +98,22 @@ function text(options)
     return _text
 end
 
+function simpleText(options)
+    local _text = display.newText({
+        parent   = options.parent,
+        text     = options.value,
+        x        = options.x,
+        y        = options.y,
+        width    = options.width,
+        height   = options.height,
+        font     = options.font,
+        fontSize = options.fontSize
+    })
+
+    _text:setFillColor( options.color )
+    return _text
+end
+
 --------------------------------------------------------------------------------
 
 function getMinSec(seconds)
