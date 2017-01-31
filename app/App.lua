@@ -1,3 +1,5 @@
+local demo = require 'Cherry.app.ExtensionDemo'
+
 --------------------------------------------------------------------------------
 
 local App = {
@@ -22,6 +24,12 @@ local App = {
 
     xGravity = 0,
     yGravity = 0,
+
+    -----------------------------------------
+
+    extension = {
+        game = demo
+    },
 
     -----------------------------------------
 
@@ -78,7 +86,7 @@ end
 --------------------------------------------------------------------------------
 
 function App:ready()
-    self.game = Game:new()
+    self.game = Game:new(App.extension.game)
     self.user = User:new()
     self.user:load()
 
