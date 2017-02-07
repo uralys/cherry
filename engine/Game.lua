@@ -42,7 +42,6 @@ end
 
 function Game:reset()
     Camera:empty()
-    HUD:reset()
     self:onReset() -- from extension
 
     Score:reset()
@@ -67,7 +66,6 @@ function Game:stop(userExit)
 
     ------------------------------------------
 
-    HUD:reset()
     Screen:showBands()
     Background:lighten()
     Score:display()
