@@ -140,13 +140,13 @@ function App:setup()
 
     ----------------------------------------------------------------------------
 
-    COLORS = _.defaults(App.colors or {}, {
-        red = '7f00ff',
-        yellow = 'ff00ff'
+    App.colors = _.defaults(App.colors or {}, {
+        '7f00ff',
+        'ff00ff'
     })
 
     colorize = function(color)
-        return utils.toColor(COLORS[color])
+        return utils.toColor(color)
     end
 
     ----------------------------------------------------------------------------
