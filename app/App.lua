@@ -1,4 +1,7 @@
-local demo = require 'Cherry.app.ExtensionDemo'
+--------------------------------------------------------------------------------
+
+local Background = require 'Cherry.components.Background'
+local demo       = require 'Cherry.app.ExtensionDemo'
 
 --------------------------------------------------------------------------------
 
@@ -87,6 +90,7 @@ end
 
 function App:ready()
     self.game = Game:new(App.extension.game)
+    self.score = Score:new(App.extension.score)
     self.user = User:new()
     self.user:load()
 

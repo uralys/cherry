@@ -1,9 +1,15 @@
+--------------------------------------------------------------------------------
+
+local Background = require 'Cherry.components.Background'
+local Screen = require 'Cherry.components.Screen'
+
+--------------------------------------------------------------------------------
 
 local physics = require( 'physics' )
 
 --------------------------------------------------------------------------------
 
-Game = {
+local Game = {
     RUNNING = 1,
     STOPPED = 2
 }
@@ -31,7 +37,7 @@ function Game:start()
     Camera:center()
     Camera:start()
 
-    Score:createBar()
+    App.score:createBar()
     Background:darken()
 
     self:onStart() -- from extension
@@ -43,8 +49,7 @@ end
 function Game:reset()
     Camera:empty()
     self:onReset() -- from extension
-
-    Score:reset()
+    App.score:reset()
 end
 
 ------------------------------------------
@@ -61,14 +66,14 @@ function Game:stop(userExit)
     -- calculate score
 
     if(not userExit) then
-        Score:calculate()
+        App.score:calculate()
     end
 
     ------------------------------------------
 
     Screen:showBands()
     Background:lighten()
-    Score:display()
+    App.score:display()
 
     ------------------------------------------
 

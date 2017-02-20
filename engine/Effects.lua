@@ -103,7 +103,7 @@ end
 
 function Effects:atmosphere(parent, x, y, scale)
     local effect = CBE.newVent({
-        preset = 'burn',
+        preset = 'wisps',
         emitX = x,
         emitY = y
     })
@@ -119,7 +119,7 @@ end
 
 function Effects:explosion(parent, x, y)
     local vent = CBE.newVent({
-        preset = 'wisps'   ,
+        preset = 'wisps',
         title = 'explosion',
 
         positionType = 'inRadius'  ,

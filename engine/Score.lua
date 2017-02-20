@@ -1,13 +1,19 @@
 --------------------------------------------------------------------------------
 
-Score = {}
+local Button = require 'Cherry.components.Button'
+local Panel  = require 'Cherry.components.Panel'
+local Banner = require 'Cherry.components.Banner'
 
 --------------------------------------------------------------------------------
 
-function Score:new()
-    local object = {}
-    setmetatable(object, { __index = Score })
-    return object
+local Score = {}
+
+--------------------------------------------------------------------------------
+
+function Score:new(extension)
+    local score = _.extend({}, extension)
+    setmetatable(score, { __index = Score })
+    return score
 end
 
 --------------------------------------------------------------------------------
@@ -72,6 +78,8 @@ function Score:createBar()
     -- if(not App.user:isNew()) then
         self:displayButtons()
     -- end
+
+    self:onCreate(self.bar) -- from extension
 
     self:displayTitle()
     self:refreshPoints()
