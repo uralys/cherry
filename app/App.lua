@@ -21,8 +21,8 @@ local App = {
     },
 
     background = {
-        light = 'cherry/_images/background-light.jpg',
-        dark = 'cherry/_images/background-dark.jpg'
+        light = 'Cherry/_images/background-light.jpg',
+        dark = 'Cherry/_images/background-dark.jpg'
     },
 
     xGravity = 0,

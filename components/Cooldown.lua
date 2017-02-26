@@ -62,7 +62,7 @@ function Cooldown:prepare(cooldown)
 
     cooldown.leftCircle = display.newImage(
         cooldown.parent,
-        'cherry/_images/cooldown/half.left-' .. cooldown.alpha .. '.png'
+        'Cherry/_images/cooldown/half.left-' .. cooldown.alpha .. '.png'
     )
 
     cooldown.leftCircle.x           = cooldown.x
@@ -71,7 +71,7 @@ function Cooldown:prepare(cooldown)
 
     cooldown.rightCircle = display.newImage(
         cooldown.parent,
-        'cherry/_images/cooldown/half.left-' .. cooldown.alpha .. '.png'
+        'Cherry/_images/cooldown/half.left-' .. cooldown.alpha .. '.png'
     )
 
     cooldown.rightCircle.rotation = 180
@@ -79,8 +79,8 @@ function Cooldown:prepare(cooldown)
     cooldown.rightCircle.y        = cooldown.y
     cooldown.rightCircle:scale (cooldown.scale, cooldown.scale)
 
-    cooldown.leftMask  = graphics.newMask( 'cherry/_images/cooldown/mask.png' )
-    cooldown.rightMask = graphics.newMask( 'cherry/_images/cooldown/mask.png' )
+    cooldown.leftMask  = graphics.newMask( 'Cherry/_images/cooldown/mask.png' )
+    cooldown.rightMask = graphics.newMask( 'Cherry/_images/cooldown/mask.png' )
 
     cooldown.leftCircle:setMask     ( cooldown.leftMask )
     cooldown.rightCircle:setMask    ( cooldown.rightMask )

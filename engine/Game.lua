@@ -29,6 +29,7 @@ end
 
 function Game:start()
     self:reset()
+    self.state = Game.RUNNING
 
     physics.start()
     physics.setGravity( App.xGravity, App.yGravity )
@@ -43,13 +44,12 @@ function Game:start()
     self:onStart() -- from extension
 
     Effects:restart()
-    self.state = Game.RUNNING
 end
 
 function Game:reset()
     Camera:empty()
-    self:onReset() -- from extension
     App.score:reset()
+    self:onReset() -- from extension
 end
 
 ------------------------------------------
@@ -57,10 +57,6 @@ end
 function Game:stop(userExit)
     if(self.state == Game.STOPPED) then return end
     self.state = Game.STOPPED
-
-    ------------------------------------------
-
-    self:onStop() -- from extension
 
     ------------------------------------------
     -- calculate score
@@ -79,6 +75,10 @@ function Game:stop(userExit)
 
     Effects:stop(true)
     Camera:stop()
+
+    ------------------------------------------
+
+    self:onStop() -- from extension
 end
 
 --------------------------------------------------------------------------------

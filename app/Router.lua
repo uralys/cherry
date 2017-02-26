@@ -39,12 +39,10 @@ end
 --------------------------------------------------------------------------------
 
 function Router:open(id, params)
-    utils.tprint(App.screens)
-
     if(utils.contains(App.screens, id)) then
         class  = 'src.screens.' .. id
     else
-        class  = 'cherry.screens.' .. id
+        class  = 'Cherry.screens.' .. id
     end
 
     self:openScreen(id, class, params)

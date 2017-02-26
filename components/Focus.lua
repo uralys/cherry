@@ -99,7 +99,7 @@ return function(object, options)
     if(options.all or options.up) then
         local upY = -object.height / 2 - 20
 
-        local up = display.newImage(focus, 'cherry/_images/gui/items/arrow.right.png')
+        local up = display.newImage(focus, 'Cherry/_images/gui/items/arrow.right.png')
         up.x = 0
         up.y = upY
         up:scale(0.5, 0.5)
@@ -122,7 +122,7 @@ return function(object, options)
 
     if(options.all or options.left) then
         local leftY = -object.width / 2 - 20
-        local left = display.newImage(focus, 'cherry/_images/gui/items/arrow.right.png')
+        local left = display.newImage(focus, 'Cherry/_images/gui/items/arrow.right.png')
         left.x = leftY
         left.y = 0
         left:scale(0.5, 0.5)
@@ -143,7 +143,7 @@ return function(object, options)
 
     if(options.all or options.bottom) then
         local bottomY = object.height / 2 + 20
-        local bottom = display.newImage(focus, 'cherry/_images/gui/items/arrow.right.png')
+        local bottom = display.newImage(focus, 'Cherry/_images/gui/items/arrow.right.png')
         bottom.x = 0
         bottom.y = bottomY
         bottom:scale(0.5, 0.5)
@@ -166,7 +166,7 @@ return function(object, options)
 
     if(options.all or options.right) then
         local rightX = object.width / 2 + 20
-        local right = display.newImage(focus, 'cherry/_images/gui/items/arrow.right.png')
+        local right = display.newImage(focus, 'Cherry/_images/gui/items/arrow.right.png')
         right.x = rightX
         right.y = 0
         right:scale(0.5, 0.5)

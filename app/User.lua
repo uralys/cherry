@@ -41,7 +41,7 @@ end
 --------------------------------------------------------------------------------
 
 function User:resetLevel()
-    self.level = 0
+    self.level = 1
 end
 
 function User:growLevel()

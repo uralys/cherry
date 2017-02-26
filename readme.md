@@ -100,13 +100,13 @@ See [below](#components-documentation) for the complete list and documentation f
 A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
 
 - Start by creating a new `screen`, for instance duplicate the simplest one `src/screens/Playground.lua`
-- Register your new screen in the [Router](https://github.com/chrisdugne/cherry/blob/master/src/Router.lua#L12)  : `YOUR_NEW_SCREEN = 'YourNewScreen'`
+- Register your new screen in the [Router](https://github.com/chrisdugne/Cherry/blob/master/src/Router.lua#L12)  : `YOUR_NEW_SCREEN = 'YourNewScreen'`
 - Now you can open your screen from anywhere calling :
     `Router:open(Router.YOUR_NEW_SCREEN)`
 
 #### Adding a new Model
-- Each `model` should implement `new` and `show` functions, for instance read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
-- Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'src.game.models.YourModel'`
+- Each `model` should implement `new` and `show` functions, for instance read how [Item](https://github.com/chrisdugne/Cherry/blob/master/src/game/models/Item.lua) is built.
+- Register your model in [main.lua](https://github.com/chrisdugne/Cherry/blob/master/main.lua#L55) : `YourModel = require 'src.game.models.YourModel'`
 - Use `YourModel:new()` during the `LevelDrawer` parsing
 - Use `YourModel:show()` during the `Game` rendering
 
@@ -120,7 +120,7 @@ An animated progress bar.
 
 ##### Requirements
 
-- Code : copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry) and `src/components/Icon.lua`
+- Code : copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/Cherry/blob/master/main.lua#L45) in Cherry) and `src/components/Icon.lua`
 
 - assets : you need to copy the assets from `assets/images/gui/progress-bar` (and credit GraphicBurger see [Third Parties](#third-parties))
 
@@ -161,7 +161,7 @@ You can choose one to 4 arrows, `showing` your item or `from` your item.
 
 ##### Requirements
 
-- Code : copy and require `src/components/Focus.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L48) in Cherry).
+- Code : copy and require `src/components/Focus.lua` ([example](https://github.com/chrisdugne/Cherry/blob/master/main.lua#L48) in Cherry).
 
 - assets : you need to copy the assets from `assets/images/gui/items/arrow.right.png` (and credit GraphicBurger see [Third Parties](#third-parties))
 
@@ -221,7 +221,7 @@ A custom ScrollView with an API to add and remove elements, and, *wait for it...
 
 ##### Requirements
 
-- Code : copy and require `src/components/Scroller.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L46) in Cherry)
+- Code : copy and require `src/components/Scroller.lua` ([example](https://github.com/chrisdugne/Cherry/blob/master/main.lua#L46) in Cherry)
 
 - assets : you need to copy the assets from `assets/images/gui/scroller` (and credit GraphicBurger see [Third Parties](#third-parties))
 
@@ -260,11 +260,11 @@ Use 2 background images to switch between `dark` and `light` modes.
 
 ##### Requirements
 
-- copy and require `src/components/Background.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L38) in Cherry)
+- copy and require `src/components/Background.lua` ([example](https://github.com/chrisdugne/Cherry/blob/master/main.lua#L38) in Cherry)
 
 ##### API
 
-- Background:init() at your [App startup](https://github.com/chrisdugne/cherry/blob/master/src/App.lua#L45) to prepare your 2 pictures.
+- Background:init() at your [App startup](https://github.com/chrisdugne/Cherry/blob/master/src/App.lua#L45) to prepare your 2 pictures.
 
 - use `Background:darken()` and `Background:lighten()` wherever you need in your app to switch modes.
 
@@ -302,7 +302,7 @@ Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the
 `https://soundcloud.com/velvetcoffee`
 
 ## BSD License
-You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [BSD](http://www.linfo.org/bsdlicense.html) crediting requirements, provided in the project [LICENSE](https://github.com/chrisdugne/cherry/blob/master/LICENSE)
+You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [BSD](http://www.linfo.org/bsdlicense.html) crediting requirements, provided in the project [LICENSE](https://github.com/chrisdugne/Cherry/blob/master/LICENSE)
 
 ## Third Parties
 
