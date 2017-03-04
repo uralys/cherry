@@ -13,7 +13,7 @@ function Button:round(options)
 
     button.image = display.newImage(
         button,
-        'Cherry/_images/gui/buttons/round.'.. options.type .. '.png',
+        'cherry/_images/gui/buttons/round.'.. options.type .. '.png',
         0, 0
     );
 
@@ -39,7 +39,7 @@ end
 function Button:icon(options)
     local button = display.newImage(
         options.parent,
-        'Cherry/_images/gui/buttons/'.. options.type ..'.png'
+        'cherry/_images/gui/buttons/'.. options.type ..'.png'
     );
 
     button.x = options.x

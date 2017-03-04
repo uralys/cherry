@@ -1,7 +1,9 @@
 --------------------------------------------------------------------------------
 
-local Background = require 'Cherry.components.Background'
-local demo       = require 'Cherry.app.ExtensionDemo'
+local Background = require 'cherry.components.background'
+local demo       = require 'cherry.app.extension-demo'
+local User       = require 'cherry.app.user'
+local Score      = require 'cherry.engine.score'
 
 --------------------------------------------------------------------------------
 
@@ -21,8 +23,8 @@ local App = {
     },
 
     background = {
-        light = 'Cherry/_images/background-light.jpg',
-        dark = 'Cherry/_images/background-dark.jpg'
+        light = 'cherry/_images/background-light.jpg',
+        dark = 'cherry/_images/background-dark.jpg'
     },
 
     xGravity = 0,
@@ -89,9 +91,9 @@ end
 --------------------------------------------------------------------------------
 
 function App:ready()
-    self.game = Game:new(App.extension.game)
+    self.game  = Game:new(App.extension.game)
     self.score = Score:new(App.extension.score)
-    self.user = User:new()
+    self.user  = User:new(App.extension.user)
     self.user:load()
 
     Background:init({

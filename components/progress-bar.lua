@@ -1,5 +1,9 @@
 --------------------------------------------------------------------------------
 
+local Icon = require 'cherry.components.icon'
+
+--------------------------------------------------------------------------------
+
 local ProgressBar = {}
 
 --------------------------------------------------------------------------------
@@ -47,7 +51,7 @@ end
 function ProgressBar:background(options)
     self.bg = display.newImage(
         self.display,
-        'Cherry/_images/gui/progress-bar/loading-bg.png'
+        'cherry/_images/gui/progress-bar/loading-bg.png'
     )
 
     self.bg.width  = options.width
@@ -62,7 +66,7 @@ function ProgressBar:background(options)
 
     self.bgGreen = display.newImage(
         self.display,
-        'Cherry/_images/gui/progress-bar/loading-bg-green.png'
+        'cherry/_images/gui/progress-bar/loading-bg-green.png'
     )
 
     self.bgGreen.width  = options.width
@@ -73,7 +77,7 @@ end
 function ProgressBar:progress(options)
     self.progress = display.newImage(
         self.display,
-        'Cherry/_images/gui/progress-bar/loading-progress.png'
+        'cherry/_images/gui/progress-bar/loading-progress.png'
     )
 
     self.progress.width   = self:progressWidth()
@@ -82,7 +86,7 @@ function ProgressBar:progress(options)
     self.progress.x       = -options.width/2.06
 
     self.progress:setMask( graphics.newMask(
-            'Cherry/_images/gui/progress-bar/loading-mask.png'
+            'cherry/_images/gui/progress-bar/loading-mask.png'
     ))
 end
 
@@ -90,7 +94,7 @@ function ProgressBar:icon(options)
     if(options.path) then
         local logoContainer = display.newImage(
             self.display,
-            'Cherry/_images/gui/items/circle.simple.container.png',
+            'cherry/_images/gui/items/circle.simple.container.png',
             -options.width*0.55, 0
         )
 

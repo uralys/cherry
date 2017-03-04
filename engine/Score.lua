@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 
-local Button = require 'Cherry.components.Button'
-local Panel  = require 'Cherry.components.Panel'
-local Banner = require 'Cherry.components.Banner'
+local Button = require 'cherry.components.button'
+local Panel  = require 'cherry.components.panel'
+local Banner = require 'cherry.components.banner'
 
 --------------------------------------------------------------------------------
 
@@ -75,14 +75,9 @@ function Score:createBar()
     self.barBG.alpha = 0
     self.barBG:setFillColor(0)
 
-    -- if(not App.user:isNew()) then
-        self:displayButtons()
-    -- end
-
     self:onCreate(self.bar) -- from extension
 
     self:displayTitle()
-    self:refreshPoints()
     self:showBar()
 end
 
@@ -143,32 +138,6 @@ function Score:hideBar()
         time  = 800,
         alpha = 0
     })
-end
-
---------------------------------------------------------------------------------
-
-function Score:increment(points)
-    self.current.points = self.current.points + points
-    self:refreshPoints()
-end
-
-function Score:refreshPoints()
-    if(self.count) then
-        display.remove(self.count)
-    end
-
-    self.count = utils.text({
-        parent   = self.bar,
-        value    = self.current.points,
-        x        = 30 - display.contentWidth * 0.5,
-        y        = 0,
-        font     = FONT,
-        fontSize = 55
-    })
-
-    utils.grow(self.count)
-
-    self.count.anchorX = 0
 end
 
 --------------------------------------------------------------------------------

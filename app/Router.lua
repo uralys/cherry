@@ -1,15 +1,16 @@
 --------------------------------------------------------------------------------
 
-local Screen = require 'Cherry.components.Screen'
+local Screen = require 'cherry.components.screen'
+local Effects = require 'cherry.engine.effects'
 
 --------------------------------------------------------------------------------
 
 local Router = {
     view = nil,
 
-    HOME       = 'Home',
-    PLAYGROUND = 'Playground',
-    HEADPHONES = 'Headphones'
+    HOME       = 'home',
+    PLAYGROUND = 'playground',
+    HEADPHONES = 'headphones'
 }
 
 --------------------------------------------------------------------------------
@@ -39,10 +40,11 @@ end
 --------------------------------------------------------------------------------
 
 function Router:open(id, params)
+    print('opening', id)
     if(utils.contains(App.screens, id)) then
         class  = 'src.screens.' .. id
     else
-        class  = 'Cherry.screens.' .. id
+        class  = 'cherry.screens.' .. id
     end
 
     self:openScreen(id, class, params)

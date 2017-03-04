@@ -4,11 +4,11 @@ local User = {}
 
 --------------------------------------------------------------------------------
 
-function User:new(options)
+function User:new(extension)
     local user = _.extend({
         savedData = nil,
         profile   = nil
-    }, options);
+    }, extension);
 
     setmetatable(user, { __index = User })
     return user;
@@ -25,6 +25,7 @@ function User:load()
     end
 
     self:resetLevel()
+    self:onLoad() -- from extension
 end
 
 --------------------------------------------------------------------------------

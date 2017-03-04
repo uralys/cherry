@@ -1,7 +1,8 @@
 --------------------------------------------------------------------------------
 
-local Background = require 'Cherry.components.Background'
-local Screen = require 'Cherry.components.Screen'
+local Background = require 'cherry.components.background'
+local Screen = require 'cherry.components.screen'
+local Effects = require 'cherry.engine.effects'
 
 --------------------------------------------------------------------------------
 
@@ -29,6 +30,22 @@ end
 
 function Game:start()
     self:reset()
+    if (self.load) then
+        print('loading...')
+        local success = self:load()
+        if(success) then
+            print('loaded successfully')
+            self:run()
+        else
+            print('couldnt load properly')
+            self:onLoadFailed()
+        end
+    else
+        self:run()
+    end
+end
+
+function Game:run()
     self.state = Game.RUNNING
 
     physics.start()
@@ -41,9 +58,10 @@ function Game:start()
     App.score:createBar()
     Background:darken()
 
-    self:onStart() -- from extension
+    self:onRun() -- from extension
 
     Effects:restart()
+    print('Game runs!')
 end
 
 function Game:reset()

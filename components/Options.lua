@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-local Button = require 'Cherry.components.Button'
+local Button = require 'cherry.components.button'
 
 --------------------------------------------------------------------------------
 

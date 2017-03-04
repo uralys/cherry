@@ -1,5 +1,14 @@
 --------------------------------------------------------------------------------
 
+local Scroller = require 'cherry.components.scroller'
+local Panel = require 'cherry.components.panel'
+local GUI = require 'cherry.components.gui'
+local Button = require 'cherry.components.button'
+local Profile = require 'cherry.components.profile'
+local Banner = require 'cherry.components.banner'
+
+--------------------------------------------------------------------------------
+
 local Chapters = {}
 
 --------------------------------------------------------------------------------
@@ -48,7 +57,7 @@ function Chapters:buy(num)
         print('transaction.state: ' ,  transaction.state)
 
         if ( transaction.state == 'purchased' ) then
-            User:bought(num)
+            App.user:bought(num)
 
         elseif ( transaction.state == 'cancelled' ) then
         elseif ( transaction.state == 'failed' ) then
@@ -60,7 +69,7 @@ function Chapters:buy(num)
     end
 
     if(SIMULATOR or ENV == 'development') then
-        User:bought(num)
+        App.user:bought(num)
         self:draw(self.options)
         return
 
@@ -138,14 +147,12 @@ end
 --------------------------------------------------------------------------------
 
 function Chapters:fillContent(options)
-    for i = 1, #GLOBALS.chapters do
+    for i = 1, #options.chapters do
         local chapter = self:summary(
-            User:chapterData(i)
+            App.user:chapterData(i)
         )
         self.scroller:insert (chapter)
     end
-
-    -- self.scroller:insert( self:hellBarEntrance(options) )
 end
 
 function Chapters:hellBarEntrance(options)
@@ -177,16 +184,6 @@ function Chapters:hellBarEntrance(options)
         font     = FONT,
         fontSize = App:adaptToRatio(10),
     })
-
-    -- Profile:status({
-    --     parent   = hellbar,
-    --     x        = contentX,
-    --     y        = 0,
-    --     width    = panel.width * 0.36,
-    --     height   = panel.height * 0.15,
-    --     item     = 'fb',
-    --     value    = GLOBALS.gameData.facebookLikes / (10000 / 100)
-    -- })
 
     local fb = Button:icon({
         parent = hellbar,
@@ -279,7 +276,7 @@ function Chapters:drawOpenChapter(options, panel, parent)
         x      = panel.width * 0.04,
         y      = - panel.height * 0.21,
         scale  = 0.75,
-        value  = User:chapterGems(User.profile, options.chapter)
+        value  = App.user:chapterGems(App.user.profile, options.chapter)
     })
 
     GUI:multiplier({
@@ -288,7 +285,7 @@ function Chapters:drawOpenChapter(options, panel, parent)
         x      = panel.width * 0.04,
         y      = panel.height * 0.2,
         scale  = 0.75,
-        value  = Score:chapterStars(options.chapter)
+        value  = App.score:chapterStars(options.chapter)
     })
 
     local play = Button:icon({
@@ -298,8 +295,8 @@ function Chapters:drawOpenChapter(options, panel, parent)
         y      = 0,
         action = function ()
             analytics.event('game', 'chapter-selection', options.chapter)
-            User:setChapter(options.chapter)
-            Router:open(Router.LEVEL_SELECTION)
+            App.user:setChapter(options.chapter)
+            Router:open('level-selection')
         end
     })
 

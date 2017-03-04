@@ -1,10 +1,73 @@
 --------------------------------------------------------------------------------
 
-local Banner = require 'Cherry.components.Banner'
+local Banner = require 'cherry.components.banner'
 
 --------------------------------------------------------------------------------
 
 local GUI = {}
+
+
+--------------------------------------------------------------------------------
+
+function GUI:gameTitle(view)
+    local banner = Banner:large({
+        parent   = view,
+        text     = 'Phantoms',
+        fontSize = 55,
+        width    = display.contentWidth*0.42,
+        height   = display.contentHeight*0.22,
+        x        = display.contentWidth*0.5,
+        y        = display.contentHeight*0.2
+    })
+
+    return banner
+end
+
+--------------------------------------------------------------------------------
+
+function GUI:bigIcon(options)
+    local icon = display.newGroup()
+    icon.x = options.x
+    icon.y = options.y
+    options.parent:insert(icon)
+
+    local bg = display.newImage(
+        icon,
+        'cherry/_images/gui/items/circle.container.on.png',
+        0, 0
+    )
+
+    local picture = display.newImage(
+        icon,
+        options.image,
+        0, 0
+    )
+
+    local scale = options.scale or 0.5
+    picture:scale(scale, scale)
+    return icon
+end
+
+--------------------------------------------------------------------------------
+
+function GUI:miniIcon(options)
+    local icon = display.newImage(
+        options.parent,
+        'cherry/_images/gui/items/' .. options.type .. '.icon.png'
+    );
+
+    if(options.disabled or options.status == 'off') then
+        icon.fill.effect = 'filter.desaturate'
+        icon.fill.effect.intensity = 1
+    end
+
+    icon.x = options.x
+    icon.y = options.y
+
+    local scale = options.scale or 0.26
+    icon:scale(scale, scale)
+    return icon
+end
 
 --------------------------------------------------------------------------------
 
@@ -16,7 +79,7 @@ function GUI:iconText(options)
 
     local bg = display.newImage(
         icon,
-        'Cherry/_images/gui/items/circle.container.on.png',
+        'cherry/_images/gui/items/circle.container.on.png',
         0, 0
     )
 
@@ -50,35 +113,9 @@ end
 
 --------------------------------------------------------------------------------
 
-function GUI:bigIcon(options)
-    local icon = display.newGroup()
-    icon.x = options.x
-    icon.y = options.y
-    options.parent:insert(icon)
-
-    local bg = display.newImage(
-        icon,
-        'Cherry/_images/gui/items/circle.container.on.png',
-        0, 0
-    )
-
-    local picture = display.newImage(
-        icon,
-        options.image,
-        0, 0
-    )
-
-    local scale = options.scale or 0.5
-    picture:scale(scale, scale)
-    return icon
-end
-
-
---------------------------------------------------------------------------------
-
 function GUI:multiplier(options)
     local icon = self:bigIcon(_.extend({
-        image  = 'Cherry/_images/gui/items/' .. options.item .. '.icon.png',
+        image  = 'cherry/_images/gui/items/' .. options.item .. '.icon.png',
         parent = options.parent,
         x      = options.x,
         y      = options.y,
@@ -87,7 +124,7 @@ function GUI:multiplier(options)
 
     local multiply = display.newImage(
         options.parent,
-        'Cherry/_images/gui/items/multiply.png',
+        'cherry/_images/gui/items/multiply.png',
         options.x + icon.width * 0.55,
         options.y
     )

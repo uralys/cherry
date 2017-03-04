@@ -13,7 +13,7 @@ function scene:create( event )
 
     local phantom = display.newImage(
         self.view,
-        'Cherry/_images/gui/avatars/headphones.png',
+        'cherry/_images/gui/avatars/headphones.png',
         display.contentWidth * 0.2,
         display.contentHeight * 0.5
     )

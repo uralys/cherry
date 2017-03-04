@@ -17,6 +17,7 @@ local rotation   = audio.loadSound('assets/sounds/sfx/room-rotation.mp3')
 local toggleDoor = audio.loadSound('assets/sounds/sfx/toggle-door.mp3')
 local gem        = audio.loadSound('assets/sounds/sfx/gem.mp3')
 local exit       = audio.loadSound('assets/sounds/sfx/exit.mp3')
+local applause   = audio.loadSound('assets/sounds/sfx/applause.mp3')
 
 local room = {
     appear = audio.loadSound('assets/sounds/sfx/room-appear.mp3'),
@@ -24,7 +25,10 @@ local room = {
     tilt   = audio.loadSound('assets/sounds/sfx/room-tilt.mp3')
 }
 
-local gems = {
+local stars = {
+    audio.loadSound('assets/sounds/sfx/gem-1.mp3'),
+    audio.loadSound('assets/sounds/sfx/gem-2.mp3'),
+    audio.loadSound('assets/sounds/sfx/gem-3.mp3'),
     audio.loadSound('assets/sounds/sfx/gem-1.mp3'),
     audio.loadSound('assets/sounds/sfx/gem-2.mp3'),
     audio.loadSound('assets/sounds/sfx/gem-3.mp3')
@@ -126,6 +130,10 @@ function Sound:playExit()
     self:effect( exit )
 end
 
+function Sound:playApplause()
+    self:effect( applause )
+end
+
 function Sound:playAppear()
     self:effect( room.appear)
 end
@@ -138,8 +146,8 @@ function Sound:playTilt()
     self:effect( room.tilt )
 end
 
-function Sound:playFinalGem(num)
-    self:effect( gems[num] )
+function Sound:playStar(num)
+    self:effect( stars[num] )
 end
 
 -----------------------------------------------------------------------------------------
