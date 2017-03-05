@@ -37,7 +37,7 @@ function Game:start()
             print('loaded successfully')
             self:run()
         else
-            print('couldnt load properly')
+            print('could not load properly')
             self:onLoadFailed()
         end
     else
@@ -77,13 +77,6 @@ function Game:stop(userExit)
     self.state = Game.STOPPED
 
     ------------------------------------------
-    -- calculate score
-
-    if(not userExit) then
-        App.score:calculate()
-    end
-
-    ------------------------------------------
 
     Screen:showBands()
     Background:lighten()
@@ -96,7 +89,7 @@ function Game:stop(userExit)
 
     ------------------------------------------
 
-    self:onStop() -- from extension
+    self:onStop(userExit) -- from extension
 end
 
 --------------------------------------------------------------------------------
