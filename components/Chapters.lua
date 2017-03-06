@@ -212,10 +212,10 @@ end
 
 --------------------------------------------------------------------------------
 
-function Chapters:drawHouse(options, panel, parent)
+function Chapters:drawCustomImage(options, panel, parent)
     local house = display.newImage(
         parent,
-        'cherry/_images/gui/houses/chapter.' .. options.chapter .. '.png',
+        options.customImage,
         - panel.width * 0.31, 0
     )
 
@@ -318,7 +318,9 @@ function Chapters:summary(options)
         status = status
     })
 
-    self:drawHouse(options, panel, summary)
+    if(options.customImage) then
+        self:drawCustomImage(options, panel, summary)
+    end
 
     if(options.condition) then
         local contentX = panel.x + panel.width * 0.22

@@ -121,7 +121,7 @@ An animated progress bar.
 
 - Code : copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry) and `src/components/Icon.lua`
 
-- assets : you need to copy the assets from `assets/images/gui/progress-bar` (and credit GraphicBurger see [Third Parties](#third-parties))
+- assets : you need to copy the assets from `_/gui/progress-bar` (and credit GraphicBurger see [Third Parties](#third-parties))
 
 ##### API
 
@@ -138,7 +138,7 @@ An animated progress bar.
         y      = 30,
         width  = 200,
         height = 30,
-        path   = 'assets/images/game/item/gem.png'
+        path   = 'cherry/_images/game/item/gem.png'
     })
 ```
 
@@ -162,7 +162,7 @@ You can choose one to 4 arrows, `showing` your item or `from` your item.
 
 - Code : copy and require `src/components/Focus.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L48) in Cherry).
 
-- assets : you need to copy the assets from `assets/images/gui/items/arrow.right.png` (and credit GraphicBurger see [Third Parties](#third-parties))
+- assets : you need to copy the assets from `_/gui/items/arrow.right.png` (and credit GraphicBurger see [Third Parties](#third-parties))
 
 ##### API
 
@@ -222,7 +222,7 @@ A custom ScrollView with an API to add and remove elements, and, *wait for it...
 
 - Code : copy and require `src/components/Scroller.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L46) in Cherry)
 
-- assets : you need to copy the assets from `assets/images/gui/scroller` (and credit GraphicBurger see [Third Parties](#third-parties))
+- assets : you need to copy the assets from `_/gui/scroller` (and credit GraphicBurger see [Third Parties](#third-parties))
 
 ##### API
 

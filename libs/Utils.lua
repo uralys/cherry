@@ -451,6 +451,13 @@ end
 
 --------------------------------------------------------
 
+function assetExists(filename)
+    local path = system.pathForFile( filename, system.ResourceDirectory)
+    return path
+end
+
+--------------------------------------------------------
+
 function saveTable(t, filename, directory)
 
     if(not directory) then
@@ -458,7 +465,7 @@ function saveTable(t, filename, directory)
     end
 
     local path = system.pathForFile( filename, directory)
-    local file = io.open(path, "w")
+    local file = io.open(path, 'w')
     if file then
         local contents = json.encode(t)
         file:write( contents )

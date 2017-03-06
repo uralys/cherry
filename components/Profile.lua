@@ -21,6 +21,10 @@ function Profile:status(options)
     local path = nil
     if(options.item) then
         path = 'assets/images/gui/items/'.. options.item ..'.icon.png'
+
+        if(not utils.assetExists(path)) then
+            path = 'cherry/_images/gui/items/'.. options.item ..'.icon.png'
+        end
     end
 
     local progress = ProgressBar:new()

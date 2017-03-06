@@ -91,7 +91,7 @@ function Level:buildLock()
 
     self.lock = display.newImage(
         self.options.parent,
-        'assets/images/gui/items/lock.png'
+        'cherry/_images/gui/items/lock.png'
     );
 
     self.lock.x = self.options.x + self.bg.width * 0.32
@@ -176,7 +176,7 @@ function Level:buildStars()
     if(self.options.stars == 7) then
         local star = display.newImage(
             self.options.parent,
-            'assets/images/gui/items/star-special.icon.png'
+            'cherry/_images/gui/items/star-special.icon.png'
         );
 
         star.x = self.options.x + self.bg.width * 0.32
