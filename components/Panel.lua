@@ -5,25 +5,10 @@ local Panel = {}
 --------------------------------------------------------------------------------
 
 function Panel:vertical(options)
+    local image = options.image or 'cherry/_images/gui/panels/panel.vertical.png'
     local panel = display.newImageRect(
         options.parent,
-        'cherry/_images/gui/panels/panel.vertical.png',
-        options.width,
-        options.height
-    );
-
-    panel.anchorX = options.anchorX or 0.5
-    panel.anchorY = options.anchorY or 0.5
-    panel.x       = options.x
-    panel.y       = options.y
-
-    return panel
-end
-
-function Panel:horizontal(options)
-    local panel = display.newImageRect(
-        options.parent,
-        'cherry/_images/gui/panels/panel.horizontal.png',
+        image,
         options.width,
         options.height
     );
@@ -37,9 +22,10 @@ function Panel:horizontal(options)
 end
 
 function Panel:small(options)
+    local image = options.image or 'cherry/_images/gui/panels/panel.horizontal.png'
     local panel = display.newImageRect(
         options.parent,
-        'cherry/_images/gui/panels/panel.horizontal.png',
+        image,
         options.width,
         options.height
     );

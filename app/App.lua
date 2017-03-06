@@ -137,14 +137,6 @@ function App:setup()
     print('Application setup...')
 
     ----------------------------------------------------------------------------
-    ---- App globals
-
-    GLOBALS = _.extend({
-        savedData = utils.loadUserData('savedData.json'),
-        options   = utils.loadUserData('options.json')
-    }, App.globals)
-
-    ----------------------------------------------------------------------------
 
     App.colors = _.defaults(App.colors or {}, {
         '7f00ff',

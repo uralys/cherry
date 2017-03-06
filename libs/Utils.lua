@@ -336,7 +336,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function request(url, method, next, data, type)
+function request(url, method, next, data, type, authToken)
     if(VERBOSE) then print(method, url) end
     if(next == nil) then
         next = function() end
@@ -344,11 +344,7 @@ function request(url, method, next, data, type)
 
     ----------------------------------------
 
-    local authToken = ''
-
-    if (GLOBALS.savedData and GLOBALS.savedData.authToken) then
-        authToken = GLOBALS.savedData.authToken
-    end
+    authToken = authToken or ''
 
     if (DEV_BEARER) then
         authToken = DEV_BEARER
@@ -562,27 +558,6 @@ function displayCounter(numToReach, writer, anchorX, anchorY, x, next, nextMilli
         writer.anchorX = anchorX
         writer.anchorY = anchorY
     end)
-end
-
-----------------------------------------------------------------
---- before opening the App, call FB API to get the likes nb
-
-function fetchGameData(openApp)
-    GLOBALS.gameData = {
-        facebookLikes = 0
-    }
-
-    local asyncResult = function(result)
-        local data = json.decode(result.response)
-        GLOBALS.gameData = data
-    end
-
-    if(networkConnection()) then
-        local dataURL = 'http://www.uralys.com/games/data/phantoms.json?' .. os.time()
-        utils.get(dataURL, asyncResult)
-    end
-
-    openApp()
 end
 
 --------------------------------------------------------

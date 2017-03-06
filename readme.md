@@ -79,7 +79,6 @@ simple example: development.json
 - extending/overriding `engine.Game`
 
 ##### less important misc
-- defining custom globals
 - setting custom bg
 - setting custom gravity
 - defining colors

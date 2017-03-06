@@ -160,6 +160,7 @@ function Score:display()
 
     local bg = Panel:vertical({
         parent = board,
+        image  = 'assets/images/gui/panels/panel.vertical.png',
         width  = display.contentWidth * 0.4,
         height = display.contentHeight * 0.35,
         x      = 0,

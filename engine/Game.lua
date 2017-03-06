@@ -58,7 +58,7 @@ function Game:run()
     App.score:createBar()
     Background:darken()
 
-    self:onRun() -- from extension
+    self.onRun() -- from extension
 
     Effects:restart()
     print('Game runs!')
@@ -67,7 +67,7 @@ end
 function Game:reset()
     Camera:empty()
     App.score:reset()
-    self:onReset() -- from extension
+    self.onReset() -- from extension
 end
 
 ------------------------------------------
@@ -89,7 +89,7 @@ function Game:stop(userExit)
 
     ------------------------------------------
 
-    self:onStop(userExit) -- from extension
+    self.onStop(userExit) -- from extension
 end
 
 --------------------------------------------------------------------------------

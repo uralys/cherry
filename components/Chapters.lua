@@ -1,11 +1,11 @@
 --------------------------------------------------------------------------------
 
 local Scroller = require 'cherry.components.scroller'
-local Panel = require 'cherry.components.panel'
-local GUI = require 'cherry.components.gui'
-local Button = require 'cherry.components.button'
-local Profile = require 'cherry.components.profile'
-local Banner = require 'cherry.components.banner'
+local Panel    = require 'cherry.components.panel'
+local GUI      = require 'cherry.components.gui'
+local Button   = require 'cherry.components.button'
+local Profile  = require 'cherry.components.profile'
+local Banner   = require 'cherry.components.banner'
 
 --------------------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ function Chapters:hellBarEntrance(options)
 
     local hell = display.newImage(
         hellbar,
-        'assets/images/gui/houses/hell.png',
+        'cherry/_images/gui/houses/hell.png',
         panel.width*0.2, 0
     )
 
@@ -215,7 +215,7 @@ end
 function Chapters:drawHouse(options, panel, parent)
     local house = display.newImage(
         parent,
-        'assets/images/gui/houses/chapter.' .. options.chapter .. '.png',
+        'cherry/_images/gui/houses/chapter.' .. options.chapter .. '.png',
         - panel.width * 0.31, 0
     )
 
@@ -399,7 +399,7 @@ end
 function Chapters:buyButton(options)
     local button = display.newImage(
         options.parent,
-        'assets/images/gui/buttons/buy.png'
+        'cherry/_images/gui/buttons/buy.png'
     );
 
     button.x = options.x
@@ -415,7 +415,7 @@ function Chapters:lock(options)
 
     local lock = display.newImage(
         options.parent,
-        'assets/images/gui/items/lock.png'
+        'cherry/_images/gui/items/lock.png'
     );
 
     lock.x = options.x
