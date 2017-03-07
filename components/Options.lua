@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local Button = require 'cherry.components.button'
+local Screen = require 'cherry.components.screen'
 
 --------------------------------------------------------------------------------
 

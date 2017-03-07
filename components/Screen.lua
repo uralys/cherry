@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local Button = require 'cherry.components.button'
+local Background = require 'cherry.components.background'
 
 --------------------------------------------------------------------------------
 
@@ -38,6 +39,7 @@ end
 
 function Screen:showBands(options)
     options = options or {}
+    Background:darken()
 
     self.topBand = display.newGroup()
     App.hud:insert(self.topBand)
@@ -66,26 +68,8 @@ function Screen:showBands(options)
     self.bottom.alpha = 0
     self.bottom:setFillColor(0)
 
-
-    self.BG = display.newRect(
-        App.hud,
-        display.contentWidth*0.5,
-        display.contentHeight*0.5,
-        display.contentWidth,
-        display.contentHeight
-    )
-
-    self.BG.alpha = 0
-    self.BG:setFillColor(0)
-
     utils.disabledTouch(self.topRect)
     utils.disabledTouch(self.bottom)
-    utils.disabledTouch(self.BG)
-
-    transition.to( self.BG, {
-        time  = 800,
-        alpha = 0.8
-    })
 
     transition.to( self.topRect, {
         time  = 800,
@@ -117,10 +101,14 @@ function Screen:showBands(options)
             scale  = 0.65,
             action = options.back
         })
+
+        self.topBand:insert(back)
     end
 end
 
 function Screen:hideBands()
+    Background:lighten()
+
     transition.to( self.topBand, {
         time  = 800,
         y     = -display.contentHeight/12
