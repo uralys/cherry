@@ -78,12 +78,14 @@ function Game:stop(userExit)
 
     ------------------------------------------
 
-    Screen:showBands()
-    Background:lighten()
-    App.score:display()
+    if(not userExit) then
+        Screen:showBands()
+        App.score:display()
+    end
 
     ------------------------------------------
 
+    Background:lighten()
     Effects:stop(true)
     Camera:stop()
 
