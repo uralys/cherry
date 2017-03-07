@@ -25,7 +25,10 @@ function User:load()
     end
 
     self:resetLevel()
-    self:onLoad() -- from extension
+
+    if (self.onLoad) then
+        self:onLoad() -- from extension
+    end
 end
 
 --------------------------------------------------------------------------------
