@@ -65,9 +65,9 @@ function Game:run()
 end
 
 function Game:reset()
+    self.onReset() -- from extension
     Camera:empty()
     App.score:reset()
-    self.onReset() -- from extension
 end
 
 ------------------------------------------
@@ -75,6 +75,10 @@ end
 function Game:stop(userExit)
     if(self.state == Game.STOPPED) then return end
     self.state = Game.STOPPED
+
+    ------------------------------------------
+
+    self.onStop(userExit) -- from extension
 
     ------------------------------------------
 
@@ -88,10 +92,6 @@ function Game:stop(userExit)
     Background:lighten()
     Effects:stop(true)
     Camera:stop()
-
-    ------------------------------------------
-
-    self.onStop(userExit) -- from extension
 end
 
 --------------------------------------------------------------------------------
