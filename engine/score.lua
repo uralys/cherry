@@ -75,7 +75,7 @@ function Score:createBar()
     self.barBG.alpha = 0
     self.barBG:setFillColor(0)
 
-    self:onCreate(self.bar) -- from extension
+    self:onCreate() -- from extension
 
     self:displayTitle()
     self:showBar()
