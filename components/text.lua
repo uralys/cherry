@@ -13,6 +13,26 @@ end
 
 --------------------------------------------------------------------------------
 
+local function animate ( view, animation )
+    print('animate', animation)
+    if(animation == 'slow-disappear') then
+        transition.to( view, {
+            time       = 2600,
+            alpha      = 1,
+            x          = view.x + 30,
+            onComplete = function()
+                transition.to( view , {
+                    time  = 3200,
+                    alpha = 0,
+                    x     = view.x + 30
+                })
+            end
+        })
+    end
+end
+
+--------------------------------------------------------------------------------
+
 function Text:render()
     if (self.view) then
         display.remove(self.view)
@@ -27,11 +47,17 @@ function Text:render()
         y        = self.y
     })
 
+    self.view:setFillColor( colorize(self.color or 'ffffff') )
+
     if (self.grow) then
         utils.grow(self.view)
     end
 
-    self.view.anchorX = 0
+    if (self.animation) then
+        animate(self.view, self.animation)
+    end
+
+    self.view.anchorX = self.anchorX or 0
 end
 
 --------------------------------------------------------------------------------
