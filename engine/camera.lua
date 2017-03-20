@@ -37,6 +37,19 @@ end
 
 --------------------------------------------------------------------------------
 
+function Camera:toHUD(vector)
+    local alpha = math.rad(Camera.display.rotation)
+    local cameraX = vector.x * Camera.zoom
+    local cameraY = vector.y * Camera.zoom
+
+    local x = cameraX * math.cos(alpha) - cameraY * math.sin(alpha)
+    local y = cameraX * math.sin(alpha) + cameraY * math.cos(alpha)
+
+    return x + Camera.display.x, y + Camera.display.y
+end
+
+--------------------------------------------------------------------------------
+
 -- INIT_X,Y should be defined by the current level offset from level[0,0]
 -- default for Doors : not offset = the center of the screen = level[0,0]
 function Camera:center()

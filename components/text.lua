@@ -14,7 +14,6 @@ end
 --------------------------------------------------------------------------------
 
 local function animate ( view, animation )
-    print('animate', animation)
     if(animation == 'slow-disappear') then
         transition.to( view, {
             time       = 2600,
@@ -25,6 +24,21 @@ local function animate ( view, animation )
                     time  = 3200,
                     alpha = 0,
                     x     = view.x + 30
+                })
+            end
+        })
+    end
+
+    if(animation == 'bounce-disappear') then
+        transition.to( view, {
+            time       = 50,
+            alpha      = 1,
+            onComplete = function()
+                transition.to( view , {
+                    time   = 1550,
+                    alpha  = 0,
+                    xScale = 1.25,
+                    yScale = 1.25
                 })
             end
         })
