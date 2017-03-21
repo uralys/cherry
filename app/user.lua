@@ -55,6 +55,17 @@ end
 
 --------------------------------------------------------------------------------
 
+function User:saveSoundSettings(soundOff)
+    self.savedData.options.sound = not soundOff
+    self:save()
+end
+
+function User:isSoundOff()
+    return not self.savedData.options.sound;
+end
+
+--------------------------------------------------------------------------------
+
 function User:save()
     utils.saveTable(self.savedData, 'savedData.json')
 end
@@ -81,7 +92,9 @@ function initPlayer(num)
     return {
         name      = 'Player ' .. num,
         analytics = {},
-        options   = {}
+        options   = {
+            sound = true
+        }
     }
 end
 

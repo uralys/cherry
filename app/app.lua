@@ -101,9 +101,7 @@ function App:ready()
         dark = App.background.dark
     })
 
-    if(not App.SOUND_OFF) then
-        Sound:playMusic()
-    end
+    Sound:init()
 
     if(App.VIEW_TESTING) then
         print(' --> forced view : ' .. App.VIEW_TESTING)

@@ -36,6 +36,19 @@ local stars = {
 
 -----------------------------------------------------------------------------------------
 
+function Sound:init()
+    self.isOff = App.user:isSoundOff() or App.SOUND_OFF
+
+    if(self.isOff) then
+        self:off(self.channels.music)
+        self:off(self.channels.effects)
+    end
+
+    Sound:playMusic()
+end
+
+-----------------------------------------------------------------------------------------
+
 function Sound:playMusic()
     self.currentTheme = 0
     self:nextTheme()
@@ -58,6 +71,9 @@ end
 
 function Sound:toggleAll()
     self.isOff = not self.isOff
+
+    App.user:saveSoundSettings(self.isOff)
+
     self:toggleMusic()
     self:toggleEffects()
 end

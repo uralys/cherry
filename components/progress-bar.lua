@@ -11,9 +11,13 @@ local ProgressBar = {}
 -- todo utils.text --> component.Text puis if Text or display.newtText
 -- install src.component
 -- install assets
-function ProgressBar:new(options)
-    local bar = _.extend({}, options);
 
+--- options:
+--      changeBG:     boolean : greenbg at 100%
+--      rail:         to override rail asset
+--      track:        to override track asset
+function ProgressBar: new(options)
+    local bar = _.extend({}, options);
     setmetatable(bar, { __index = ProgressBar })
     return bar;
 end
@@ -51,7 +55,7 @@ end
 function ProgressBar:background(options)
     self.bg = display.newImage(
         self.display,
-        'cherry/_images/gui/progress-bar/loading-bg.png'
+        self.rail or 'cherry/_images/gui/progress-bar/loading-bg.png'
     )
 
     self.bg.width  = options.width
@@ -77,7 +81,7 @@ end
 function ProgressBar:progress(options)
     self.progress = display.newImage(
         self.display,
-        'cherry/_images/gui/progress-bar/loading-progress.png'
+        self.track or 'cherry/_images/gui/progress-bar/loading-progress.png'
     )
 
     self.progress.width   = self:progressWidth()
@@ -173,7 +177,7 @@ function ProgressBar:reach(step)
         time       = 1400
     })
 
-    if(value == 100) then self:showGreenBG() end
+    if(self.changeBG and value == 100) then self:showGreenBG() end
 end
 
 --------------------------------------------------------------------------------
