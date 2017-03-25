@@ -35,9 +35,15 @@ end
 
 function User:resetSavedData()
     self.savedData = {
-        version = App.VERSION,
-        profile = initPlayer(1)
+        version = App.version,
+        options = {
+            sound = true
+        }
     }
+
+    if (self.onResetSavedData) then
+        self:onResetSavedData() -- from extension
+    end
 
     self:save()
 end
@@ -82,20 +88,6 @@ end
 
 function User:totalPercentage()
     return utils.toPercentage(12, 28)
-end
-
---------------------------------------------------------------------------------
--- PRIVATE
---------------------------------------------------------------------------------
-
-function initPlayer(num)
-    return {
-        name      = 'Player ' .. num,
-        analytics = {},
-        options   = {
-            sound = true
-        }
-    }
 end
 
 --------------------------------------------------------------------------------
