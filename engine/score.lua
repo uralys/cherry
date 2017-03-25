@@ -148,53 +148,23 @@ function Score:calculate()
     print('Final score : ', self.current.points)
 end
 
---------------------------------------------------------------------------------
+function Score:generateResult()
+    return {
+        title = 'Game over !',
+        background = 'cherry/_images/gui/panels/panel.vertical.png'
+    }
+end
 
-function Score:display()
-    self:hideBar()
-
-    local board = display.newGroup()
-    board.x = display.contentWidth  * 0.5
-    board.y = display.contentHeight * 0.5
-    App.hud:insert(board)
-
-    local bg = Panel:vertical({
-        parent = board,
-        image  = 'cherry/_images/gui/panels/panel.vertical.png',
-        width  = display.contentWidth * 0.4,
-        height = display.contentHeight * 0.35,
-        x      = 0,
-        y      = 0
-    })
-
-    local title = 'Game Over'
-
-    Banner:large({
-        parent   = board,
-        text     = title,
-        fontSize = 44,
-        width    = display.contentWidth*0.25,
-        height   = display.contentHeight*0.13,
-        x        = 0,
-        y        = -bg.height*0.49
-    })
-
+function Score:displayResult(board, bg)
     local text = display.newText(
         board,
-        self.current.points,
+        'Thanks for playing.',
         0, 0,
         FONT, 85
     )
 
     utils.grow(text)
 
-    self:addBoardButtons(board)
-    utils.easeDisplay(board)
-end
-
---------------------------------------------------------------------------------
-
-function Score:addBoardButtons(board)
     Button:icon({
         parent = board,
         type   = 'play',
@@ -205,6 +175,41 @@ function Score:addBoardButtons(board)
             Router:open(Router.HOME)
         end
     })
+end
+
+--------------------------------------------------------------------------------
+
+function Score:display()
+    self:hideBar()
+
+    local board = display.newGroup()
+    board.x = display.contentWidth  * 0.5
+    board.y = display.contentHeight * 0.5
+    App.hud:insert(board)
+
+    local result = self:generateResult()
+
+    local bg = Panel:vertical({
+        parent = board,
+        image  = result.background,
+        width  = display.contentWidth * 0.4,
+        height = display.contentHeight * 0.35,
+        x      = 0,
+        y      = 0
+    })
+
+    Banner:large({
+        parent   = board,
+        text     = result.title,
+        fontSize = 44,
+        width    = display.contentWidth*0.25,
+        height   = display.contentHeight*0.13,
+        x        = 0,
+        y        = -bg.height*0.49
+    })
+
+    self:displayResult(board, bg)
+    utils.easeDisplay(board)
 end
 
 --------------------------------------------------------------------------------
