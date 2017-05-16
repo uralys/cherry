@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 
+local gpgs       = require 'plugin.gpgs'
 local Background = require 'cherry.components.background'
 local demo       = require 'cherry.app.extension-demo'
 local User       = require 'cherry.app.user'
@@ -9,7 +10,8 @@ local Score      = require 'cherry.engine.score'
 
 local App = {
     name    = 'Cherry',
-    version = VERSION,
+    cherryVersion = CHERRY_VERSION,
+    version = '0.0.1',
     IOS_ID  = 'XXXXX',
 
     -----------------------------------------
@@ -56,13 +58,19 @@ local App = {
 function App:start(options)
     App = _.extend(App, options or {})
 
-    print('---------------------- ' .. App.name ..
-    ' [ ' .. App.ENV .. ' | ' .. App.version ..
-    ' ] ----------------')
+    print('--------------------------------')
+    print( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
+    print( 'Cherry: ' .. App.cherryVersion)
+    print('--------------------------------')
+    local path = 'env/' .. App.ENV .. '.json'
+    local settings = utils.loadFile(path)
+    utils.tprint(settings)
+    print('--------------------------------')
 
     self:deviceSetup()
     self:setup()
     self:loadSettings()
+    self:initGPGS()
     self:ready()
 end
 
@@ -86,6 +94,23 @@ function App:loadSettings()
         App.TESTING_LEVEL   = App.LEVEL_TESTING.level
         App.TESTING_STEPS   = App.LEVEL_TESTING.step
     end
+end
+
+--------------------------------------------------------------------------------
+
+function App:initGPGS()
+    local function gpgsLoginListener( event )
+        print( "Login event:", json.prettify(event) )
+    end
+
+    local function gpgsInitListener( event )
+        if not event.isError then
+            -- Try to automatically log in the user without displaying the login screen
+            gpgs.login( { listener = gpgsLoginListener } )
+        end
+    end
+
+    gpgs.init( gpgsInitListener )
 end
 
 --------------------------------------------------------------------------------

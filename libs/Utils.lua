@@ -18,30 +18,46 @@ end
 --------------------------------------------------------------------------------
 
 function onTouch(object, action)
-    object:addEventListener ("touch", function(event)
-        if(event.phase == "began") then
+    if(object.removeOnTouch) then object.removeOnTouch() end
+
+    local touch = function(event)
+        if(event.phase == 'began') then
             object.alpha = 0.8
             display.getCurrentStage():setFocus( object )
-        elseif event.phase == "ended" or event.phase == "cancelled" then
+        elseif event.phase == 'ended' or event.phase == 'cancelled' then
             object.alpha = 1
             display.getCurrentStage():setFocus( nil )
             action()
         end
         return true
-    end)
+    end
+
+    object:addEventListener ('touch', touch)
+
+    object.removeOnTouch = function()
+        object:removeEventListener ('touch', touch)
+    end
 end
 
 --------------------------------------------------------------------------------
 
 function onTap(object, action)
-    object:addEventListener ("touch", function(event)
-        if(event.phase == "began") then
+    if(object.removeOnTap) then object.removeOnTap() end
+
+    local tap = function(event)
+        if(event.phase == 'began') then
             display.getCurrentStage():setFocus( object )
             return action()
-        elseif event.phase == "ended" or event.phase == "cancelled" then
+        elseif event.phase == 'ended' or event.phase == 'cancelled' then
             display.getCurrentStage():setFocus( nil )
         end
-    end)
+    end
+
+    object:addEventListener ('touch', tap)
+
+    object.removeOnTap = function()
+        object:removeEventListener ('touch', tap)
+    end
 end
 
 function disabledTouch(object)

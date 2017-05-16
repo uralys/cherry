@@ -48,11 +48,12 @@ function Options:drawActions(view)
 
     self.version = utils.simpleText({
         parent = self.actions,
-        value  = 'v' .. App.version,
+        value  = App.version,
         x      = 320,
         y      = 0,
         color  = 1,
-        font   = FONT
+        font   = FONT,
+        fontSize = 40
     })
 end
 
