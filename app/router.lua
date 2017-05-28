@@ -32,7 +32,7 @@ function Router:openScreen(id, class, params)
     analytics.pageview(id)
 
     Router.view = id
-    print('Router : openScreen : ' .. Router.view )
+    print('[Router] openScreen: ' .. Router.view )
 
     composer.gotoScene( class, options )
 end
@@ -40,7 +40,6 @@ end
 --------------------------------------------------------------------------------
 
 function Router:open(id, params)
-    print('opening', id)
     if(utils.contains(App.screens, id)) then
         class  = 'src.screens.' .. id
     else
