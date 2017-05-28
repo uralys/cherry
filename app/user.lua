@@ -38,6 +38,9 @@ function User:resetSavedData()
         version = App.version,
         options = {
             sound = true
+        },
+        profile = {
+            tutorial = false
         }
     }
 

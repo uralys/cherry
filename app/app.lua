@@ -1,6 +1,5 @@
 --------------------------------------------------------------------------------
 
-local gpgs       = require 'plugin.gpgs'
 local Background = require 'cherry.components.background'
 local demo       = require 'cherry.app.extension-demo'
 local User       = require 'cherry.app.user'
@@ -9,7 +8,7 @@ local Score      = require 'cherry.engine.score'
 --------------------------------------------------------------------------------
 
 local App = {
-    name    = 'Cherry',
+    name    = 'Uralys',
     cherryVersion = CHERRY_VERSION,
     version = '0.0.1',
     IOS_ID  = 'XXXXX',
@@ -31,6 +30,11 @@ local App = {
 
     xGravity = 0,
     yGravity = 0,
+
+    -----------------------------------------
+    -- to use gpgs, add the plugin within your build.settings
+
+    useGPGS = false,
 
     -----------------------------------------
 
@@ -62,15 +66,11 @@ function App:start(options)
     print( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
     print( 'Cherry: ' .. App.cherryVersion)
     print('--------------------------------')
-    local path = 'env/' .. App.ENV .. '.json'
-    local settings = utils.loadFile(path)
-    utils.tprint(settings)
-    print('--------------------------------')
 
     self:deviceSetup()
     self:setup()
     self:loadSettings()
-    self:initGPGS()
+    self:initGPGS(options)
     self:ready()
 end
 
@@ -83,6 +83,7 @@ function App:loadSettings()
     utils.tprint(settings)
     print('--------------------------------')
 
+    App.INVINCIBLE     = settings.invincible
     App.SOUND_OFF      = settings.silent
     App.EDITOR_TESTING = settings.editor
     App.EDITOR_PLAY    = settings.play
@@ -98,7 +99,13 @@ end
 
 --------------------------------------------------------------------------------
 
-function App:initGPGS()
+function App:initGPGS(options)
+    if(not options.useGPGS) then
+        return
+    end
+
+    local gpgs = require 'plugin.gpgs'
+
     local function gpgsLoginListener( event )
         print( "Login event:", json.prettify(event) )
     end
