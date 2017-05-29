@@ -1,7 +1,7 @@
 
 ## cherry.lua
 
-Cherry is an open source starter provided as a `CoronaSDK App` to help building your Game.
+Cherry is an open source starter for `CoronaSDK App` to help building your game.
 
 - [Introduction](#introduction-to-cherry)
 - [Usage](#usage)
@@ -17,12 +17,11 @@ Cherry is an open source starter provided as a `CoronaSDK App` to help building 
 
 ## Introduction to Cherry
 
-You may use Cherry as a base, or to pick components from, in order to start your own game.
-Cherry provides the following facilities and libraries:
+You may extend Cherry framework, or just pick few components, in order to start your own game.
 
 #### Using Cherry
 - clone Cherry next to your project, and symlink it to your project root
-`ln -s ../Cherry Cherry`
+`ln -s ../cherry cherry`
 - add your env folder with your en settings
 - add a `main.lua` with just `require 'src.app'`
 - add a `src/app.lua` and require `Cherry` inside
@@ -41,7 +40,7 @@ App:start({
 A typical tree should be :
 
 ```
-├── Cherry
+├── cherry
 │   ├── _images
 │   ├── app
 │   ├── cherry.lua
@@ -52,7 +51,7 @@ A typical tree should be :
 │
 ├── YourGame
 │   ├── CBE
-│   ├── Cherry -> ../Cherry
+│   ├── cherry -> ../cherry
 │   ├── assets
 │   ├── build.settings
 │   ├── config.lua
