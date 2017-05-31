@@ -232,7 +232,7 @@ function destroyFromDisplay(object, easeHideEffect)
     end
 
     if(easeHideEffect) then
-        easeHide(object, doDestroy)
+        easeHide(object, doDestroy, 125)
     else
         doDestroy()
     end
@@ -634,7 +634,7 @@ function bounce(object, scale)
     end)
 end
 
-function grow(object, fromScale, time)
+function grow(object, fromScale, time, onComplete)
     object.xScale = fromScale or 0.6
     object.yScale = fromScale or 0.6
 
@@ -642,15 +642,15 @@ function grow(object, fromScale, time)
         xScale = 1,
         yScale = 1,
         time = time or 350,
-        transition = easing.outBounce
+        onComplete = onComplete
     })
 end
 
-function easeHide(object, next)
+function easeHide(object, next, time)
     transition.to( object, {
         xScale = 0.01,
         yScale = 0.01,
-        time = 450,
+        time = time or 450,
         transition = easing.inCubic,
         onComplete = function()
             if(next) then
