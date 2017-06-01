@@ -776,6 +776,8 @@ function curveText(options)
     end
 
     options.parent:insert(curvedText)
+
+    return curvedText
 end
 
 --------------------------------------------------------------------------------

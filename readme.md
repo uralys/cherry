@@ -91,6 +91,15 @@ Either use these components within the full workflow or pick them one by one to 
 
 See [below](#components-documentation) for the complete list and documentation for each component.
 
+## Tests
+UT with busted: http://olivinelabs.com/busted/
+
+```
+> busted --run=tests
+●
+1 success / 0 failures / 0 errors / 0 pending : 0.014314 seconds
+```
+
 ## Usage
 
 #### Adding a new Screen

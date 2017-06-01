@@ -5,6 +5,8 @@ local Banner = {}
 --------------------------------------------------------------------------------
 
 function Banner:large(options)
+    options = options or {}
+    options.width = options.width or 400
 
     local banner = display.newGroup()
     options.parent:insert(banner)
@@ -25,12 +27,12 @@ function Banner:large(options)
 
     banner.text = utils.curveText({
         parent     = banner,
-        text       = options.text,
+        text       = options.text or '',
         curveSize  = curveSize,
         x          = 0,
         y          = curveSize*0.965,
         font       = FONT,
-        fontSize   = options.fontSize
+        fontSize   = options.fontSize or 10
     })
 
     return banner
@@ -39,6 +41,8 @@ end
 --------------------------------------------------------------------------------
 
 function Banner:simple(options)
+    options = options or {}
+    options.width = options.width or 400
 
     local banner = display.newGroup()
     options.parent:insert(banner)
@@ -59,12 +63,12 @@ function Banner:simple(options)
 
     banner.text = utils.curveText({
         parent     = banner,
-        text       = options.text,
+        text       = options.text or '',
         curveSize  = curveSize,
         x          = 0,
         y          = curveSize*0.985,
         font       = FONT,
-        fontSize   = options.fontSize
+        fontSize   = options.fontSize or 10
     })
 
     return banner
