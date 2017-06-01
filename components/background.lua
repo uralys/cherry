@@ -49,6 +49,8 @@ function Background:init(options)
     self.darkBG.x     = display.contentWidth*0.5
     self.darkBG.y     = display.contentHeight*0.5
     self.darkBG.alpha = 1
+
+    return self
 end
 
 --------------------------------------------------------------------------------

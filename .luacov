@@ -25,7 +25,11 @@ return {
   -- (exclude overrules include, do not include
   -- the .lua extension)
   ['include'] = {
-    'components'
+    'app',
+    'components',
+    'engine',
+    'libs',
+    'screens'
   },
 
   -- Patterns for files to exclude when reporting
@@ -35,6 +39,4 @@ return {
   ['exclude'] = {
     'test'
   },
-
-
 }

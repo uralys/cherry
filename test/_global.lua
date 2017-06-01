@@ -1,0 +1,6 @@
+expose('Globals', function()
+  _G.display = require('test.mocks.display')
+  _G.transition = require('test.mocks.transition')
+  _G.utils = require('libs.utils')
+  _G.App = require('test.mocks.app')
+end)
