@@ -1,3 +1,4 @@
+print(package.path)
 expose('Globals', function()
   _G.display = require('test.mocks.display')
   _G.transition = require('test.mocks.transition')

@@ -1,0 +1,32 @@
+# .travis.yaml
+language: python
+sudo: false
+
+env:
+  - LUA="lua=5.1"
+  - LUA="lua=5.2"
+  - LUA="lua=5.3"
+  - LUA="luajit=2.0"
+  - LUA="luajit=2.1"
+
+before_install:
+  - pip install hererocks
+  - hererocks lua_install -r^ --$LUA
+  - export PATH=$PATH:$PWD/lua_install/bin
+
+branches:
+  only:
+    - master
+
+install:
+  - luarocks install busted
+  - luarocks install luacov
+
+script:
+  - pwd
+  - ls -l /home/travis/build/chrisdugne/cherry
+  - ls -l /home/travis/build/chrisdugne/cherry/libs
+  - busted --run=tests -m '/home/travis/build/chrisdugne/cherry/?.lua'
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
