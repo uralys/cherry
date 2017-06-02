@@ -1,5 +1,7 @@
-
 ## cherry.lua
+
+[![Build Status](https://travis-ci.org/chrisdugne/cherry.svg?branch=master)](https://travis-ci.org/chrisdugne/cherry)
+[![codecov](https://codecov.io/gh/chrisdugne/cherry/branch/master/graph/badge.svg)](https://codecov.io/gh/chrisdugne/cherry)
 
 Cherry is an open source starter for `CoronaSDK App` to help building your game.
 
