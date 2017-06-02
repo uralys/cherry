@@ -37,6 +37,7 @@ return {
   -- (exclude overrules include, do not include
   -- the .lua extension)
   ['exclude'] = {
-    'test'
+    'mocks',
+    'spec'
   },
 }
