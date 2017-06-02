@@ -50,14 +50,16 @@ A typical tree should be :
 │   ├── engine
 │   ├── libs
 │   ├── screens
+│   ├── test
 │
 ├── YourGame
-│   ├── CBE
 │   ├── cherry -> ../cherry
 │   ├── assets
 │   ├── build.settings
 │   ├── config.lua
 │   ├── env
+│   ├── src
+│   ├── test
 │   ├── main.lua
 ```
 
@@ -95,11 +97,12 @@ See [below](#components-documentation) for the complete list and documentation f
 
 ## Tests
 UT with busted: http://olivinelabs.com/busted/
+use `luarocks` to install `busted` and `luacov`
 
 ```
-> busted --run=tests
-●
-1 success / 0 failures / 0 errors / 0 pending : 0.014314 seconds
+> ./test/run
+●●●●●●●●●●●●
+12 successes / 0 failures / 0 errors / 0 pending : 0.014314 seconds
 ```
 
 ## Usage
