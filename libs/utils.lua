@@ -5,11 +5,11 @@
 -- this will be the first required cleanup for Cherry I guess
 --------------------------------------------------------------------------------
 
-module(..., package.seeall)
+local utils = {}
 
 --------------------------------------------------------------------------------
 
-function oppositeDirection(direction)
+function utils.oppositeDirection(direction)
     local oppositeDirection = (direction + 2)%4
     if(oppositeDirection == 0 ) then oppositeDirection = 4 end
     return oppositeDirection
@@ -17,7 +17,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function onTouch(object, action)
+function utils.onTouch(object, action)
     if(object.removeOnTouch) then object.removeOnTouch() end
 
     local touch = function(event)
@@ -41,7 +41,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function onTap(object, action)
+function utils.onTap(object, action)
     if(object.removeOnTap) then object.removeOnTap() end
 
     local tap = function(event)
@@ -60,15 +60,15 @@ function onTap(object, action)
     end
 end
 
-function disabledTouch(object)
-    onTap(object, function ()
+function utils.disabledTouch(object)
+    utils.onTap(object, function ()
         return true
     end)
 end
 
 --------------------------------------------------------------------------------
 
-function toColor(hexCode)
+function utils.toColor(hexCode)
     return tonumber('0x'..hexCode:sub(1,2))/255,
            tonumber('0x'..hexCode:sub(3,4))/255,
            tonumber('0x'..hexCode:sub(5,6))/255;
@@ -76,13 +76,13 @@ end
 
 --------------------------------------------------------------------------------
 
-function isInt(n)
+function utils.isInt(n)
   return n==math.floor(n)
 end
 
 --------------------------------------------------------------------------------
 
-function toPercentage(nb, max)
+function utils.toPercentage(nb, max)
     local percent = math.min(100, round ( nb / max  * 100))
 
     return  {
@@ -93,7 +93,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function text(options)
+function utils.text(options)
     local _text = display.newEmbossedText({
         parent   = options.parent,
         text     = options.value,
@@ -114,7 +114,7 @@ function text(options)
     return _text
 end
 
-function simpleText(options)
+function utils.simpleText(options)
     local _text = display.newText({
         parent   = options.parent,
         text     = options.value,
@@ -132,7 +132,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function getMinSec(seconds)
+function utils.getMinSec(seconds)
     local min = math.floor(seconds/60)
     local sec = seconds - min * 60
 
@@ -143,7 +143,7 @@ function getMinSec(seconds)
     return min, sec
 end
 
-function getMinSecMillis(millis)
+function utils.getMinSecMillis(millis)
     local min = math.floor(millis/60000)
     local sec = math.floor((millis - min * 60 * 1000)/1000)
     local ms = math.floor(millis - min * 60 * 1000 - sec * 1000)
@@ -161,7 +161,7 @@ function getMinSecMillis(millis)
     return min, sec, ms
 end
 
-function getUrlParams(url)
+function utils.getUrlParams(url)
 
     local index = string.find(url,"?")
     local paramsString = url:sub(index+1, string.len(url) )
@@ -174,7 +174,7 @@ function getUrlParams(url)
 
 end
 
-function fillNextParam(params, paramsString)
+function utils.fillNextParam(params, paramsString)
 
     local indexEqual = string.find(paramsString,"=")
     local indexAnd = string.find(paramsString,"&")
@@ -202,7 +202,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function split(value, sep)
+function utils.split(value, sep)
     local sep, fields = sep or ":", {}
     local pattern = string.format("([^%s]+)", sep)
     value:gsub(pattern, function(c) fields[#fields+1] = c end)
@@ -211,7 +211,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function emptyGroup( group )
+function utils.emptyGroup( group )
     if(group ~= nil and group.numChildren ~= nil and group.numChildren > 0) then
         for i=group.numChildren,1,-1 do
             local child = group[i]
@@ -222,17 +222,17 @@ function emptyGroup( group )
     end
 end
 
-function destroyFromDisplay(object, easeHideEffect)
+function utils.destroyFromDisplay(object, easeHideEffect)
     local doDestroy = function()
         if(object) then
-            emptyGroup(object)
+            utils.emptyGroup(object)
             display.remove(object)
             object = nil
         end
     end
 
     if(easeHideEffect) then
-        easeHide(object, doDestroy, 125)
+        utils.easeHide(object, doDestroy, 125)
     else
         doDestroy()
     end
@@ -250,7 +250,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function joinTables(t1, t2)
+function utils.joinTables(t1, t2)
 
     local result = {}
     if(t1 == nil) then t1 = {} end
@@ -269,7 +269,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function removeFromTable(t, object)
+function utils.removeFromTable(t, object)
     local index = 1
     for k,v in pairs(t) do
         if(t[k] == object) then
@@ -282,7 +282,7 @@ function removeFromTable(t, object)
     table.remove(t, index)
 end
 
-function emptyTable(t)
+function utils.emptyTable(t)
     if(not t) then return end
     local i, v = next(t, nil)
     while i do
@@ -291,7 +291,7 @@ function emptyTable(t)
     end
 end
 
-function contains(t, object)
+function utils.contains(t, object)
     if(not t) then return end
     for k,v in pairs(t) do
         if(v == object) then
@@ -303,7 +303,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function imageName( url )
+function utils.imageName( url )
     local index = string.find(url,"/")
 
     if(index == nil) then
@@ -322,7 +322,7 @@ end
 -- use :
 -- utils.tprint(object)
 -- utils.tprint(object, nil, options)
-function tprint (tbl, indent, options)
+function utils.tprint (tbl, indent, options)
 
     if not tbl then print("Table nil") return end
     if not options then options = {} end
@@ -352,7 +352,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function request(url, method, next, data, type, authToken)
+function utils.request(url, method, next, data, type, authToken)
     if(VERBOSE) then print(method, url) end
     if(next == nil) then
         next = function() end
@@ -402,7 +402,7 @@ end
 
 --------------------------------------------------------
 
-function post(url, data, next, _type)
+function utils.post(url, data, next, _type)
     if(type(data) ~= 'string') then
         data = json.encode(data)
     end
@@ -410,11 +410,11 @@ function post(url, data, next, _type)
     utils.request(url, "POST", next, data, _type)
 end
 
-function get(url, next)
+function utils.get(url, next)
     utils.request(url, "GET", next)
 end
 
-function put(url, data, next)
+function utils.put(url, data, next)
     if(type(data) ~= 'string') then
         data = json.encode(data)
     end
@@ -422,20 +422,20 @@ function put(url, data, next)
     utils.request(url, "PUT", next, data)
 end
 
-function delete(url, next)
+function utils.delete(url, next)
     utils.request(url, "DELETE", next)
 end
 
 
 --------------------------------------------------------
 
-function isEmail(str)
+function utils.isEmail(str)
     return str:match("[A-Za-z0-9%.%%%+%-]+@[A-Za-z0-9%.%%%+%-]+%.%w%w%w?%w?")
 end
 
 --------------------------------------------------------
 
-function url_decode(str)
+function utils.url_decode(str)
     str = string.gsub (str, "+", " ")
     str = string.gsub (str, "%%(%x%x)",
     function(h) return string.char(tonumber(h,16)) end)
@@ -443,7 +443,7 @@ function url_decode(str)
     return str
 end
 
-function urlEncode(str)
+function utils.urlEncode(str)
     if (str) then
         str = string.gsub (str, "\n", "\r\n")
         str = string.gsub (str, "([^%w ])",
@@ -455,26 +455,26 @@ end
 
 --------------------------------------------------------
 
-function parseDate(str)
+function utils.parseDate(str)
     _,_,y,m,d=string.find(str, "(%d+)-(%d+)-(%d+)")
     return tonumber(y),tonumber(m),tonumber(d)
 end
 
-function parseDateTime(str)
+function utils.parseDateTime(str)
     local Y,M,D = parseDate(str)
     return os.time({year=Y, month=M, day=D})
 end
 
 --------------------------------------------------------
 
-function assetExists(filename)
+function utils.assetExists(filename)
     local path = system.pathForFile( filename, system.ResourceDirectory)
     return path
 end
 
 --------------------------------------------------------
 
-function saveTable(t, filename, directory)
+function utils.saveTable(t, filename, directory)
 
     if(not directory) then
         directory = system.DocumentsDirectory
@@ -492,7 +492,7 @@ function saveTable(t, filename, directory)
     end
 end
 
-function loadTable(path)
+local function loadTable(path)
     local contents = ""
     local myTable = {}
     local file = io.open( path, "r" )
@@ -508,7 +508,7 @@ end
 
 --------------------------------------------------------
 
-function getPointsBetween(from, to, nbPoints)
+function utils.getPointsBetween(from, to, nbPoints)
 
     if(from.x > to.x) then
         local swap = from
@@ -535,7 +535,7 @@ end
 
 --------------------------------------------------------
 
-function networkConnection()
+function utils.networkConnection()
     local status
 
     local socket = require('socket')
@@ -558,7 +558,7 @@ end
 
 --------------------------------------------------------
 
-function displayCounter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
+function utils.displayCounter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
     writer.currentDisplay = writer.currentDisplay or 0
     timer.performWithDelay(25, function()
 
@@ -585,7 +585,7 @@ end
 
 --------------------------------------------------------
 
-function rotateBackAndForth(object, angle, time)
+function utils.rotateBackAndForth(object, angle, time)
 
     local initialRotation = object.rotation
 
@@ -606,7 +606,7 @@ end
 
 --------------------------------------------------------
 
-function easeDisplay(object, scale)
+function utils.easeDisplay(object, scale)
     local scaleTo = scale or 1
     object.xScale = 0.2
     object.yScale = 0.2
@@ -619,12 +619,12 @@ function easeDisplay(object, scale)
     })
 end
 
-function bounce(object, scale)
+function utils.bounce(object, scale)
     local scaleTo = scale or 1
 
     object.xScale = 0.01
     object.yScale = 0.01
-    timer.performWithDelay(utils.random(120, 330), function()
+    timer.performWithDelay(math.random(120, 330), function()
         transition.to( object, {
             xScale = scaleTo,
             yScale = scaleTo,
@@ -634,7 +634,7 @@ function bounce(object, scale)
     end)
 end
 
-function grow(object, fromScale, time, onComplete)
+function utils.grow(object, fromScale, time, onComplete)
     object.xScale = fromScale or 0.6
     object.yScale = fromScale or 0.6
 
@@ -646,7 +646,7 @@ function grow(object, fromScale, time, onComplete)
     })
 end
 
-function easeHide(object, next, time)
+function utils.easeHide(object, next, time)
     transition.to( object, {
         xScale = 0.01,
         yScale = 0.01,
@@ -660,8 +660,7 @@ function easeHide(object, next, time)
     })
 end
 
-function fadeIn(object)
-
+function utils.fadeIn(object)
     object.alpha = 0
 
     transition.to( object, {
@@ -672,11 +671,11 @@ end
 
 --------------------------------------------------------
 
-function loadUserData(file)
+function utils.loadUserData(file)
     return loadTable(system.pathForFile( file , system.DocumentsDirectory))
 end
 
-function loadFile(path)
+function utils.loadFile(path)
     local resource = system.pathForFile( path , system.ResourceDirectory)
     if(not resource) then
         return false
@@ -688,7 +687,7 @@ end
 --- http://developer.coronalabs.com/code/maths-library
 
 -- returns the distance between points a and b
-function distanceBetween( a, b )
+function utils.distanceBetween( a, b )
     local width, height = b.x-a.x, b.y-a.y
     return (width*width + height*height)^0.5 -- math.sqrt(width*width + height*height)
     -- nothing wrong with math.sqrt, but I believe the ^.5 is faster
@@ -696,7 +695,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function openWeb(url, listener, customOnClose)
+function utils.openWeb(url, listener, customOnClose)
 
     ------------------
 
@@ -746,7 +745,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function curveText(options)
+function utils.curveText(options)
     local curvedText = display.newGroup()
     local circleSize = options.curveSize or 250
     local step       = options.fontSize*(0.33/#options.text)
@@ -782,109 +781,4 @@ end
 
 --------------------------------------------------------------------------------
 
---[[
-   Author: Julio Manuel Fernandez-Diaz
-   Date:   January 12, 2007
-   (For Lua 5.1)
-
-   Modified slightly by RiciLake to avoid the unnecessary table traversal in tablecount()
-
-   Formats tables with cycles recursively to any depth.
-   The output is returned as a string.
-   References to other tables are shown as values.
-   Self references are indicated.
-
-   The string returned is "Lua code", which can be procesed
-   (in the case in which indent is composed by spaces or "--").
-   Userdata and function keys and values are shown as strings,
-   which logically are exactly not equivalent to the original code.
-
-   This routine can serve for pretty formating tables with
-   proper indentations, apart from printing them:
-
-      print(table.show(t, "t"))   -- a typical use
-
-   Heavily based on "Saving tables with cycles", PIL2, p. 113.
-
-   Arguments:
-      t is the table.
-      name is the name of the table (optional)
-      indent is a first indentation (optional).
---]]
-function table.show(t, name, indent)
-   local cart     -- a container
-   local autoref  -- for self references
-
-   --[[ counts the number of elements in a table
-   local function tablecount(t)
-      local n = 0
-      for _, _ in pairs(t) do n = n+1 end
-      return n
-   end
-   ]]
-   -- (RiciLake) returns true if the table is empty
-   local function isemptytable(t) return next(t) == nil end
-
-   local function basicSerialize (o)
-      local so = tostring(o)
-      if type(o) == "function" then
-         local info = debug.getinfo(o, "S")
-         -- info.name is nil because o is not a calling level
-         if info.what == "C" then
-            return string.format("%q", so .. ", C function")
-         else
-            -- the information is defined through lines
-            return string.format("%q", so .. ", defined in (" ..
-                info.linedefined .. "-" .. info.lastlinedefined ..
-                ")" .. info.source)
-         end
-      elseif type(o) == "number" or type(o) == "boolean" then
-         return so
-      else
-         return string.format("%q", so)
-      end
-   end
-
-   local function addtocart (value, name, indent, saved, field)
-      indent = indent or ""
-      saved = saved or {}
-      field = field or name
-
-      cart = cart .. indent .. field
-
-      if type(value) ~= "table" then
-         cart = cart .. " = " .. basicSerialize(value) .. ",\n"
-      else
-         if saved[value] then
-            cart = cart .. " = {}; -- " .. saved[value]
-                        .. " (self reference)\n"
-            autoref = autoref ..  name .. " = " .. saved[value] .. ";\n"
-         else
-            saved[value] = name
-            --if tablecount(value) == 0 then
-            if isemptytable(value) then
-               cart = cart .. " = {};\n"
-            else
-               cart = cart .. " = {\n"
-               for k, v in pairs(value) do
-                  -- k = basicSerialize(k)
-                  local fname = string.format("%s[%s]", name, k)
-                  -- field = string.format("[%s]", k)
-                  field = k
-                  -- three spaces between levels
-                  addtocart(v, fname, indent .. "   ", saved, field)
-               end
-               cart = cart .. indent .. "},\n"
-            end
-         end
-      end
-   end
-
-   name = name or "__unnamed__"
-   if type(t) ~= "table" then
-      return name .. " = " .. basicSerialize(t)
-   end
-   cart, autoref = "", ""
-   addtocart(t, name, indent)
-   print(cart .. autoref)
-end
+return utils

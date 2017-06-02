@@ -1,16 +1,9 @@
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-module(..., package.seeall)
+local ANALYTICS_URL = "http://www.google-analytics.com/collect"
+local params = {}
 
-----------------------------------------------------------------------------------------------------
-
-ANALYTICS_URL = "http://www.google-analytics.com/collect"
-
-----------------------------------------------------------------------------------------------------
-
-params = {}
-
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function init(version, trackingId, profileId, AppName, AppVersion)
     params.version    = version
@@ -21,7 +14,7 @@ function init(version, trackingId, profileId, AppName, AppVersion)
     params.AppVersion = AppVersion
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function pageview(page)
     local data = ""
@@ -36,7 +29,7 @@ function pageview(page)
     utils.post(ANALYTICS_URL, data, nil, 'urlencoded')
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function event(category, action, label)
     local data = ""
@@ -56,3 +49,11 @@ function event(category, action, label)
 
     utils.post(ANALYTICS_URL, data, nil, 'urlencoded')
 end
+
+--------------------------------------------------------------------------------
+
+return {
+    init = init,
+    pageview = pageview,
+    event = event
+}
