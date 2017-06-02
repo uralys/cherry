@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ $1 = "travis" ]]; then
+    busted --run=tests --directory='./test' -m '/home/travis/build/chrisdugne/cherry/?.lua'
+else
+    busted --run=tests --directory='./test'
+fi

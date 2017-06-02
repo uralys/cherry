@@ -1,2 +1,2 @@
 assets/levels/level-editor/level-editor.json
-luacov.report.out
+test/luacov.report.out

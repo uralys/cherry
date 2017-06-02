@@ -23,10 +23,7 @@ install:
   - luarocks install luacov
 
 script:
-  - pwd
-  - ls -l /home/travis/build/chrisdugne/cherry
-  - ls -l /home/travis/build/chrisdugne/cherry/libs
-  - busted --run=tests -m '/home/travis/build/chrisdugne/cherry/?.lua'
+  - ./test/run travis
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
