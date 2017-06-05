@@ -8,10 +8,10 @@ local Score      = require 'cherry.engine.score'
 --------------------------------------------------------------------------------
 
 local App = {
-    name    = 'Uralys',
-    cherryVersion = CHERRY_VERSION,
-    version = '0.0.1',
-    IOS_ID  = 'XXXXX',
+    name          = 'Uralys',
+    cherryVersion = '2.4.1',
+    version       = '0.0.1',
+    IOS_ID        = 'XXXXX',
 
     -----------------------------------------
     -- 'production', 'development', 'editor'
@@ -173,10 +173,6 @@ function App:setup()
         'ff00ff'
     })
 
-    colorize = function(color)
-        return utils.toColor(color)
-    end
-
     ----------------------------------------------------------------------------
 
     analytics.init(
@@ -189,35 +185,27 @@ function App:setup()
 
     ----------------------------------------------------------------------------
 
-    IOS         = system.getInfo( 'platformName' )  == 'iPhone OS'
-    ANDROID     = system.getInfo( 'platformName' )  == 'Android'
-    SIMULATOR   = system.getInfo( 'environment' )   == 'simulator'
+    _G.IOS         = system.getInfo( 'platformName' )  == 'iPhone OS'
+    _G.ANDROID     = system.getInfo( 'platformName' )  == 'Android'
+    _G.SIMULATOR   = system.getInfo( 'environment' )   == 'simulator'
 
     ----------------------------------------------------------------------------
 
-    if(IOS or SIMULATOR) then
+    if(_G.IOS or _G.SIMULATOR) then
         display.setStatusBar( display.HiddenStatusBar )
     end
 
     ----------------------------------------------------------------------------
 
-    if ANDROID then
-        FONT   = App.font.android
+    if _G.ANDROID then
+        _G.FONT   = App.font.android
     else
-        FONT   = App.font.ios
+        _G.FONT   = App.font.ios
     end
 
     ----------------------------------------------------------------------------
 
     self.aspectRatio = display.pixelHeight / display.pixelWidth
-
-    ----------------------------------------------------------------------------
-
-    abs    = math.abs
-    random = math.random
-    round  = math.round
-
-    ----------------------------------------------------------------------------
 end
 
 --------------------------------------------------------------------------------
@@ -242,6 +230,7 @@ function App:deviceSetup()
         print( event.phase, event.keyName )
 
         if ( 'back' == keyName and phase == 'up' ) then
+            print('back button is not handled')
         end
 
         if ( keyName == 'volumeUp' and phase == 'down' ) then

@@ -23,8 +23,6 @@
 -- SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 
 local table = require('table')
-local string = require('string')
-
 local lu = {}
 
 --
@@ -121,8 +119,6 @@ function lu.reduceRight (t, func, memo)
 end
 
 function lu.where (t, props)
-  local found = {}
-
   return lu.select(t, function (val)
     return lu.every(props, function(v, k)
       return val[k] == v
@@ -224,8 +220,8 @@ function lu.concat (...)
   return _r
 end
 
-function lu.flatten (t, shallow)
-  local shallow = shallow or false
+function lu.flatten (t, _shallow)
+  local shallow = _shallow or false
   local new_flattened
   local _flat = {}
 
@@ -328,8 +324,6 @@ function lu.isEmpty (val)
   else
     return false
   end
-
-  return true
 end
 
 function lu.isEqual (tableA, tableB, useMt)
@@ -355,7 +349,7 @@ function lu.isEqual (tableA, tableB, useMt)
     if lu.isNil(v2) or not lu.isEqual(v1,v2,useMt) then return false end
   end
 
-  for i, v1 in pairs(tableB) do
+  for i,_ in pairs(tableB) do
     local v2 = tableA[i]
     if lu.isNil(v2) then return false end
   end
@@ -404,7 +398,7 @@ function lu.once (func)
     if _internal <=1 then
       _args = {...}
     end
-    return func(unpack(_args))
+    return func(table.unpack(_args))
   end
 end
 
@@ -443,13 +437,6 @@ local entityMap = {
   }
 }
 entityMap.unescape = lu.invert(entityMap.escape)
-function lu.escape (str)
-  str = str or ''
-end
-
-function lu.unescape (str)
-  str = str or ''
-end
 
 --
 -- Aliases

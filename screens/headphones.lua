@@ -4,6 +4,7 @@
 --
 --------------------------------------------------------------------------------
 
+local composer = require('composer')
 local scene = composer.newScene()
 
 --------------------------------------------------------------------------------
@@ -26,7 +27,7 @@ function scene:create( event )
         x        = display.contentWidth * 0.4,
         y        = display.contentHeight * 0.5,
         value    = 'You should use headphones for a complete experience',
-        font     = FONT,
+        font     = _G.FONT,
         fontSize = App:adaptToRatio(15),
         width    = display.contentWidth * 0.4
     })

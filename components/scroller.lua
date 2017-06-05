@@ -70,7 +70,7 @@ end
 
 function Scroller:remove(child)
     local index = 1
-    for k,c in pairs(self.children) do
+    for k in pairs(self.children) do
         if(self.children[k] == child) then
             break
         end
@@ -88,8 +88,7 @@ end
 
 function Scroller:removeAll()
     self.scrollView._view.y = 0
-    local n = #self.children
-    for i=1, n do
+    while #self.children > 0 do
         self:remove(self.children[1])
     end
 end
@@ -162,7 +161,7 @@ end
 
 function Scroller:refreshHandle()
     local totalHeight = self:contentHeight()
-    local height = 0
+    local height
 
     if(totalHeight == 0) then
         self:hideScrollbar()
@@ -209,7 +208,7 @@ end
 
 function Scroller:contentHeight()
     local height = 0
-    for k,child in pairs(self.children) do
+    for _,child in pairs(self.children) do
         height = height + child.height + self.options.gap
     end
 
@@ -262,7 +261,7 @@ function Scroller:bind(event)
 
     self.handleWatcher = RESET
 
-    local watch = function(event)
+    local watch = function()
         self:syncHandlePosition()
 
         local handleHasMoved = self.previousHandleY ~= self.scrollbar.handle.y

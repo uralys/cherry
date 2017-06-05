@@ -31,7 +31,7 @@ function GUI:bigIcon(options)
     icon.y = options.y
     options.parent:insert(icon)
 
-    local bg = display.newImage(
+    display.newImage(
         icon,
         'cherry/_images/gui/items/circle.container.on.png',
         0, 0
@@ -77,18 +77,18 @@ function GUI:iconText(options)
     icon.y = options.y
     options.parent:insert(icon)
 
-    local bg = display.newImage(
+    display.newImage(
         icon,
         'cherry/_images/gui/items/circle.container.on.png',
         0, 0
     )
 
-    local text = utils.text({
+    utils.text({
         parent   = icon,
         value    = options.value,
         x        = 0,
         y        = 0,
-        font     = options.font or FONT,
+        font     = options.font or _G.FONT,
         fontSize = options.fontSize or 65
     })
 
@@ -136,7 +136,7 @@ function GUI:multiplier(options)
         value    = options.value,
         x        = options.x + icon.width * 1.1,
         y        = options.y,
-        font     = options.font or FONT,
+        font     = options.font or _G.FONT,
         fontSize = options.fontSize or 75
     })
 

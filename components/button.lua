@@ -21,7 +21,7 @@ function Button:round(options)
         button,
         options.label,
         0, 0,
-        FONT,
+        _G.FONT,
         60
     );
 

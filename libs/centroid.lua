@@ -1,6 +1,6 @@
 local reduce = require('src.ludash').reduce
 
-function centroid (points)
+local function centroid (points)
   local l = #points
 
   return reduce(points, function (center, p, i)

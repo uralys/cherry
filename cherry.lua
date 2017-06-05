@@ -1,10 +1,4 @@
---------------------------------------------------------------------------------
-CHERRY_VERSION = '2.4.1'
---------------------------------------------------------------------------------
 -- libs
-json          = require 'json'
-composer      = require 'composer'
-
 _             = require 'cherry.libs.underscore'
 utils         = require 'cherry.libs.utils'
 Vector2D      = require 'cherry.libs.vector2D'

@@ -84,7 +84,7 @@ end
 --------------------------------------------------------------------------------
 
 function Score:displayButtons()
-    local back = Button:icon({
+    Button:icon({
         parent = self.bar,
         type   = 'close',
         x      = display.contentWidth*0.5 - 50,
@@ -106,7 +106,7 @@ function Score:displayTitle()
         self.bar,
         App.game.title,
         display.contentWidth*0.5 - 195, 0,
-        FONT, 35
+        _G.FONT, 35
     )
 
     text.anchorX = 1
@@ -160,7 +160,7 @@ function Score:displayResult(board, bg)
         board,
         'Thanks for playing.',
         0, 0,
-        FONT, 85
+        _G.FONT, 85
     )
 
     utils.grow(text)

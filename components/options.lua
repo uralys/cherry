@@ -52,7 +52,7 @@ function Options:drawActions(view)
         x      = 320,
         y      = 0,
         color  = 1,
-        font   = FONT,
+        font   = _G.FONT,
         fontSize = 40
     })
 end

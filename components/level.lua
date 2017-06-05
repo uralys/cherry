@@ -11,7 +11,9 @@ local Level = {}
 
 function Level:new(options)
     local level = _.extend({
-        gems = {}
+        gems = {},
+        activatedGems = options.gems,
+        activatedStars = options.stars
     }, options);
 
     setmetatable(level, { __index = Level })
@@ -33,15 +35,14 @@ end
 -- stars
 -- moves
 function Level:build(options)
-    self = Level:new ( options )
-    self.options = options
-    self:buildPanel()
-    self:buildLock()
-    self:buildGems()
-    self:buildStars()
-    self:buildMoves()
-    self:buildNum()
-    return self
+    local level = Level:new ( options )
+    level:buildPanel(options)
+    level:buildLock()
+    level:buildGems()
+    level:buildStars()
+    level:buildMoves()
+    level:buildNum()
+    return level
 end
 
 function Level:show()
@@ -71,38 +72,38 @@ end
 
 --------------------------------------------------------------------------------
 
-function Level:buildPanel()
+function Level:buildPanel(options)
     self.bg = Panel:level({
-        parent = self.options.parent,
-        x      = self.options.x,
-        y      = self.options.y,
-        status = self.options.status
+        parent = self.parent,
+        x      = self.x,
+        y      = self.y,
+        status = self.status
     })
 
-    if(self.options.status == 'on') then
-        utils.onTouch(self.bg, self.options.action)
+    if(self.status == 'on') then
+        utils.onTouch(self.bg, self.action)
     end
 end
 
 --------------------------------------------------------------------------------
 
 function Level:buildLock()
-    if(self.options.status == 'on') then return end
+    if(self.status == 'on') then return end
 
     self.lock = display.newImage(
-        self.options.parent,
+        self.parent,
         'cherry/_images/gui/items/lock.png'
     );
 
-    self.lock.x = self.options.x + self.bg.width * 0.32
-    self.lock.y = self.options.y - self.bg.height * 0.32
+    self.lock.x = self.x + self.bg.width * 0.32
+    self.lock.y = self.y - self.bg.height * 0.32
 end
 
 --------------------------------------------------------------------------------
 
 function Level:buildMoves()
-    local levelDone = self.options.moves > 0
-    local allGemsCaught = self.options.gems == self.options.maxGems
+    local levelDone = self.moves > 0
+    local allGemsCaught = self.activatedGems == self.maxGems
     local displayMoves = levelDone and allGemsCaught
 
     if(not displayMoves) then
@@ -110,34 +111,34 @@ function Level:buildMoves()
         return
     end
 
-    self.moves = GUI:iconText(_.extend({
-        parent = self.options.parent,
-        value  = self.options.moves,
-        x      = self.options.x + self.bg.width * 0.32,
-        y      = self.options.y - self.bg.height * 0.36
-    }, options))
+    self.moves = GUI:iconText({
+        parent = self.parent,
+        value  = self.moves,
+        x      = self.x + self.bg.width * 0.32,
+        y      = self.y - self.bg.height * 0.36
+    })
 end
 
 --------------------------------------------------------------------------------
 
 function Level:buildGems()
     local MINI_STAR_WIDTH = 40
-    local width = self.options.maxGems * 40
-    local y = self.options.y + self.bg.height * 0.25
+    local width = self.maxGems * 40
+    local y = self.y + self.bg.height * 0.25
     self.gems = {}
 
-    for i = 1, self.options.maxGems do
-        local x = self.options.x - width/2 + MINI_STAR_WIDTH * (i - 0.5)
+    for i = 1, self.maxGems do
+        local x = self.x - width/2 + MINI_STAR_WIDTH * (i - 0.5)
         local status = 'off'
-        if(self.options.gems >= i) then status = 'on' end
+        if(self.activatedGems >= i) then status = 'on' end
 
         local gem = GUI:miniIcon({
             type     = 'gem',
-            parent   = self.options.parent,
+            parent   = self.parent,
             x        = x,
             y        = y,
             status   = status,
-            disabled = self.options.status == 'off'
+            disabled = self.status == 'off'
         })
 
         self.gems[i] = gem
@@ -153,34 +154,34 @@ end
 --------------------------------------------------------------------------------
 
 function Level:buildStars()
-    local y = self.options.y + self.bg.height * 0.5
-    local x = self.options.x - self.bg.width * 0.47
+    local y = self.y + self.bg.height * 0.5
+    local x = self.x - self.bg.width * 0.47
     self.stars = {}
 
-    for i = 1, self.options.maxStars do
+    for i = 1, self.maxStars do
         local status = 'off'
-        if(self.options.stars >= i) then status = 'on' end
+        if(self.activatedStars >= i) then status = 'on' end
 
         local star = GUI:miniIcon({
             type     = 'star',
-            parent   = self.options.parent,
+            parent   = self.parent,
             x        = x,
             y        = y - i * self.bg.height * 0.15,
             status   = status,
-            disabled = self.options.status == 'off'
+            disabled = self.status == 'off'
         })
 
         self.stars[i] = star
     end
 
-    if(self.options.stars == 7) then
+    if(self.stars == 7) then
         local star = display.newImage(
-            self.options.parent,
+            self.parent,
             'cherry/_images/gui/items/star-special.icon.png'
         );
 
-        star.x = self.options.x + self.bg.width * 0.32
-        star.y = self.options.y - self.bg.height * 0.36
+        star.x = self.x + self.bg.width * 0.32
+        star.y = self.y - self.bg.height * 0.36
         self.stars[7] = star
     end
 end
@@ -197,11 +198,11 @@ end
 
 function Level:buildNum()
     self.text = display.newEmbossedText(
-        self.options.parent,
-        self.options.level,
+        self.parent,
+        self.level,
         self.bg.x,
         self.bg.y - 10,
-        FONT,
+        _G.FONT,
         60
     );
 

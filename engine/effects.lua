@@ -1,19 +1,22 @@
 --------------------------------------------------------------------------------
 
-local Effects = {
-    effects     = {},
-    nbDestroyed = 0,
-    nbRunning   = 0
-}
+if(not CBE) then
+    print('You must link CBE to use Effects')
+end
 
 --------------------------------------------------------------------------------
 
-function Effects:start(refresh)
-    if(refresh) then
-        -- Runtime:addEventListener( 'enterFrame', refreshEffects )
-    else
-        self:startAllEffects()
-    end
+local Effects = {
+    effects = {},
+}
+
+local nbDestroyed = 0
+local nbRunning   = 0
+
+--------------------------------------------------------------------------------
+
+function Effects:start()
+    self:startAllEffects()
 end
 
 function Effects:pause()
@@ -91,7 +94,7 @@ end
 
 function Effects:destroyObjectWithEffect(body)
     if(body.effect) then
-        return destroyEffect(body.effect)
+        return self:destroyEffect(body.effect)
     else
         return false
     end

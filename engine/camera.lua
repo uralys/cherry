@@ -65,14 +65,12 @@ end
 --------------------------------------------------------------------------------
 
 function Camera:start(options)
-
     self.options = _.extend(self.options, options)
     transition.cancel(self.display)
     self.display.alpha = 1
-
     App.hud:toFront()
 
-    local shake = function()
+    self.moveDisplay = function()
         if(self.shakeCount % shakePeriod == 0 ) then
             self.display.x = self.display.x0 + math.random( -xShake, xShake )
             self.display.y = self.display.y0 + math.random( -yShake, yShake )
@@ -80,38 +78,38 @@ function Camera:start(options)
         self.shakeCount = self.shakeCount + 1
     end
 
-    function startShake()
+    self.startShake = function()
         self.display.x0 = self.display.x
         self.display.y0 = self.display.y
         self.shakeCount = 0
-        Runtime:addEventListener( 'enterFrame', shake )
+        Runtime:addEventListener( 'enterFrame', self.moveDisplay )
     end
 
-    function stopShake()
-        Runtime:removeEventListener( 'enterFrame', shake )
+    self.stopShake = function()
+        Runtime:removeEventListener( 'enterFrame', self.moveDisplay )
         self.display.x = INIT_X
         self.display.y = INIT_Y
         self.shaking = false
     end
+end
 
-    function Camera:shake()
-        if(self.shaking) then
-            timer.cancel(self.shaking)
-            stopShake()
-        end
-
-        startShake()
-        self.shaking = timer.performWithDelay(200, stopShake)
+function Camera:shake()
+    if(self.shaking) then
+        timer.cancel(self.shaking)
+        self.stopShake()
     end
 
-    function Camera:stop()
-        transition.to (self.display, {
-            alpha = 0,
-            time = 500,
-            xScale = 0,
-            yScale = 0
-        })
-    end
+    self.startShake()
+    self.shaking = timer.performWithDelay(250, self.stopShake)
+end
+
+function Camera:stop()
+    transition.to (self.display, {
+        alpha = 0,
+        time = 500,
+        xScale = 0,
+        yScale = 0
+    })
 end
 
 --------------------------------------------------------------------------------

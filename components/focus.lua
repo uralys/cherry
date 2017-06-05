@@ -1,7 +1,7 @@
 
 --------------------------------------------------------
 
-function horizontalBackAndForth(object, options)
+local function horizontalBackAndForth(object, options)
     local initialX = object.x
 
     local back = function()
@@ -30,7 +30,7 @@ end
 
 --------------------------------------------------------
 
-function verticalBackAndForth(object, options)
+local function verticalBackAndForth(object, options)
 
     local initialY = object.y
 

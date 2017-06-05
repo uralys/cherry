@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/chrisdugne/cherry.svg?branch=master)](https://travis-ci.org/chrisdugne/cherry)
 [![codecov](https://codecov.io/gh/chrisdugne/cherry/branch/master/graph/badge.svg)](https://codecov.io/gh/chrisdugne/cherry)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-green.svg?colorB=3cc712)](LICENSE)
+![version](https://img.shields.io/github/tag/chrisdugne/cherry.svg?colorB=3cc712)
 
 Cherry is an open source starter for `CoronaSDK App` to help building your game.
 
@@ -23,12 +25,12 @@ You may extend Cherry framework, or just pick few components, in order to start 
 
 #### Using Cherry
 - clone Cherry next to your project, and symlink it to your project root
-`ln -s ../cherry cherry`
+`ln -s ../Cherry Cherry`
 - add your env folder with your en settings
 - add a `main.lua` with just `require 'src.app'`
 - add a `src/app.lua` and require `Cherry` inside
 ```
-CHERRY   = require 'cherry.cherry'
+require 'Cherry.cherry'
 ```
 - then call `App.start()` with your options
 ```
@@ -42,7 +44,7 @@ App:start({
 A typical tree should be :
 
 ```
-├── cherry
+├── Cherry
 │   ├── _images
 │   ├── app
 │   ├── cherry.lua

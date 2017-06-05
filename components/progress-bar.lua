@@ -127,7 +127,7 @@ function ProgressBar:text(options)
         text    = '',
         x        = 0,
         y        = 0,
-        font     = FONT,
+        font     = _G.FONT,
         fontSize = self.progress.height*0.7,
     })
 end

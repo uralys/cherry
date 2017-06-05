@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 
 local Background = {}
@@ -26,7 +25,8 @@ function Background:init(options)
     options = options or {}
     local lightImage = options.light or 'cherry/_images/background-light.jpg'
     local darkImage  = options.dark or 'cherry/_images/background-dark.jpg'
-    local time       = options.time or 700
+
+    self.time = options.time or 700
 
     App.display:toBack()
 

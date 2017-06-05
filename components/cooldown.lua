@@ -96,7 +96,7 @@ function Cooldown:autoRun(cooldown)
     end
 
     if(cooldown.autoStartBack) then
-        cooldown:start(reverse)
+        cooldown:start(true)
     end
 end
 
@@ -153,18 +153,18 @@ function Cooldown:addTime(time)
     if(self.state == FORWARD) then
 
         timeForHalf     = self.time*0.5
-        currentAngle    = round(180 * self.elapsedTime/timeForHalf)
+        currentAngle    = math.round(180 * self.elapsedTime/timeForHalf)
 
-        if(self.elapsedTime + abs(time)  > timeForHalf) then
+        if(self.elapsedTime + math.abs(time)  > timeForHalf) then
             print('addTime : set COMPLETE')
         end
 
     elseif(self.state == REVERSE) then
 
         timeForHalf     = self.time*0.5/self.reverseRatio
-        currentAngle    = 360 - round(180 * self.elapsedTime/timeForHalf)
+        currentAngle    = 360 - math.round(180 * self.elapsedTime/timeForHalf)
 
-        if(self.elapsedTime + abs(time)  > self.time/self.reverseRatio) then
+        if(self.elapsedTime + math.abs(time)  > self.time/self.reverseRatio) then
             print('addTime : set EMPTY')
         end
 
@@ -187,7 +187,7 @@ function Cooldown:addTime(time)
     ---
     -- find out if the needle changes side
 
-    local sameNeedle = self.elapsedTime + abs(time)  < timeForHalf
+    local sameNeedle = self.elapsedTime + math.abs(time)  < timeForHalf
 
     ---
     -- needle stays on the same side
@@ -202,7 +202,7 @@ function Cooldown:addTime(time)
             self.leftCircle.maskRotation    = angleToReach - 180
         end
 
-        self.remainingHalfTime  = timeForHalf - self.elapsedTime - abs(time)
+        self.remainingHalfTime  = timeForHalf - self.elapsedTime - math.abs(time)
         self.startHalfTime      = system.getTimer() - (self.time*0.5 - self.remainingHalfTime)
 
 
@@ -215,7 +215,7 @@ function Cooldown:addTime(time)
             self.rightCircle.maskRotation   = 180
             self.leftCircle.maskRotation    = angleToReach - 180
             self.needle                     = NEEDLE_ON_LEFT
-            self.remainingHalfTime          = timeForHalf - self.elapsedTime - abs(time)
+            self.remainingHalfTime          = timeForHalf - self.elapsedTime - math.abs(time)
             self.startHalfTime              = system.getTimer() - (timeForHalf - self.remainingHalfTime)
         end
 

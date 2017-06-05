@@ -11,7 +11,7 @@ function Banner:large(options)
     local banner = display.newGroup()
     options.parent:insert(banner)
 
-    local image = display.newImageRect(
+    display.newImageRect(
         banner,
         'cherry/_images/gui/banners/banner.png',
         options.width,
@@ -31,7 +31,7 @@ function Banner:large(options)
         curveSize  = curveSize,
         x          = 0,
         y          = curveSize*0.965,
-        font       = FONT,
+        font       = _G.FONT,
         fontSize   = options.fontSize or 10
     })
 
@@ -47,7 +47,7 @@ function Banner:simple(options)
     local banner = display.newGroup()
     options.parent:insert(banner)
 
-    local image = display.newImageRect(
+    display.newImageRect(
         banner,
         'cherry/_images/gui/banners/banner.simple.png',
         options.width,
@@ -67,7 +67,7 @@ function Banner:simple(options)
         curveSize  = curveSize,
         x          = 0,
         y          = curveSize*0.985,
-        font       = FONT,
+        font       = _G.FONT,
         fontSize   = options.fontSize or 10
     })
 

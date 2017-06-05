@@ -55,13 +55,13 @@ function Text:render()
     self.view = utils.text({
         parent   = self.parent,
         value    = self.value,
-        font     = self.font or FONT,
+        font     = self.font or _G.FONT,
         fontSize = self.fontSize or 55,
         x        = self.x,
         y        = self.y
     })
 
-    self.view:setFillColor( colorize(self.color or 'ffffff') )
+    self.view:setFillColor( utils.colorize(self.color or 'ffffff') )
 
     if (self.grow) then
         utils.grow(self.view)

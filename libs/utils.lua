@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 
+local json = require('json')
 local utils = {}
 
 --------------------------------------------------------------------------------
@@ -61,6 +62,8 @@ function utils.toColor(hexCode)
            tonumber('0x'..hexCode:sub(5,6))/255;
 end
 
+utils.colorize = utils.toColor
+
 --------------------------------------------------------------------------------
 
 function utils.isInt(n)
@@ -70,7 +73,7 @@ end
 --------------------------------------------------------------------------------
 
 function utils.toPercentage(nb, max)
-    local percent = math.min(100, round ( nb / max  * 100))
+    local percent = math.min(100, math.round ( nb / max  * 100))
 
     return  {
         value = percent,
@@ -155,7 +158,7 @@ function utils.getUrlParams(url)
 
     local params = {}
 
-    fillNextParam(params, paramsString);
+    utils.fillNextParam(params, paramsString);
 
     return params;
 
@@ -176,24 +179,15 @@ function utils.fillNextParam(params, paramsString)
     if ( indexEqual ~= nil ) then
         local varName = paramsString:sub(0, indexEqual-1)
         local value = paramsString:sub(indexEqual+1, indexEndValue)
-        params[varName] = url_decode(value)
+        params[varName] = utils.url_decode(value)
 
         if (indexAnd ~= nil) then
             paramsString = paramsString:sub(indexAnd+1, string.len(paramsString) )
-            fillNextParam(params, paramsString)
+            utils.fillNextParam(params, paramsString)
         end
 
     end
 
-end
-
---------------------------------------------------------------------------------
-
-function utils.split(value, sep)
-    local sep, fields = sep or ":", {}
-    local pattern = string.format("([^%s]+)", sep)
-    value:gsub(pattern, function(c) fields[#fields+1] = c end)
-    return fields
 end
 
 --------------------------------------------------------------------------------
@@ -204,7 +198,7 @@ function utils.emptyGroup( group )
             local child = group[i]
             transition.cancel(child)
             child:removeSelf()
-            child = nil
+            group[i] = nil
         end
     end
 end
@@ -258,7 +252,7 @@ end
 
 function utils.removeFromTable(t, object)
     local index = 1
-    for k,v in pairs(t) do
+    for k,_ in pairs(t) do
         if(t[k] == object) then
             break
         end
@@ -271,16 +265,16 @@ end
 
 function utils.emptyTable(t)
     if(not t) then return end
-    local i, v = next(t, nil)
+    local i, _ = next(t, nil)
     while i do
         t[i] = nil
-        i, v = next(t, i)
+        i, _ = next(t, i)
     end
 end
 
 function utils.contains(t, object)
     if(not t) then return end
-    for k,v in pairs(t) do
+    for _,v in pairs(t) do
         if(v == object) then
             return true
         end
@@ -300,7 +294,7 @@ function utils.imageName( url )
         return url;
     else
         local subURL = url:sub(index+1, string.len(url))
-        return imageName(subURL)
+        return utils.imageName(subURL)
     end
 end
 
@@ -323,11 +317,11 @@ function utils.tprint (tbl, indent, options)
             local show = not string.startsWith(k, '_')
                          or  options.showUnderscores == true
             if(show) then
-                formatting = string.rep("  ", indent) .. k .. ": "
+                local formatting = string.rep("  ", indent) .. k .. ": "
                 if type(v) == "table" then
                     print(formatting)
                     if(indent < 6) then
-                        tprint(v, indent+1, options)
+                        utils.tprint(v, indent+1, options)
                     end
                 else
                     print(formatting .. tostring(v))
@@ -340,6 +334,9 @@ end
 --------------------------------------------------------------------------------
 
 function utils.request(url, method, next, data, type, authToken)
+    local VERBOSE = false
+    local DEV_BEARER = '234567'
+
     if(VERBOSE) then print(method, url) end
     if(next == nil) then
         next = function() end
@@ -443,12 +440,12 @@ end
 --------------------------------------------------------
 
 function utils.parseDate(str)
-    _,_,y,m,d=string.find(str, "(%d+)-(%d+)-(%d+)")
+    local _,_,y,m,d=string.find(str, "(%d+)-(%d+)-(%d+)")
     return tonumber(y),tonumber(m),tonumber(d)
 end
 
 function utils.parseDateTime(str)
-    local Y,M,D = parseDate(str)
+    local Y,M,D = utils.parseDate(str)
     return os.time({year=Y, month=M, day=D})
 end
 
@@ -480,13 +477,11 @@ function utils.saveTable(t, filename, directory)
 end
 
 local function loadTable(path)
-    local contents = ""
-    local myTable = {}
     local file = io.open( path, "r" )
     if file then
         -- read all contents of file into a string
         local contents = file:read( "*a" )
-        myTable = json.decode(contents);
+        local myTable = json.decode(contents);
         io.close( file )
         return myTable
     end
@@ -514,7 +509,7 @@ function utils.getPointsBetween(from, to, nbPoints)
     for i=0,nbPoints do
         local x = x1 + i*step
         local y = y1 + a*(x - x1)
-        table.insert(points, vector2D:new(x, y))
+        table.insert(points, Vector2D:new(x, y))
     end
 
     return points
@@ -539,7 +534,6 @@ function utils.networkConnection()
     end
 
     test:close()
-    test = nil
     return status
 end
 
@@ -560,7 +554,7 @@ function utils.displayCounter(numToReach, writer, anchorX, anchorY, x, next, nex
             next()
         else
             nextMillis = 100/(numToReach - writer.currentDisplay)
-            displayCounter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
+            utils.displayCounter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
         end
 
         writer.text    = writer.currentDisplay

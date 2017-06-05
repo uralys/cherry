@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 
+local Screen   = require 'cherry.components.Screen'
 local Scroller = require 'cherry.components.scroller'
 local Panel    = require 'cherry.components.panel'
 local GUI      = require 'cherry.components.gui'
@@ -60,6 +61,8 @@ function Chapters:buy(num)
             App.user:bought(num)
 
         elseif ( transaction.state == 'cancelled' ) then
+            utils.tprint(transaction)
+
         elseif ( transaction.state == 'failed' ) then
             utils.tprint(transaction)
         end
@@ -68,18 +71,18 @@ function Chapters:buy(num)
         self:draw(self.options)
     end
 
-    if(SIMULATOR or ENV == 'development') then
+    if(_G.SIMULATOR or _G.ENV == 'development') then
         App.user:bought(num)
         self:draw(self.options)
         return
 
-    elseif(IOS) then
+    elseif(_G.IOS) then
         native.setActivityIndicator( true )
         store = require( 'store' )
         store.init( storeTransaction )
         store.purchase(id)
 
-    elseif(ANDROID) then
+    elseif(_G.ANDROID) then
         native.setActivityIndicator( true )
         store = require( 'plugin.google.iap.v3' )
         timer.performWithDelay( 1000, function()
@@ -165,7 +168,7 @@ function Chapters:hellBarEntrance(options)
         status = 'off'
     })
 
-    local hell = display.newImage(
+    display.newImage(
         hellbar,
         'cherry/_images/gui/houses/hell.png',
         panel.width*0.2, 0
@@ -181,11 +184,11 @@ function Chapters:hellBarEntrance(options)
         y        = 0,
         width    = panel.width * 0.4,
         height   = panel.height * 0.45,
-        font     = FONT,
+        font     = _G.FONT,
         fontSize = App:adaptToRatio(10),
     })
 
-    local fb = Button:icon({
+    Button:icon({
         parent = hellbar,
         type   = 'facebook',
         x      = contentX,
@@ -324,13 +327,13 @@ function Chapters:summary(options)
 
     if(options.condition) then
         local contentX = panel.x + panel.width * 0.22
-        local textY = 0
+        local textY
 
         if(options.type == 'hidden') then
             textY = panel.y - panel.height * 0.2
             local buttonsY = panel.height * 0.2
 
-            local fb = Button:icon({
+            Button:icon({
                 parent = summary,
                 type   = 'facebook',
                 x      = contentX,
@@ -340,7 +343,7 @@ function Chapters:summary(options)
                 end
             })
 
-            local fb = Button:icon({
+            Button:icon({
                 parent = summary,
                 type   = 'rate',
                 x      = contentX + panel.width*0.15,
@@ -363,7 +366,7 @@ function Chapters:summary(options)
             y        = textY,
             width    = panel.width * 0.5,
             height   = panel.height * 0.38,
-            font     = FONT,
+            font     = _G.FONT,
             fontSize = App:adaptToRatio(12)
         })
 
@@ -392,7 +395,7 @@ end
 
 function Chapters:lockChapter(options)
     self:lock(_.defaults({
-        parent = summary,
+        parent = options.parent,
         x = options.x,
         y = options.y
     }, options))

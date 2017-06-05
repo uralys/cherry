@@ -5,7 +5,7 @@ local params = {}
 
 --------------------------------------------------------------------------------
 
-function init(version, trackingId, profileId, AppName, AppVersion)
+local function init(version, trackingId, profileId, AppName, AppVersion)
     params.version    = version
     params.trackingId = trackingId
     params.profileId  = profileId
@@ -16,7 +16,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function pageview(page)
+local function pageview(page)
     local data = ""
     data = data .. "v="     .. params.version
     data = data .. "&tid="  .. params.trackingId
@@ -31,7 +31,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function event(category, action, label)
+local function event(category, action, label)
     local data = ""
     data = data .. "v="     .. params.version
     data = data .. "&tid="  .. params.trackingId

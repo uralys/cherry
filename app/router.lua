@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 
+local composer = require('composer')
 local Screen = require 'cherry.components.screen'
 local Effects = require 'cherry.engine.effects'
 
@@ -40,6 +41,7 @@ end
 --------------------------------------------------------------------------------
 
 function Router:open(id, params)
+    local class
     if(utils.contains(App.screens, id)) then
         class  = 'src.screens.' .. id
     else

@@ -21,8 +21,10 @@ branches:
 install:
   - luarocks install busted
   - luarocks install luacov
+  - luarocks install luacheck
 
 script:
+  - luacheck **/*.lua
   - ./test/run travis
 
 after_success:

@@ -12,7 +12,7 @@ local function onStart ()
         App.hud,
         'Cherry !',
         0, 0,
-        FONT, 45
+        _G.FONT, 45
     )
 
     introText:setFillColor( 255 )
