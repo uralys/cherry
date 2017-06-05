@@ -1,19 +1,6 @@
 --------------------------------------------------------------------------------
---- wow wow wow... sorry for the crap stacked here from diligis, adillions,
--- the lightning planet, kodo, behind the wind...and phantoms...
---
--- this will be the first required cleanup for Cherry I guess
---------------------------------------------------------------------------------
 
 local utils = {}
-
---------------------------------------------------------------------------------
-
-function utils.oppositeDirection(direction)
-    local oppositeDirection = (direction + 2)%4
-    if(oppositeDirection == 0 ) then oppositeDirection = 4 end
-    return oppositeDirection
-end
 
 --------------------------------------------------------------------------------
 
@@ -592,7 +579,7 @@ function utils.rotateBackAndForth(object, angle, time)
     local back = function()
         transition.to(object, {
             rotation   = initialRotation,
-            onComplete = rotateBackAndForth(object, -angle, time),
+            onComplete = utils.rotateBackAndForth(object, -angle, time),
             time       = time
         })
     end
