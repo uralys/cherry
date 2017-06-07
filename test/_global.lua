@@ -1,4 +1,4 @@
-expose('Globals', function()
+expose('[setting up tests Globals]', function()
   _G.display = require('mocks.display')
   _G.transition = require('mocks.transition')
   _G.utils = require('libs.utils')

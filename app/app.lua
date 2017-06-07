@@ -107,7 +107,6 @@ function App:initGPGS(options)
     local gpgs = require 'plugin.gpgs'
 
     local function gpgsLoginListener( event )
-        print( "Login event:", json.prettify(event) )
     end
 
     local function gpgsInitListener( event )

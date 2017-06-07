@@ -5,7 +5,6 @@ stds.corona = {
     'display',
     'easing',
     'graphics',
-    'json',
     math = {fields = {round = {}}},
     'native',
     'network',

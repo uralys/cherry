@@ -19,9 +19,7 @@ branches:
     - master
 
 install:
-  - luarocks install busted
-  - luarocks install luacov
-  - luarocks install luacheck
+  - ./install-rocks
 
 script:
   - luacheck **/*.lua
