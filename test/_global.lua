@@ -1,6 +1,5 @@
 expose('[setting up tests Globals]', function()
-  _G.display = require('mocks.display')
+  _G.display    = require('mocks.display')
   _G.transition = require('mocks.transition')
-  _G.utils = require('libs.utils')
-  _G.App = require('mocks.app')
+  _G.App        = require('mocks.app')
 end)

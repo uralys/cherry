@@ -1,9 +1,11 @@
-describe('[utils]', function()
+local gesture = require 'gesture'
+
+describe('[gesture]', function()
   it('> onTouch', function()
     local foo = display.newImage(App.display)
     local action = spy.new(function() end)
 
-    utils.onTouch(foo, action)
+    gesture.onTouch(foo, action)
 
     foo:dispatchEvent({
         name = 'touch',

@@ -1,8 +1,10 @@
 --------------------------------------------------------------------------------
 
-local Button = require 'cherry.components.button'
-local Panel  = require 'cherry.components.panel'
-local Banner = require 'cherry.components.banner'
+local _      = require 'underscore'
+local utils  = require 'utils'
+local Button = require 'components.button'
+local Panel  = require 'components.panel'
+local Banner = require 'components.banner'
 
 --------------------------------------------------------------------------------
 

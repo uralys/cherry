@@ -1,6 +1,8 @@
 --------------------------------------------------------------------------------
 
-local Banner = require 'cherry.components.banner'
+local _      = require 'underscore'
+local utils  = require 'utils'
+local Banner = require 'components.banner'
 
 --------------------------------------------------------------------------------
 

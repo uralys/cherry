@@ -1,5 +1,8 @@
 --------------------------------------------------------------------------------
 
+local gesture = require 'gesture'
+local utils = require 'utils'
+
 local Button = {}
 
 --------------------------------------------------------------------------------
@@ -28,7 +31,7 @@ function Button:round(options)
     button.text.anchorX = 0.63
     button.text.anchorY = 0.61
 
-    utils.onTap(button, function()
+    gesture.onTap(button, function()
         options.action()
         Sound:playButton()
     end)
@@ -46,7 +49,7 @@ function Button:icon(options)
     button.y = options.y
 
     if(options.action) then
-        utils.onTap(button, function()
+        gesture.onTap(button, function()
             options.action()
             Sound:playButton()
         end)

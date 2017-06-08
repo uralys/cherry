@@ -1,5 +1,8 @@
 --------------------------------------------------------------------------------
 
+local _     = require 'underscore'
+local utils = require 'utils'
+
 local Camera = {
     options = {},
     display = display.newGroup(),

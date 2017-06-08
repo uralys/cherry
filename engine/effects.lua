@@ -4,6 +4,8 @@ if(not CBE) then
     print('You must link CBE to use Effects')
 end
 
+local utils = require 'utils'
+
 --------------------------------------------------------------------------------
 
 local Effects = {

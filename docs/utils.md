@@ -8,7 +8,7 @@ local button = display.newImage(
     0, 0
 )
 
-utils.onTap(button, function()
+gesture.onTap(button, function()
     print('tap !')
 end)
 ```
@@ -32,7 +32,7 @@ local button = display.newImage(
     0, 0
 )
 
-utils.onTouch(button, function()
+gesture.onTouch(button, function()
     print('touch !')
 end)
 ```

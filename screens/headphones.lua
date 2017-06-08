@@ -1,10 +1,10 @@
 --------------------------------------------------------------------------------
---
--- Headphones.lua
---
---------------------------------------------------------------------------------
 
-local composer = require('composer')
+local analytics = require 'analytics'
+local utils     = require 'utils'
+local gesture   = require 'gesture'
+local composer  = require('composer')
+
 local scene = composer.newScene()
 
 --------------------------------------------------------------------------------
@@ -38,13 +38,13 @@ function scene:create( event )
         Router:open(nextView)
     end)
 
-    utils.onTap(phantom, function()
+    gesture.onTap(phantom, function()
         analytics.event('game', 'phantom-headphone')
         timer.cancel(delay)
         Router:open(nextView)
     end)
 
-    utils.onTap(text, function()
+    gesture.onTap(text, function()
         analytics.event('game', 'text-headphone')
     end)
 end

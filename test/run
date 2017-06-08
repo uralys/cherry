@@ -1,6 +1,11 @@
 #!/bin/bash
 if [[ $1 = "travis" ]]; then
-    busted --run=tests --directory='./test' -m '/home/travis/build/chrisdugne/cherry/?.lua'
+    busted \
+        --run=tests \
+        --config-file=test/.busted \
+        -m '/home/travis/build/chrisdugne/cherry/test/?.lua;/home/travis/build/chrisdugne/cherry/libs/?.lua;/home/travis/build/chrisdugne/cherry/?.lua'
 else
-    busted --run=tests --directory='./test'
+    busted \
+        --run=tests \
+        --config-file=test/.busted
 fi

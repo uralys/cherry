@@ -1,15 +1,18 @@
 --------------------------------------------------------------------------------
 
-local Background = require 'cherry.components.background'
-local demo       = require 'cherry.app.extension-demo'
-local User       = require 'cherry.app.user'
-local Score      = require 'cherry.engine.score'
+local Background = require 'components.background'
+local demo       = require 'app.extension-demo'
+local User       = require 'app.user'
+local Score      = require 'engine.score'
+local _          = require 'underscore'
+local utils      = require 'utils'
+local analytics  = require 'analytics'
 
 --------------------------------------------------------------------------------
 
 local App = {
     name          = 'Uralys',
-    cherryVersion = '2.4.1',
+    cherryVersion = '2.5.0',
     version       = '0.0.1',
     IOS_ID        = 'XXXXX',
 

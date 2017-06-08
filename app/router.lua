@@ -1,8 +1,11 @@
 --------------------------------------------------------------------------------
 
-local composer = require('composer')
-local Screen = require 'cherry.components.screen'
-local Effects = require 'cherry.engine.effects'
+local composer  = require('composer')
+local _         = require 'underscore'
+local analytics = require 'analytics'
+local utils     = require 'utils'
+local Screen    = require 'components.screen'
+local Effects   = require 'engine.effects'
 
 --------------------------------------------------------------------------------
 
@@ -45,7 +48,7 @@ function Router:open(id, params)
     if(utils.contains(App.screens, id)) then
         class  = 'src.screens.' .. id
     else
-        class  = 'cherry.screens.' .. id
+        class  = 'screens.' .. id
     end
 
     self:openScreen(id, class, params)

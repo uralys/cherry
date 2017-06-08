@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------
 
-local Panel = require 'cherry.components.panel'
-local GUI = require 'cherry.components.gui'
+local _       = require 'underscore'
+local utils   = require 'utils'
+local gesture = require 'gesture'
+local Panel   = require 'components.panel'
+local GUI     = require 'components.gui'
 
 --------------------------------------------------------------------------------
 
@@ -81,7 +84,7 @@ function Level:buildPanel(options)
     })
 
     if(self.status == 'on') then
-        utils.onTouch(self.bg, self.action)
+        gesture.onTouch(self.bg, self.action)
     end
 end
 

@@ -18,8 +18,6 @@ stds.corona = {
 
 stds.cherry = {
   globals = {
-    '_',
-    'analytics',
     'App',
     'Camera',
     'CBE',
@@ -30,9 +28,7 @@ stds.cherry = {
     string = {fields = {
         endsWith = {},
         startsWith = {}
-    }},
-    'utils',
-    'Vector2D'
+    }}
   }
 }
 

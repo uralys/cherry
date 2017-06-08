@@ -1,9 +1,9 @@
-## cherry.lua
+## lua
 
-[![Build Status](https://travis-ci.org/chrisdugne/cherry.svg?branch=master)](https://travis-ci.org/chrisdugne/cherry)
+[![Build Status](https://travis-ci.org/chrisdugne/svg?branch=master)](https://travis-ci.org/chrisdugne/cherry)
 [![codecov](https://codecov.io/gh/chrisdugne/cherry/branch/master/graph/badge.svg)](https://codecov.io/gh/chrisdugne/cherry)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-green.svg?colorB=3cc712)](LICENSE)
-![version](https://img.shields.io/github/tag/chrisdugne/cherry.svg?colorB=3cc712)
+![version](https://img.shields.io/github/tag/chrisdugne/svg?colorB=3cc712)
 
 Cherry is an open source starter for `CoronaSDK App` to help building your game.
 
@@ -17,7 +17,7 @@ Cherry is an open source starter for `CoronaSDK App` to help building your game.
 - [Third Parties](#third-parties)
 - [Games using Cherry](#games-using-cherry)
 
-![cherry](/docs/cherry.png)
+![cherry](/docs/png)
 
 ## Introduction to Cherry
 
@@ -27,11 +27,12 @@ You may extend Cherry framework, or just pick few components, in order to start 
 - clone Cherry next to your project, and symlink it to your project root
 `ln -s ../Cherry Cherry`
 - add your env folder with your en settings
-- add a `main.lua` with just `require 'src.app'`
-- add a `src/app.lua` and require `Cherry` inside
+- add a `main.lua` with
 ```
-require 'Cherry.cherry'
+require 'Cherry.loader'
+require 'app'
 ```
+- add a `src/app.lua`
 - then call `App.start()` with your options
 ```
 App:start({
@@ -40,6 +41,22 @@ App:start({
 })
 ```
 
+Note: The loader adds `src/`, `Cherry` and `Cherry/libs` in the package.path
+so you may require your modules and Cherry's modules directy
+
+```lua
+-- libs
+require 'animation'
+require 'gesture'
+
+-- components
+require 'components.button'
+require 'components.panel'
+
+-- your own src
+require 'extension.game'
+require 'model.phantom'
+```
 
 A typical tree should be :
 
@@ -47,7 +64,7 @@ A typical tree should be :
 ├── Cherry
 │   ├── _images
 │   ├── app
-│   ├── cherry.lua
+│   ├── lua
 │   ├── components
 │   ├── engine
 │   ├── libs
@@ -55,20 +72,24 @@ A typical tree should be :
 │   ├── test
 │
 ├── YourGame
-│   ├── cherry -> ../cherry
+│   ├── Cherry -> ../Cherry
 │   ├── assets
 │   ├── build.settings
 │   ├── config.lua
 │   ├── env
 │   ├── src
+│   │   ├── components
+│   │   ├── extensions
+│   │   ├── models
+│   │   ├── screens
 │   ├── test
 │   ├── main.lua
 ```
 
 #### Doc to provide
 ##### waiting for the doc, read the code
-- Look in cherry.app.App to see what you may override with `App:start(options)`
-- Look in cherry.engine.Game to see what you may override with `Game:YourStuff()`
+- Look in app.App to see what you may override with `App:start(options)`
+- Look in engine.Game to see what you may override with `Game:YourStuff()`
 
 ##### core
 - env files
@@ -328,4 +349,4 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 
 ## Games using Cherry
 
-- [Phantoms](http://www.uralys.com/projects/phantoms/) released on November 2015 as the actual source for cherry.
+- [Phantoms](http://www.uralys.com/projects/phantoms/) released on November 2015 as the actual source for

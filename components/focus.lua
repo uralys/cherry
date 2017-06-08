@@ -1,4 +1,8 @@
 
+local _       = require 'underscore'
+local utils   = require 'utils'
+local gesture = require 'gesture'
+
 --------------------------------------------------------
 
 local function horizontalBackAndForth(object, options)
@@ -185,8 +189,8 @@ return function(object, options)
 
     -----------------
 
-    if(utils and utils.onTap) then
-        utils.onTap(focus, function ()
+    if(utils and gesture.onTap) then
+        gesture.onTap(focus, function ()
             if(utils and utils.destroyFromDisplay) then
                 utils.destroyFromDisplay(focus, true)
             else

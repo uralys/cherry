@@ -1,12 +1,16 @@
 --------------------------------------------------------------------------------
 
-local Screen   = require 'cherry.components.Screen'
-local Scroller = require 'cherry.components.scroller'
-local Panel    = require 'cherry.components.panel'
-local GUI      = require 'cherry.components.gui'
-local Button   = require 'cherry.components.button'
-local Profile  = require 'cherry.components.profile'
-local Banner   = require 'cherry.components.banner'
+local _         = require 'underscore'
+local analytics = require 'analytics'
+local utils     = require 'utils'
+local gesture   = require 'gesture'
+local Screen    = require 'components.Screen'
+local Scroller  = require 'components.scroller'
+local Panel     = require 'components.panel'
+local GUI       = require 'components.gui'
+local Button    = require 'components.button'
+local Profile   = require 'components.profile'
+local Banner    = require 'components.banner'
 
 --------------------------------------------------------------------------------
 
@@ -266,7 +270,7 @@ function Chapters:drawClosedChapter(options, panel, parent)
             payed   = options.payed
         })
 
-        utils.onTap(button, function() self:buy(options.chapter) end)
+        gesture.onTap(button, function() self:buy(options.chapter) end)
     end
 end
 

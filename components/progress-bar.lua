@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
-local Icon = require 'cherry.components.icon'
+local _    = require 'underscore'
+local Icon = require 'components.icon'
 
 --------------------------------------------------------------------------------
 

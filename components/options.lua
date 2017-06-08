@@ -1,7 +1,8 @@
 --------------------------------------------------------------------------------
 
-local Button = require 'cherry.components.button'
-local Screen = require 'cherry.components.screen'
+local utils  = require 'utils'
+local Button = require 'components.button'
+local Screen = require 'components.screen'
 
 --------------------------------------------------------------------------------
 

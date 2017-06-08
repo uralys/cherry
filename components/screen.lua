@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------
 
-local Button = require 'cherry.components.button'
-local Background = require 'cherry.components.background'
+local utils      = require 'utils'
+local analytics  = require 'analytics'
+local gesture    = require 'gesture'
+local Button     = require 'components.button'
+local Background = require 'components.background'
 
 --------------------------------------------------------------------------------
 
@@ -68,8 +71,8 @@ function Screen:showBands(options)
     self.bottom.alpha = 0
     self.bottom:setFillColor(0)
 
-    utils.disabledTouch(self.topRect)
-    utils.disabledTouch(self.bottom)
+    gesture.disabledTouch(self.topRect)
+    gesture.disabledTouch(self.bottom)
 
     transition.to( self.topRect, {
         time  = 800,

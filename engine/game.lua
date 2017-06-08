@@ -1,8 +1,9 @@
 --------------------------------------------------------------------------------
 
-local Background = require 'cherry.components.background'
-local Screen = require 'cherry.components.screen'
-local Effects = require 'cherry.engine.effects'
+local _          = require 'underscore'
+local Background = require 'components.background'
+local Screen     = require 'components.screen'
+local Effects    = require 'engine.effects'
 
 --------------------------------------------------------------------------------
 

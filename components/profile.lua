@@ -1,6 +1,8 @@
 --------------------------------------------------------------------------------
 
-local ProgressBar = require 'cherry.components.progress-bar'
+local _           = require 'underscore'
+local utils       = require 'utils'
+local ProgressBar = require 'components.progress-bar'
 
 --------------------------------------------------------------------------------
 
