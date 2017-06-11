@@ -1,10 +1,10 @@
 --------------------------------------------------------------------------------
 
-local _       = require 'underscore'
-local utils   = require 'utils'
-local gesture = require 'gesture'
-local Panel   = require 'components.panel'
-local GUI     = require 'components.gui'
+local _         = require 'underscore'
+local animation = require 'animation'
+local gesture   = require 'gesture'
+local Panel     = require 'components.panel'
+local GUI       = require 'components.gui'
 
 --------------------------------------------------------------------------------
 
@@ -49,13 +49,13 @@ function Level:build(options)
 end
 
 function Level:show()
-    utils.bounce(self.bg)
-    utils.bounce(self.text)
+    animation.bounce(self.bg)
+    animation.bounce(self.text)
     self:bounceGems()
     self:bounceStars()
 
-    if(self.lock) then utils.bounce(self.lock) end
-    if(self.moves) then utils.bounce(self.moves, 0.5) end
+    if(self.lock) then animation.bounce(self.lock) end
+    if(self.moves) then animation.bounce(self.moves, 0.5) end
 end
 
 function Level:destroy()
@@ -150,7 +150,7 @@ end
 
 function Level:bounceGems()
     for i = 1, #self.gems do
-        utils.bounce(self.gems[i], 0.26)
+        animation.bounce(self.gems[i], 0.26)
     end
 end
 
@@ -193,7 +193,7 @@ function Level:bounceStars()
     for i = 1, #self.stars do
         local scale = 0.26
         if(i == 7) then scale = 0.8 end
-        utils.bounce(self.stars[i], scale)
+        animation.bounce(self.stars[i], scale)
     end
 end
 

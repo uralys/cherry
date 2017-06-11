@@ -1,10 +1,10 @@
 --------------------------------------------------------------------------------
 
-local _      = require 'underscore'
-local utils  = require 'utils'
-local Button = require 'components.button'
-local Panel  = require 'components.panel'
-local Banner = require 'components.banner'
+local _         = require 'underscore'
+local animation = require 'animation'
+local Button    = require 'components.button'
+local Panel     = require 'components.panel'
+local Banner    = require 'components.banner'
 
 --------------------------------------------------------------------------------
 
@@ -165,7 +165,7 @@ function Score:displayResult(board, bg)
         _G.FONT, 85
     )
 
-    utils.grow(text)
+    animation.grow(text)
 
     Button:icon({
         parent = board,
@@ -211,7 +211,7 @@ function Score:display()
     })
 
     self:displayResult(board, bg)
-    utils.easeDisplay(board)
+    animation.easeDisplay(board)
 end
 
 --------------------------------------------------------------------------------

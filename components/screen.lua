@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 
-local utils      = require 'utils'
 local analytics  = require 'analytics'
 local gesture    = require 'gesture'
+local webview    = require 'webview'
 local Button     = require 'components.button'
 local Background = require 'components.background'
 
@@ -13,7 +13,7 @@ local Screen = {}
 --------------------------------------------------------------------------------
 
 function Screen:openFacebook()
-    local closeWeb = utils.openWeb('http://facebook.com/uralys')
+    local closeWeb = webview.open('http://facebook.com/uralys')
     analytics.event('user', 'open-web', 'facebook')
     self:showBands({
         back = function ()
@@ -27,7 +27,7 @@ end
 --------------------------------------------------------------------------------
 
 function Screen:openCredits()
-    local closeWeb = utils.openWeb('http://www.uralys.com/projects/phantoms/#credits')
+    local closeWeb = webview.open('http://www.uralys.com/projects/phantoms/#credits')
     analytics.event('user', 'open-web', 'uralys')
     self:showBands({
         back = function ()

@@ -7,3 +7,5 @@ _G.Camera        = require 'engine.camera'
 _G.Effects       = require 'engine.effects'
 _G.Game          = require 'engine.game'
 _G.Sound         = require 'engine.sound'
+
+require 'tprint'

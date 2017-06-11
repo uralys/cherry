@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-local utils = require 'utils'
+local http = require 'http'
 
 local ANALYTICS_URL = "http://www.google-analytics.com/collect"
 
@@ -28,7 +28,7 @@ local function pageview(page)
     data = data .. "&av="   .. _G.analyticsParams.AppVersion
     data = data .. "&cd="   .. page
 
-    utils.post(ANALYTICS_URL, data, nil, 'urlencoded')
+    http.post(ANALYTICS_URL, data, nil, 'urlencoded')
 end
 
 --------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ local function event(category, action, label)
         data = data .. "&el="  .. label
     end
 
-    utils.post(ANALYTICS_URL, data, nil, 'urlencoded')
+    http.post(ANALYTICS_URL, data, nil, 'urlencoded')
 end
 
 --------------------------------------------------------------------------------

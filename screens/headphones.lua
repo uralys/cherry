@@ -1,7 +1,8 @@
 --------------------------------------------------------------------------------
 
 local analytics = require 'analytics'
-local utils     = require 'utils'
+local animation = require 'animation'
+local Text      = require 'text'
 local gesture   = require 'gesture'
 local composer  = require('composer')
 
@@ -20,9 +21,9 @@ function scene:create( event )
     )
 
     phantom.rotation = -4
-    utils.rotateBackAndForth(phantom, 4, 800)
+    animation.rotateBackAndForth(phantom, 4, 800)
 
-    local text = utils.text({
+    local text = Text.embossed({
         parent   = self.view,
         x        = display.contentWidth * 0.4,
         y        = display.contentHeight * 0.5,

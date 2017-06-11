@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 
-local gesture = require 'gesture'
-local utils = require 'utils'
+local animation = require 'animation'
+local gesture   = require 'gesture'
 
 local Button = {}
 
@@ -61,9 +61,9 @@ function Button:icon(options)
 
     if(options.bounce) then
         if(options.scale) then
-            utils.bounce(button, options.scale)
+            animation.bounce(button, options.scale)
         else
-            utils.bounce(button)
+            animation.bounce(button)
         end
     end
 

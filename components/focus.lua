@@ -1,6 +1,6 @@
 
 local _       = require 'underscore'
-local utils   = require 'utils'
+local group   = require 'group'
 local gesture = require 'gesture'
 
 --------------------------------------------------------
@@ -189,18 +189,10 @@ return function(object, options)
 
     -----------------
 
-    if(utils and gesture.onTap) then
-        gesture.onTap(focus, function ()
-            if(utils and utils.destroyFromDisplay) then
-                utils.destroyFromDisplay(focus, true)
-            else
-                display.remove(focus)
-            end
-
-            -- enable propagation
-            return false
-        end)
-    end
+    gesture.onTap(focus, function ()
+        group.destroy(focus, true)
+        return false -- enable propagation
+    end)
 
     -----------------
 

@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------
 
-local _     = require 'underscore'
-local utils = require 'utils'
+local _         = require 'underscore'
+local TextUtils = require 'text'
+local colorize  = require 'colorize'
+local animation = require 'animation'
+
 local Text = {}
 
 --------------------------------------------------------------------------------
@@ -15,8 +18,8 @@ end
 
 --------------------------------------------------------------------------------
 
-local function animate ( view, animation )
-    if(animation == 'slow-disappear') then
+local function animate ( view, type )
+    if(type == 'slow-disappear') then
         transition.to( view, {
             time       = 2600,
             alpha      = 1,
@@ -31,7 +34,7 @@ local function animate ( view, animation )
         })
     end
 
-    if(animation == 'bounce-disappear') then
+    if(type == 'bounce-disappear') then
         transition.to( view, {
             time       = 50,
             alpha      = 1,
@@ -54,7 +57,7 @@ function Text:render()
         display.remove(self.view)
     end
 
-    self.view = utils.text({
+    self.view = TextUtils.embossed({
         parent   = self.parent,
         value    = self.value,
         font     = self.font or _G.FONT,
@@ -63,10 +66,10 @@ function Text:render()
         y        = self.y
     })
 
-    self.view:setFillColor( utils.colorize(self.color or 'ffffff') )
+    self.view:setFillColor( colorize(self.color or 'ffffff') )
 
     if (self.grow) then
-        utils.grow(self.view)
+        animation.grow(self.view)
     end
 
     if (self.animation) then

@@ -2,7 +2,8 @@
 
 local _         = require 'underscore'
 local analytics = require 'analytics'
-local utils     = require 'utils'
+local animation = require 'animation'
+local Text      = require 'text'
 local gesture   = require 'gesture'
 local Screen    = require 'components.Screen'
 local Scroller  = require 'components.scroller'
@@ -31,7 +32,7 @@ function Chapters:draw(options)
 end
 
 function Chapters:onShow()
-    utils.easeDisplay(self.banner)
+    animation.easeDisplay(self.banner)
 end
 
 function Chapters:reset()
@@ -50,9 +51,9 @@ function Chapters:buy(num)
     -- Product listener function
     local function productListener( event )
         print( 'Valid products:', #event.products )
-        utils.tprint(event.products)
+        _G.tprint(event.products)
         print( 'Invalid products:', #event.invalidProducts )
-        utils.tprint(event.invalidProducts)
+        _G.tprint(event.invalidProducts)
     end
 
     local function storeTransaction( event )
@@ -65,10 +66,10 @@ function Chapters:buy(num)
             App.user:bought(num)
 
         elseif ( transaction.state == 'cancelled' ) then
-            utils.tprint(transaction)
+            _G.tprint(transaction)
 
         elseif ( transaction.state == 'failed' ) then
-            utils.tprint(transaction)
+            _G.tprint(transaction)
         end
 
         store.finishTransaction( transaction )
@@ -180,7 +181,7 @@ function Chapters:hellBarEntrance(options)
 
     local contentX = -panel.width * 0.2
 
-    utils.text({
+    Text:embossed({
         parent   = hellbar,
         value    = 'Reach 10k likes on FB to open this secret door...',
         x        = contentX,
@@ -307,7 +308,7 @@ function Chapters:drawOpenChapter(options, panel, parent)
         end
     })
 
-    utils.easeDisplay(play, 1.2)
+    animation.easeDisplay(play, 1.2)
 end
 
 --------------------------------------------------------------------------------
@@ -363,7 +364,7 @@ function Chapters:summary(options)
             textY = panel.y
         end
 
-        utils.text({
+        Text:embossed({
             parent   = summary,
             value    = options.condition.text,
             x        = contentX,

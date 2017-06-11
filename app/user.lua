@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 
-local _     = require 'underscore'
-local utils = require 'utils'
+local _    = require 'underscore'
+local file = require 'file'
 
 local User = {}
 
@@ -20,7 +20,7 @@ end
 --------------------------------------------------------------------------------
 
 function User:load()
-    self.savedData = utils.loadUserData('savedData.json');
+    self.savedData = file.loadUserData('savedData.json');
 
     -- preparing data
     if(not self.savedData) then
@@ -79,21 +79,13 @@ end
 --------------------------------------------------------------------------------
 
 function User:save()
-    utils.saveTable(self.savedData, 'savedData.json')
+    file.save(self.savedData, 'savedData.json')
 end
 
---------------------------------------------------------------------------------
---  Profile crawling
 --------------------------------------------------------------------------------
 
 function User:isNew()
     return not self.savedData.profile.tutorial
-end
-
---------------------------------------------------------------------------------
-
-function User:totalPercentage()
-    return utils.toPercentage(12, 28)
 end
 
 --------------------------------------------------------------------------------

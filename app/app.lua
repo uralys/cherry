@@ -5,7 +5,7 @@ local demo       = require 'app.extension-demo'
 local User       = require 'app.user'
 local Score      = require 'engine.score'
 local _          = require 'underscore'
-local utils      = require 'utils'
+local file       = require 'file'
 local analytics  = require 'analytics'
 
 --------------------------------------------------------------------------------
@@ -82,8 +82,8 @@ end
 function App:loadSettings()
     print('---------- SETTINGS ------------')
     local path = 'env/' .. App.ENV .. '.json'
-    local settings = utils.loadFile(path)
-    utils.tprint(settings)
+    local settings = file.load(path)
+    _G.tprint(settings)
     print('--------------------------------')
 
     App.INVINCIBLE     = settings.invincible

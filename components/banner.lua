@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-local utils = require 'utils'
+local Text = require 'text'
 local Banner = {}
 
 --------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ function Banner:large(options)
 
     local curveSize = options.width/0.55
 
-    banner.text = utils.curveText({
+    banner.text = Text.curve({
         parent     = banner,
         text       = options.text or '',
         curveSize  = curveSize,
@@ -62,7 +62,7 @@ function Banner:simple(options)
 
     local curveSize = options.width/0.55
 
-    banner.text = utils.curveText({
+    banner.text = Text.curve({
         parent     = banner,
         text       = options.text or '',
         curveSize  = curveSize,

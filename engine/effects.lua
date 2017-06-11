@@ -4,7 +4,7 @@ if(not CBE) then
     print('You must link CBE to use Effects')
 end
 
-local utils = require 'utils'
+local table = require 'table-extended'
 
 --------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ end
 --------------------------------------------------------------------------------
 
 function Effects:destroyEffect( effect, now )
-    utils.removeFromTable(self.effects, effect)
+    table.removeObject(self.effects, effect)
     effect:destroy()
 
     nbDestroyed = nbDestroyed + 1

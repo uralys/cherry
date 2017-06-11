@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _     = require 'underscore'
-local utils = require 'utils'
+local group = require 'group'
 
 local Camera = {
     options = {},
@@ -29,7 +29,7 @@ end
 --------------------------------------------------------------------------------
 
 function Camera:empty()
-    utils.emptyGroup(self.display)
+    group.empty(self.display)
 end
 
 --------------------------------------------------------------------------------

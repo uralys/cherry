@@ -1,8 +1,9 @@
 --------------------------------------------------------------------------------
 
-local _      = require 'underscore'
-local utils  = require 'utils'
-local Banner = require 'components.banner'
+local _         = require 'underscore'
+local animation = require 'animation'
+local Text      = require 'text'
+local Banner    = require 'components.banner'
 
 --------------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ function GUI:iconText(options)
         0, 0
     )
 
-    utils.text({
+    Text:embossed({
         parent   = icon,
         value    = options.value,
         x        = 0,
@@ -131,9 +132,9 @@ function GUI:multiplier(options)
         options.y
     )
 
-    utils.bounce(multiply)
+    animation.bounce(multiply)
 
-    local num = utils.text({
+    local num = Text:embossed({
         parent   = options.parent,
         value    = options.value,
         x        = options.x + icon.width * 1.1,
@@ -142,7 +143,7 @@ function GUI:multiplier(options)
         fontSize = options.fontSize or 75
     })
 
-    utils.bounce(num)
+    animation.bounce(num)
 end
 
 --------------------------------------------------------------------------------

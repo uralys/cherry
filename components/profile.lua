@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _           = require 'underscore'
-local utils       = require 'utils'
+local file        = require 'file'
 local ProgressBar = require 'components.progress-bar'
 
 --------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ function Profile:status(options)
     if(options.item) then
         path = 'assets/images/gui/items/'.. options.item ..'.icon.png'
 
-        if(not utils.assetExists(path)) then
+        if(not file.exists(path)) then
             path = 'cherry/_images/gui/items/'.. options.item ..'.icon.png'
         end
     end

@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-local utils  = require 'utils'
+local Text   = require 'text'
 local Button = require 'components.button'
 local Screen = require 'components.screen'
 
@@ -47,7 +47,7 @@ function Options:drawActions(view)
         end
     })
 
-    self.version = utils.simpleText({
+    self.version = Text.simple({
         parent = self.actions,
         value  = App.version,
         x      = 320,
