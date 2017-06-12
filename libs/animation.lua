@@ -5,13 +5,12 @@ local animation = {}
 --------------------------------------------------------
 
 function animation.rotateBackAndForth(object, angle, time)
-
     local initialRotation = object.rotation
 
     local back = function()
         transition.to(object, {
             rotation   = initialRotation,
-            onComplete = animation.rotateBackAndForth(object, -angle, time),
+            onComplete = function() animation.rotateBackAndForth(object, -angle, time) end,
             time       = time
         })
     end

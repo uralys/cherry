@@ -3,5 +3,11 @@ return {
     for k,v in pairs(properties) do
       object[k] = v
     end
+    if(object.onComplete) then
+        object.onCompleteCounts = (object.onCompleteCounts or 0) - 1
+        if(object.onCompleteCounts >= 0) then
+            object.onComplete()
+        end
+    end
   end
 }

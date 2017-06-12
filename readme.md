@@ -1,11 +1,11 @@
-## lua
+## Cherry.lua
 
-[![Build Status](https://travis-ci.org/chrisdugne/svg?branch=master)](https://travis-ci.org/chrisdugne/cherry)
+[![Travis](https://img.shields.io/travis/chridugne/cherry.svg)]()
 [![codecov](https://codecov.io/gh/chrisdugne/cherry/branch/master/graph/badge.svg)](https://codecov.io/gh/chrisdugne/cherry)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-green.svg?colorB=3cc712)](LICENSE)
-![version](https://img.shields.io/github/tag/chrisdugne/svg?colorB=3cc712)
+[![GitHub release](https://img.shields.io/github/release/chrisdugne/cherry.svg)]()
 
-Cherry is an open source starter for `CoronaSDK App` to help building your game.
+Cherry is a starter for `CoronaSDK App` to help building your game.
 
 - [Introduction](#introduction-to-cherry)
 - [Usage](#usage)
@@ -17,7 +17,7 @@ Cherry is an open source starter for `CoronaSDK App` to help building your game.
 - [Third Parties](#third-parties)
 - [Games using Cherry](#games-using-cherry)
 
-![cherry](/docs/png)
+![cherry](/docs/cherry.png)
 
 ## Introduction to Cherry
 

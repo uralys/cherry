@@ -38,6 +38,7 @@ return {
   -- the .lua extension)
   ['exclude'] = {
     'mocks',
-    'spec'
+    'mocks',
+    'tprint'
   },
 }

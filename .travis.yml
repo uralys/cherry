@@ -22,7 +22,7 @@ install:
   - ./install-rocks
 
 script:
-  - luacheck **/*.lua
+  - luacheck .
   - ./test/run travis
 
 after_success:

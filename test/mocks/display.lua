@@ -41,7 +41,8 @@ local function newDisplayObject()
         yReference = 0,
         yScale = 1,
         referencePoint = display.TopLeftReferencePoint,
-        eventListeners = {}
+        eventListeners = {},
+        onCompleteCounts = 1 --- cherry default transition testing: calling onComplete once
     }
 
     _displayObject.setFillColor = function() return  end
