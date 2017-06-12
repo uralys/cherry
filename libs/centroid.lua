@@ -1,4 +1,4 @@
-local reduce = require('src.ludash').reduce
+local reduce = require('ludash').reduce
 
 local function centroid (points)
   local l = #points

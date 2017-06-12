@@ -3,7 +3,6 @@
 local composer  = require('composer')
 local _         = require 'underscore'
 local analytics = require 'analytics'
-local table     = require 'table-extended'
 local group     = require 'group'
 local Screen    = require 'components.screen'
 local Effects   = require 'engine.effects'
@@ -36,7 +35,7 @@ function Router:openScreen(id, class, params)
     analytics.pageview(id)
 
     Router.view = id
-    print('[Router] openScreen: ' .. Router.view )
+    print('[Router] ---> ' .. Router.view )
 
     composer.gotoScene( class, options )
 end
@@ -44,13 +43,7 @@ end
 --------------------------------------------------------------------------------
 
 function Router:open(id, params)
-    local class
-    if(table.contains(App.screens, id)) then
-        class  = 'src.screens.' .. id
-    else
-        class  = 'screens.' .. id
-    end
-
+    local class = 'screens.' .. id
     self:openScreen(id, class, params)
 end
 

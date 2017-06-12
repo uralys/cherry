@@ -9,7 +9,7 @@ local http = {}
 
 function http.request(url, method, next, data, type, authToken)
     local VERBOSE = false
-    local DEV_BEARER = '234567'
+    local DEV_BEARER = nil
 
     if(VERBOSE) then print(method, url) end
     if(next == nil) then
@@ -36,7 +36,6 @@ function http.request(url, method, next, data, type, authToken)
     elseif(type == "urlencoded") then
         headers["Content-Type"] = "Application/x-www-form-urlencoded"
     end
-
 
     ----------------------------------------
 

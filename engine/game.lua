@@ -32,10 +32,8 @@ end
 function Game:start()
     self:reset()
     if (self.load) then
-        print('loading...')
         local success = self:load()
         if(success) then
-            print('loaded successfully')
             self:run()
         else
             print('could not load properly')
@@ -61,7 +59,7 @@ function Game:run()
 
     if(self.onRun) then self:onRun() end -- from extension
 
-    Effects:restart()
+    if(_G.CBE) then Effects:restart() end
     print('Game runs!')
 end
 
@@ -79,7 +77,7 @@ function Game:stop(userExit)
 
     ------------------------------------------
 
-    if(self.onStop) then self:onStop() end -- from extension
+    if(self.onStop) then self:onStop(userExit) end -- from extension
 
     ------------------------------------------
 
@@ -91,7 +89,7 @@ function Game:stop(userExit)
     ------------------------------------------
 
     Background:lighten()
-    Effects:stop(true)
+    if(_G.CBE) then Effects:stop(true) end
     Camera:stop()
 end
 

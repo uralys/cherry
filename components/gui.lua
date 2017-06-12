@@ -86,7 +86,7 @@ function GUI:iconText(options)
         0, 0
     )
 
-    Text:embossed({
+    Text.embossed({
         parent   = icon,
         value    = options.value,
         x        = 0,
@@ -134,7 +134,7 @@ function GUI:multiplier(options)
 
     animation.bounce(multiply)
 
-    local num = Text:embossed({
+    local num = Text.embossed({
         parent   = options.parent,
         value    = options.value,
         x        = options.x + icon.width * 1.1,

@@ -10,7 +10,7 @@ local ProgressBar = {}
 --------------------------------------------------------------------------------
 -- DOC desc
 -- todo utils.text --> component.Text puis if Text or display.newtText
--- install src.component
+-- install component
 -- install assets
 
 --- options:

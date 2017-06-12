@@ -181,7 +181,7 @@ function Chapters:hellBarEntrance(options)
 
     local contentX = -panel.width * 0.2
 
-    Text:embossed({
+    Text.embossed({
         parent   = hellbar,
         value    = 'Reach 10k likes on FB to open this secret door...',
         x        = contentX,

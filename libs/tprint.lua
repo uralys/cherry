@@ -1,20 +1,20 @@
-_G.tprint = function (tbl, indent, options)
+_G.tprint = function (tbl, depth, loop)
+    if depth == nil then depth = 10 end
+    if loop == nil then loop = 1 end
     if not tbl then print("Table nil") return end
-    if not options then options = {} end
 
     if type(tbl) ~= "table" then
         print(tostring(tbl))
     else
-        if not indent then indent = 1 end
         for k, v in pairs(tbl) do
-            local formatting = string.rep("  ", indent) .. k .. ": "
+            local formatting = string.rep("  ", loop) .. k
             if type(v) == "table" then
                 print(formatting)
-                if(indent < 6) then
-                    _G.tprint(v, indent+1, options)
+                if(depth > 1) then
+                    _G.tprint(v, depth - 1, loop + 1)
                 end
             else
-                print(formatting .. tostring(v))
+                print(formatting .. ': ' .. tostring(v))
             end
         end
     end

@@ -141,7 +141,7 @@ A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/libra
 
 #### Adding a new Model
 - Each `model` should implement `new` and `show` functions, for instance read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
-- Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'src.game.models.YourModel'`
+- Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'game.models.YourModel'`
 - Use `YourModel:new()` during the `LevelDrawer` parsing
 - Use `YourModel:show()` during the `Game` rendering
 

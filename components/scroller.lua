@@ -4,7 +4,7 @@
 -- can insert on the fly
 -- handle resize/visibility
 -- handle listening
--- install src.component
+-- install component
 -- install assets
 --------------------------------------------------------------------------------
 --- todo :
