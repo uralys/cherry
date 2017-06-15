@@ -1,11 +1,11 @@
 #!/bin/bash
 if [[ $1 = "travis" ]]; then
-    busted \
+    busted -v \
         --run=tests \
         --config-file=test/.busted \
         -m '/home/travis/build/chrisdugne/cherry/test/?.lua;/home/travis/build/chrisdugne/cherry/libs/?.lua;/home/travis/build/chrisdugne/cherry/?.lua'
 else
-    busted \
+    busted -v \
         --run=tests \
         --config-file=test/.busted
 fi

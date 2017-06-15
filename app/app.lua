@@ -70,7 +70,7 @@ function App:start(options)
     print( 'Cherry: ' .. App.cherryVersion)
     print('--------------------------------')
     print('extensions:')
-    _G.tprint(App.extension, 1)
+    print(_G.inspect(App.extension, 1))
     print('--------------------------------')
 
     self:deviceSetup()

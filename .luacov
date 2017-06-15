@@ -9,7 +9,7 @@ return {
   ['configfile'] = '.luacov',
 
   -- filename to store stats collected
-  ['statsfile'] = 'test/luacov.stats.out',
+  ['statsfile'] = 'luacov.stats.out',
 
   -- filename to store report
   ['reportfile'] = 'luacov.report.out',

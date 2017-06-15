@@ -286,6 +286,22 @@ display = {
         newText.size = size
         return newText
     end,
+    newEmbossedText = function(options)
+        local newText = newDisplayObject()
+        newText.setEmbossColor = function(text, color)
+            local highlight = color.highlight
+            local shadow = color.shadow
+            newText.highlight = { r = highlight.r, g = highlight.g, b = highlight.b }
+            newText.shadow = { r = shadow.r, g = shadow.g, b = shadow.b }
+        end
+
+        newText.x = options.x
+        newText.y = options.y
+        newText.text = options.text
+        newText.size = options.size
+
+        return newText
+    end,
     currentStage = _currentStage,
     getCurrentStage = function() return display.currentStage end,
     TopLeftReferencePoint = 7,

@@ -1,13 +1,5 @@
 expose('[setting up tests Globals]', function()
-  require('tprint')
-
-  _G.sleep = function(n)
-    local t = os.clock()
-    while os.clock() - t <= n do
-      -- nothing
-    end
-  end
-
+  _G.inspect    = require('inspect')
   _G.display    = require('mocks.display')
   _G.transition = require('mocks.transition')
   _G.App        = require('mocks.app')
