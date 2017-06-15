@@ -176,6 +176,7 @@ local function newDisplayObject()
     }
     setmetatable(displayObject, metatable)
 
+    displayObject.private = _displayObject
     return displayObject
 end
 
@@ -273,17 +274,17 @@ display = {
 
         return sprite
     end,
-    newText = function(text, x, y, font, size)
+    newText = function(options)
         local newText = newDisplayObject()
         newText.setTextColor = function(r, g, b)
             newText.textColor = { r = r, g = g, b = b }
         end
 
-
-        newText.x = x
-        newText.y = y
-        newText.text = text
-        newText.size = size
+        newText.x = options.x
+        newText.y = options.y
+        newText.text = options.text
+        newText.size = options.size
+        options.parent:insert(newText)
         return newText
     end,
     newEmbossedText = function(options)
@@ -299,7 +300,7 @@ display = {
         newText.y = options.y
         newText.text = options.text
         newText.size = options.size
-
+        options.parent:insert(newText)
         return newText
     end,
     currentStage = _currentStage,

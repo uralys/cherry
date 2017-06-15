@@ -1,11 +1,13 @@
 stds.corona = {
+  globals = {
+    math = {fields = {round = {}}}
+  },
   read_globals = {
     'audio',
     'composer',
     'display',
     'easing',
     'graphics',
-    math = {fields = {round = {}}},
     'native',
     'network',
     'Runtime',

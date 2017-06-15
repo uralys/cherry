@@ -18,7 +18,7 @@ function Text.embossed(options)
         fontSize = options.fontSize
     })
 
-    local color = {
+    local color = options.color or {
         highlight = { r=1, g=1, b=1 },
         shadow = { r=0.3, g=0.3, b=0.3 }
     }
@@ -52,24 +52,24 @@ function Text.curve(options)
         local angleDegrees = (i - (#options.text+1.5)/2)*step - 90
         local angleRadians = math.rad(angleDegrees)
 
-        local sprite = display.newEmbossedText(
-            curvedText,
-            options.text:sub(i, i),
-            0, 0,
-            options.font,
-            options.fontSize or 65
-        )
-        sprite.x = options.x + math.cos(angleRadians)*circleSize
-        sprite.y = options.y + math.sin(angleRadians)*circleSize
-        sprite.rotation = 90 + angleDegrees -- or maybe minus this or plus 90...
-
         local color =
         {
             highlight = { r=0.2, g=0.2, b=0.2 },
             shadow = { r=0.2, g=0.2, b=0.2 }
         }
-        sprite:setEmbossColor( color )
 
+        local sprite = Text.embossed({
+            parent = curvedText,
+            text = options.text:sub(i, i),
+            x = 0,
+            y = 0,
+            fontSize = 65,
+            color = color
+        })
+
+        sprite.x = options.x + math.cos(angleRadians)*circleSize
+        sprite.y = options.y + math.sin(angleRadians)*circleSize
+        sprite.rotation = 90 + angleDegrees -- or maybe minus this or plus 90...
     end
 
     options.parent:insert(curvedText)
@@ -81,8 +81,11 @@ end
 
 function Text.counter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
     writer.currentDisplay = writer.currentDisplay or 0
-    timer.performWithDelay(25, function()
+    writer.x       = x
+    writer.anchorX = anchorX
+    writer.anchorY = anchorY
 
+    timer.performWithDelay(25, function()
         local ratio = (4 * numToReach)/(numToReach - writer.currentDisplay)
         local toAdd = math.floor(numToReach/ratio)
         if(toAdd == 0) then toAdd = 1 end
@@ -91,16 +94,13 @@ function Text.counter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
 
         if(writer.currentDisplay >= numToReach) then
             writer.currentDisplay = math.round(numToReach)
-            next()
+            writer.text    = writer.currentDisplay
+            if(next) then next() end
         else
             nextMillis = 100/(numToReach - writer.currentDisplay)
             Text.counter(numToReach, writer, anchorX, anchorY, x, next, nextMillis)
         end
 
-        writer.text    = writer.currentDisplay
-        writer.x       = x
-        writer.anchorX = anchorX
-        writer.anchorY = anchorY
     end)
 end
 
