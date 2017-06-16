@@ -70,7 +70,7 @@ function App:start(options)
     print( 'Cherry: ' .. App.cherryVersion)
     print('--------------------------------')
     print('extensions:')
-    print(_G.inspect(App.extension, 1))
+    print(_G.inspect(App.extension, {depth = 1}))
     print('--------------------------------')
 
     self:deviceSetup()
@@ -86,7 +86,7 @@ function App:loadSettings()
     print('---------- SETTINGS ------------')
     local path = 'env/' .. App.ENV .. '.json'
     local settings = file.load(path)
-    _G.tprint(settings)
+    print(_G.inspect(settings))
     print('--------------------------------')
 
     App.INVINCIBLE     = settings.invincible

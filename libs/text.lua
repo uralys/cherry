@@ -9,7 +9,7 @@ local Text = {}
 function Text.embossed(options)
     local _text = display.newEmbossedText({
         parent   = options.parent,
-        text     = options.value,
+        text     = options.text,
         x        = options.x,
         y        = options.y,
         width    = options.width,
@@ -63,6 +63,7 @@ function Text.curve(options)
             text = options.text:sub(i, i),
             x = 0,
             y = 0,
+            font = options.font,
             fontSize = 65,
             color = color
         })

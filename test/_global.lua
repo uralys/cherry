@@ -5,6 +5,8 @@ expose('[setting up tests Globals]', function()
   _G.App        = require('mocks.app')
   _G.network    = require('mocks.network')
   _G.http       = require('mocks.http')
+  _G.Runtime    = require('mocks.runtime')
+  _G.system     = require('mocks.system')
 
   _G.easing     = {}
   _G.timer      = {performWithDelay = function(time, func) func() end}

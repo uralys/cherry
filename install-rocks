@@ -2,5 +2,3 @@
 luarocks install busted;
 luarocks install luacheck;
 luarocks install luacov;
-luarocks install dkjson;
-luarocks install inspect;

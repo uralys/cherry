@@ -305,6 +305,7 @@ display = {
     end,
     currentStage = _currentStage,
     getCurrentStage = function() return display.currentStage end,
+    setStatusBar = function() return true end,
     TopLeftReferencePoint = 7,
     TopCenterReferencePoint = 8,
     TopRightReferencePoint = 9,
@@ -319,7 +320,9 @@ display = {
     screenOriginX = 0,
     screenOriginY = 0,
     contentScaleY = 1,
-    contentScaleX = 1
+    contentScaleX = 1,
+    pixelWidth = 750,
+    pixelHeight = 1334
 }
 
 return display

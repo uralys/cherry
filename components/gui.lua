@@ -88,7 +88,7 @@ function GUI:iconText(options)
 
     Text.embossed({
         parent   = icon,
-        value    = options.value,
+        text     = options.value,
         x        = 0,
         y        = 0,
         font     = options.font or _G.FONT,
@@ -136,7 +136,7 @@ function GUI:multiplier(options)
 
     local num = Text.embossed({
         parent   = options.parent,
-        value    = options.value,
+        text     = options.value,
         x        = options.x + icon.width * 1.1,
         y        = options.y,
         font     = options.font or _G.FONT,

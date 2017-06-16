@@ -27,7 +27,7 @@ function scene:create( event )
         parent   = self.view,
         x        = display.contentWidth * 0.4,
         y        = display.contentHeight * 0.5,
-        value    = 'You should use headphones for a complete experience',
+        text     = 'You should use headphones for a complete experience',
         font     = _G.FONT,
         fontSize = App:adaptToRatio(15),
         width    = display.contentWidth * 0.4
