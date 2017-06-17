@@ -3,7 +3,7 @@ if [[ $1 = "travis" ]]; then
     busted -v \
         --run=tests \
         --config-file=test/.busted \
-        -m '/home/travis/build/chrisdugne/cherry/test/?.lua;/home/travis/build/chrisdugne/cherry/libs/?.lua;/home/travis/build/chrisdugne/cherry/?.lua'
+        -m '/home/travis/build/chrisdugne/cherry/test/?.lua;/home/travis/build/chrisdugne/cherry/src/libs/?.lua;/home/travis/build/chrisdugne/cherry/src/?.lua'
 else
     busted -v \
         --run=tests \
