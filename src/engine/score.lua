@@ -153,7 +153,7 @@ end
 function Score:generateResult()
     return {
         title = 'Game over !',
-        background = 'cherry/_images/gui/panels/panel.vertical.png'
+        background = 'Cherry/assets/images/gui/panels/panel.vertical.png'
     }
 end
 

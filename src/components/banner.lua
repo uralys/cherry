@@ -14,7 +14,7 @@ function Banner:large(options)
 
     display.newImageRect(
         banner,
-        'cherry/_images/gui/banners/banner.png',
+        'Cherry/assets/images/gui/banners/banner.png',
         options.width,
         options.height
     );
@@ -50,7 +50,7 @@ function Banner:simple(options)
 
     display.newImageRect(
         banner,
-        'cherry/_images/gui/banners/banner.simple.png',
+        'Cherry/assets/images/gui/banners/banner.simple.png',
         options.width,
         options.height
     );

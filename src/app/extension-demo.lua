@@ -1,10 +1,10 @@
 
 local function onReset ()
-    print('gameExtension.onReset should be set')
+    _G.log('gameExtension.onReset should be set')
 end
 
 local function onStop ()
-    print('gameExtension.onReset should be set')
+    _G.log('gameExtension.onReset should be set')
 end
 
 local function onStart ()

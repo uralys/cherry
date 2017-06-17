@@ -4,9 +4,8 @@ local analytics = require 'analytics'
 local animation = require 'animation'
 local Text      = require 'text'
 local gesture   = require 'gesture'
-local composer  = require('composer')
 
-local scene = composer.newScene()
+local scene = _G.composer.newScene()
 
 --------------------------------------------------------------------------------
 
@@ -15,7 +14,7 @@ function scene:create( event )
 
     local phantom = display.newImage(
         self.view,
-        'cherry/_images/gui/avatars/headphones.png',
+        'Cherry/assets/images/gui/avatars/headphones.png',
         display.contentWidth * 0.2,
         display.contentHeight * 0.5
     )

@@ -36,7 +36,7 @@ function GUI:bigIcon(options)
 
     display.newImage(
         icon,
-        'cherry/_images/gui/items/circle.container.on.png',
+        'Cherry/assets/images/gui/items/circle.container.on.png',
         0, 0
     )
 
@@ -56,7 +56,7 @@ end
 function GUI:miniIcon(options)
     local icon = display.newImage(
         options.parent,
-        'cherry/_images/gui/items/' .. options.type .. '.icon.png'
+        'Cherry/assets/images/gui/items/' .. options.type .. '.icon.png'
     );
 
     if(options.disabled or options.status == 'off') then
@@ -82,7 +82,7 @@ function GUI:iconText(options)
 
     display.newImage(
         icon,
-        'cherry/_images/gui/items/circle.container.on.png',
+        'Cherry/assets/images/gui/items/circle.container.on.png',
         0, 0
     )
 
@@ -118,7 +118,7 @@ end
 
 function GUI:multiplier(options)
     local icon = self:bigIcon(_.extend({
-        image  = 'cherry/_images/gui/items/' .. options.item .. '.icon.png',
+        image  = 'Cherry/assets/images/gui/items/' .. options.item .. '.icon.png',
         parent = options.parent,
         x      = options.x,
         y      = options.y,
@@ -127,7 +127,7 @@ function GUI:multiplier(options)
 
     local multiply = display.newImage(
         options.parent,
-        'cherry/_images/gui/items/multiply.png',
+        'Cherry/assets/images/gui/items/multiply.png',
         options.x + icon.width * 0.55,
         options.y
     )

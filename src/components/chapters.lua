@@ -50,26 +50,26 @@ function Chapters:buy(num)
 
     -- Product listener function
     local function productListener( event )
-        print( 'Valid products:', #event.products )
-        _G.tprint(event.products)
-        print( 'Invalid products:', #event.invalidProducts )
-        _G.tprint(event.invalidProducts)
+        _G.log( 'Valid products:', #event.products )
+        _G.log(_G.inspect(event.products))
+        _G.log( 'Invalid products:', #event.invalidProducts )
+        _G.log(_G.inspect(event.invalidProducts))
     end
 
     local function storeTransaction( event )
-        print('--> callback storeTransaction')
+        _G.log('--> callback storeTransaction')
         native.setActivityIndicator( false )
         local transaction = event.transaction
-        print('transaction.state: ' ,  transaction.state)
+        _G.log('transaction.state: ' ,  transaction.state)
 
         if ( transaction.state == 'purchased' ) then
             App.user:bought(num)
 
         elseif ( transaction.state == 'cancelled' ) then
-            _G.tprint(transaction)
+            _G.log(_G.inspect(transaction))
 
         elseif ( transaction.state == 'failed' ) then
-            _G.tprint(transaction)
+            _G.log(_G.inspect(transaction))
         end
 
         store.finishTransaction( transaction )
@@ -91,12 +91,12 @@ function Chapters:buy(num)
         native.setActivityIndicator( true )
         store = require( 'plugin.google.iap.v3' )
         timer.performWithDelay( 1000, function()
-            print('init store...')
+            _G.log('init store...')
             store.init( 'google', storeTransaction );
             timer.performWithDelay( 1000, function()
-                print('trying to loadProducts')
+                _G.log('trying to loadProducts')
                 if ( store.canLoadProducts ) then
-                    print('trying to loadProducts')
+                    _G.log('trying to loadProducts')
                     local productIdentifiers = {
                         id,
                         'uralys.phantoms.chapter_3'
@@ -104,7 +104,7 @@ function Chapters:buy(num)
                     store.loadProducts( productIdentifiers, productListener )
                 end
 
-                print('PURCHASING...[' .. id .. ']')
+                _G.log('PURCHASING...[' .. id .. ']')
                 store.purchase(id)
             end )
         end )
@@ -175,7 +175,7 @@ function Chapters:hellBarEntrance(options)
 
     display.newImage(
         hellbar,
-        'cherry/_images/gui/houses/hell.png',
+        'Cherry/assets/images/gui/houses/hell.png',
         panel.width*0.2, 0
     )
 
@@ -409,7 +409,7 @@ end
 function Chapters:buyButton(options)
     local button = display.newImage(
         options.parent,
-        'cherry/_images/gui/buttons/buy.png'
+        'Cherry/assets/images/gui/buttons/buy.png'
     );
 
     button.x = options.x
@@ -425,7 +425,7 @@ function Chapters:lock(options)
 
     local lock = display.newImage(
         options.parent,
-        'cherry/_images/gui/items/lock.png'
+        'Cherry/assets/images/gui/items/lock.png'
     );
 
     lock.x = options.x

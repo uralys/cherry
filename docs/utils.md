@@ -4,7 +4,7 @@ Use `onTap` on any displayObject to apply a function as soon as a finger **touch
 
 ```lua
 local button = display.newImage(
-    'cherry/_images/gui/items/circle.simple.container.png',
+    'Cherry/assets/images/gui/items/circle.simple.container.png',
     0, 0
 )
 
@@ -28,7 +28,7 @@ Use `onTouch` on any displayObject to apply a function when finger that touched 
 
 ```lua
 local button = display.newImage(
-    'cherry/_images/gui/items/circle.simple.container.png',
+    'Cherry/assets/images/gui/items/circle.simple.container.png',
     0, 0
 )
 

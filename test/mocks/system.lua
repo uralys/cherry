@@ -7,7 +7,7 @@ local system = {
     end
   end,
   pathForFile = function (name, folder)
-    return 'plop'
+    return './' .. name
   end
 }
 

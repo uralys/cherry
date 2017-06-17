@@ -5,7 +5,7 @@ local Icon = {}
 --------------------------------------------------------------------------------
 
 function Icon:draw(options)
-
+print(options.path)
     local icon = display.newImage(
         options.parent,
         options.path

@@ -11,7 +11,7 @@ local ProgressBar = {}
 -- DOC desc
 -- todo utils.text --> component.Text puis if Text or display.newtText
 -- install component
--- install assets
+-- install Cherry/assets
 
 --- options:
 --      changeBG:     boolean : greenbg at 100%
@@ -56,7 +56,7 @@ end
 function ProgressBar:background(options)
     self.bg = display.newImage(
         self.display,
-        self.rail or 'cherry/_images/gui/progress-bar/loading-bg.png'
+        self.rail or 'Cherry/assets/images/gui/progress-bar/loading-bg.png'
     )
 
     self.bg.width  = options.width
@@ -71,7 +71,7 @@ function ProgressBar:background(options)
 
     self.bgGreen = display.newImage(
         self.display,
-        'cherry/_images/gui/progress-bar/loading-bg-green.png'
+        'Cherry/assets/images/gui/progress-bar/loading-bg-green.png'
     )
 
     self.bgGreen.width  = options.width
@@ -82,7 +82,7 @@ end
 function ProgressBar:progress(options)
     self.progress = display.newImage(
         self.display,
-        self.track or 'cherry/_images/gui/progress-bar/loading-progress.png'
+        self.track or 'Cherry/assets/images/gui/progress-bar/loading-progress.png'
     )
 
     self.progress.width   = self:progressWidth()
@@ -91,7 +91,7 @@ function ProgressBar:progress(options)
     self.progress.x       = -options.width/2.06
 
     self.progress:setMask( graphics.newMask(
-            'cherry/_images/gui/progress-bar/loading-mask.png'
+        'Cherry/assets/images/gui/progress-bar/loading-mask.png'
     ))
 end
 
@@ -99,7 +99,7 @@ function ProgressBar:icon(options)
     if(options.path) then
         local logoContainer = display.newImage(
             self.display,
-            'cherry/_images/gui/items/circle.simple.container.png',
+            'Cherry/assets/images/gui/items/circle.simple.container.png',
             -options.width*0.55, 0
         )
 

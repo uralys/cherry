@@ -1,6 +1,5 @@
 --------------------------------------------------------------------------------
 
-local composer  = require('composer')
 local _         = require 'underscore'
 local analytics = require 'analytics'
 local group     = require 'group'
@@ -35,9 +34,9 @@ function Router:openScreen(id, class, params)
     analytics.pageview(id)
 
     Router.view = id
-    print('[Router] ---> ' .. Router.view )
+    _G.log('[Router] ---> ' .. Router.view )
 
-    composer.gotoScene( class, options )
+    _G.composer.gotoScene( class, options )
 end
 
 --------------------------------------------------------------------------------

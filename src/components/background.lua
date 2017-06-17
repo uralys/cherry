@@ -23,8 +23,8 @@ end
 
 function Background:init(options)
     options = options or {}
-    local lightImage = options.light or 'cherry/_images/background-light.jpg'
-    local darkImage  = options.dark or 'cherry/_images/background-dark.jpg'
+    local lightImage = options.light or 'Cherry/assets/images/background-light.jpg'
+    local darkImage  = options.dark or 'Cherry/assets/images/background-dark.jpg'
 
     self.time = options.time or 700
 

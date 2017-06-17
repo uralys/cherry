@@ -62,18 +62,22 @@ A typical tree should be :
 
 ```
 ├── Cherry
-│   ├── _images
-│   ├── app
-│   ├── lua
-│   ├── components
-│   ├── engine
-│   ├── libs
-│   ├── screens
-│   ├── test
-│
+│   ├── assets
+│   │   └── images
+│   ├── src
+│   │   ├── app
+│   │   ├── components
+│   │   ├── engine
+│   │   ├── libs
+│   │   └── screens
+│   └── test
+│  
 ├── YourGame
 │   ├── Cherry -> ../Cherry
 │   ├── assets
+│   │   ├── images
+│   │   └── sounds
+│   │  
 │   ├── build.settings
 │   ├── config.lua
 │   ├── env
@@ -81,9 +85,9 @@ A typical tree should be :
 │   │   ├── components
 │   │   ├── extensions
 │   │   ├── models
-│   │   ├── screens
+│   │   └── screens
 │   ├── test
-│   ├── main.lua
+│   └── main.lua
 ```
 
 #### Doc to provide
@@ -174,7 +178,7 @@ An animated progress bar.
         y      = 30,
         width  = 200,
         height = 30,
-        path   = 'cherry/_images/game/item/gem.png'
+        path   = 'assets/images/game/item/gem.png'
     })
 ```
 

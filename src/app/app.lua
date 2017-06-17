@@ -27,8 +27,8 @@ local App = {
     },
 
     background = {
-        light = 'cherry/_images/background-light.jpg',
-        dark = 'cherry/_images/background-dark.jpg'
+        light = 'Cherry/assets/images/background-light.jpg',
+        dark = 'Cherry/assets/images/background-dark.jpg'
     },
 
     xGravity = 0,
@@ -65,13 +65,13 @@ local App = {
 function App:start(options)
     App = _.extend(App, options or {})
 
-    print('--------------------------------')
-    print( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
-    print( 'Cherry: ' .. App.cherryVersion)
-    print('--------------------------------')
-    print('extensions:')
-    print(_G.inspect(App.extension, {depth = 1}))
-    print('--------------------------------')
+    _G.log('--------------------------------')
+    _G.log( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
+    _G.log( 'Cherry: ' .. App.cherryVersion)
+    _G.log('--------------------------------')
+    _G.log('extensions:')
+    _G.log(App.extension, {depth = 1})
+    _G.log('--------------------------------')
 
     self:deviceSetup()
     self:setup()
@@ -83,11 +83,11 @@ end
 --------------------------------------------------------------------------------
 
 function App:loadSettings()
-    print('---------- SETTINGS ------------')
+    _G.log('---------- SETTINGS ------------')
     local path = 'env/' .. App.ENV .. '.json'
     local settings = file.load(path)
-    print(_G.inspect(settings))
-    print('--------------------------------')
+    _G.log(settings)
+    _G.log('--------------------------------')
 
     App.INVINCIBLE     = settings.invincible
     App.SOUND_OFF      = settings.silent
@@ -128,7 +128,7 @@ end
 --------------------------------------------------------------------------------
 
 function App:ready()
-    self.game  = Game:new(App.extension.game)
+    self.game  = _G.Game:new(App.extension.game)
     self.score = Score:new(App.extension.score)
     self.user  = User:new(App.extension.user)
     self.user:load()
@@ -138,26 +138,26 @@ function App:ready()
         dark = App.background.dark
     })
 
-    Sound:init()
+    _G.Sound:init()
 
     if(App.VIEW_TESTING) then
-        print(' --> forced view : ' .. App.VIEW_TESTING)
-        print('--------------------------------')
-        Router:open(App.VIEW_TESTING)
+        _G.log(' --> forced view : ' .. App.VIEW_TESTING)
+        _G.log('--------------------------------')
+        _G.Router:open(App.VIEW_TESTING)
 
     elseif(App.EDITOR_TESTING or App.LEVEL_TESTING) then
-        print(' --> forced playground')
-        print('--------------------------------')
-        Router:open(Router.PLAYGROUND)
+        _G.log(' --> forced playground')
+        _G.log('--------------------------------')
+        _G.Router:open(_G.Router.PLAYGROUND)
 
     else
-        local nextView = Router.HOME
+        local nextView = _G.Router.HOME
 
         if(self.user:isNew()) then
-            nextView = Router.PLAYGROUND
+            nextView = _G.Router.PLAYGROUND
         end
 
-        Router:open(Router.HEADPHONES, {
+        _G.Router:open(_G.Router.HEADPHONES, {
             nextView = nextView
         })
     end
@@ -169,7 +169,7 @@ end
 
 function App:setup()
 
-    print('Application setup...')
+    _G.log('Application setup...')
 
     ----------------------------------------------------------------------------
 
@@ -217,7 +217,7 @@ end
 
 function App:deviceSetup()
 
-    print('Device setup...')
+    _G.log('Device setup...')
 
     ----------------------------------------------------------------------------
     -- prepare notifications for this session
@@ -232,22 +232,22 @@ function App:deviceSetup()
 
         local phase = event.phase
         local keyName = event.keyName
-        print( event.phase, event.keyName )
+        _G.log( event.phase, event.keyName )
 
         if ( 'back' == keyName and phase == 'up' ) then
-            print('back button is not handled')
+            _G.log('back button is not handled')
         end
 
         if ( keyName == 'volumeUp' and phase == 'down' ) then
             local masterVolume = audio.getVolume()
-            print( 'volume:', masterVolume )
+            _G.log( 'volume:', masterVolume )
             if ( masterVolume < 1.0 ) then
                 masterVolume = masterVolume + 0.1
                 audio.setVolume( masterVolume )
             end
         elseif ( keyName == 'volumeDown' and phase == 'down' ) then
             local masterVolume = audio.getVolume()
-            print( 'volume:', masterVolume )
+            _G.log( 'volume:', masterVolume )
             if ( masterVolume > 0.0 ) then
                 masterVolume = masterVolume - 0.1
                 audio.setVolume( masterVolume )
@@ -267,9 +267,9 @@ function App:deviceSetup()
         local iHandledTheError = true
 
         if iHandledTheError then
-            print( 'Handling the unhandled error', event.errorMessage )
+            _G.log( 'Handling the unhandled error', event.errorMessage )
         else
-            print( 'Not handling the unhandled error', event.errorMessage )
+            _G.log( 'Not handling the unhandled error', event.errorMessage )
         end
 
         return iHandledTheError
@@ -288,7 +288,7 @@ function App:deviceSetup()
     --    count = count+1
     -- end
 
-    -- print( '\rFont count = ' .. count )
+    -- _G.log( '\rFont count = ' .. count )
 
     -- local name = 'pt'     -- part of the Font name we are looking for
 
@@ -297,7 +297,7 @@ function App:deviceSetup()
     -- -- Display each font in the terminal console
     -- for i, fontname in ipairs(fonts) do
 
-    --        print( 'fontname = ' .. tostring( fontname ) )
+    --        _G.log( 'fontname = ' .. tostring( fontname ) )
     -- end
 end
 
@@ -305,7 +305,7 @@ end
 
 function App:deviceNotification(text, secondsFromNow, id)
 
-    print('----> deviceNotification : [' .. id .. '] --> ' ..
+    _G.log('----> deviceNotification : [' .. id .. '] --> ' ..
             text .. ' (' .. secondsFromNow .. ')'
     )
 
@@ -315,16 +315,16 @@ function App:deviceNotification(text, secondsFromNow, id)
     }
 
     if(self.deviceNotifications[id]) then
-        print('cancelling device notification : ', self.deviceNotifications[id])
+        _G.log('cancelling device notification : ', self.deviceNotifications[id])
         system.cancelNotification( self.deviceNotifications[id] )
     end
 
-    print('scheduling : ', id, secondsFromNow)
+    _G.log('scheduling : ', id, secondsFromNow)
     self.deviceNotifications[id] = system.scheduleNotification(
         secondsFromNow,
         options
     )
-    print('scheduled : ', self.deviceNotifications[id])
+    _G.log('scheduled : ', self.deviceNotifications[id])
 
 end
 

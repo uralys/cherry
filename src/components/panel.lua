@@ -5,7 +5,7 @@ local Panel = {}
 --------------------------------------------------------------------------------
 
 function Panel:vertical(options)
-    local image = options.image or 'cherry/_images/gui/panels/panel.vertical.png'
+    local image = options.image or 'Cherry/assets/images/gui/panels/panel.vertical.png'
     local panel = display.newImageRect(
         options.parent,
         image,
@@ -22,7 +22,7 @@ function Panel:vertical(options)
 end
 
 function Panel:small(options)
-    local image = options.image or 'cherry/_images/gui/panels/panel.horizontal.png'
+    local image = options.image or 'Cherry/assets/images/gui/panels/panel.horizontal.png'
     local panel = display.newImageRect(
         options.parent,
         image,
@@ -41,7 +41,7 @@ end
 function Panel:level(options)
     local panel = display.newImage(
         options.parent,
-        'cherry/_images/gui/panels/level.panel.' .. options.status .. '.png'
+        'Cherry/assets/images/gui/panels/level.panel.' .. options.status .. '.png'
     );
 
     panel.anchorX = options.anchorX or 0.5
@@ -55,7 +55,7 @@ end
 function Panel:chapter(options)
     local panel = display.newImageRect(
         options.parent,
-        'cherry/_images/gui/panels/chapter.panel.' .. options.status .. '.png',
+        'Cherry/assets/images/gui/panels/chapter.panel.' .. options.status .. '.png',
         options.width,
         options.height
     );

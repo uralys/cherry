@@ -25,7 +25,7 @@ function Profile:status(options)
         path = 'assets/images/gui/items/'.. options.item ..'.icon.png'
 
         if(not file.exists(path)) then
-            path = 'cherry/_images/gui/items/'.. options.item ..'.icon.png'
+            path = 'Cherry/assets/images/gui/items/'.. options.item ..'.icon.png'
         end
     end
 

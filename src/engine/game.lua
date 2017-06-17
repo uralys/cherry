@@ -7,7 +7,7 @@ local Effects    = require 'engine.effects'
 
 --------------------------------------------------------------------------------
 
-local physics = require( 'physics' )
+local physics = _G.physics or require( 'physics' )
 
 --------------------------------------------------------------------------------
 

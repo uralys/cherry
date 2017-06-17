@@ -7,7 +7,7 @@ return {
   },
   tests = {
     ROOT = {"./test"},
-    lpath = "./libs/?.lua;./test/?.lua",
+    lpath = "./src/?.lua;./src/libs/?.lua;./test/?.lua",
     pattern = ".lua"
   }
 }
