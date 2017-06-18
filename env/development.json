@@ -1,7 +1,11 @@
 {
   "silent": false,
   "editor": false,
-  "level-testing": false,
+  "level-testing": {
+    "chapter": 1,
+    "level": 1,
+    "step": 1
+  },
   "play": false,
   "invincible": false,
   "view-testing": null

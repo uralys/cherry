@@ -8,4 +8,12 @@ describe('[App]', function()
       version = '2.6.0'
     })
   end)
+
+  it('should test gpgs', function()
+    App:start({
+      name    = 'Demo',
+      version = '2.6.0',
+      useGPGS = true
+    })
+  end)
 end)

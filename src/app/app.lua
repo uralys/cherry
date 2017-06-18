@@ -110,7 +110,7 @@ function App:initGPGS(options)
         return
     end
 
-    local gpgs = require 'plugin.gpgs'
+    local gpgs = _G.gpgs or require 'plugin.gpgs'
 
     local function gpgsLoginListener( event )
     end
