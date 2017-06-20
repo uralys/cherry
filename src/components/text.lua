@@ -59,7 +59,7 @@ function Text:render()
 
     self.view = TextUtils.embossed({
         parent   = self.parent,
-        value    = self.value,
+        text     = self.value,
         font     = self.font or _G.FONT,
         fontSize = self.fontSize or 55,
         x        = self.x,

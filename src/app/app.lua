@@ -63,7 +63,8 @@ local App = {
 --------------------------------------------------------------------------------
 
 function App:start(options)
-    App = _.extend(App, options or {})
+    options = options or {}
+    App = _.extend(App, options)
 
     _G.log('--------------------------------')
     _G.log( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
@@ -215,8 +216,36 @@ end
 
 --------------------------------------------------------------------------------
 
-function App:deviceSetup()
+local function onKeyEvent( event )
 
+    local phase = event.phase
+    local keyName = event.keyName
+    _G.log( event.phase, event.keyName )
+
+    if ( 'back' == keyName and phase == 'up' ) then
+        _G.log('back button is not handled')
+    end
+
+    -- if ( keyName == 'volumeUp' and phase == 'down' ) then
+    --     local masterVolume = audio.getVolume()
+    --     _G.log( 'volume:', masterVolume )
+    --     if ( masterVolume < 1.0 ) then
+    --         masterVolume = masterVolume + 0.1
+    --         audio.setVolume( masterVolume )
+    --     end
+    -- elseif ( keyName == 'volumeDown' and phase == 'down' ) then
+    --     local masterVolume = audio.getVolume()
+    --     _G.log( 'volume:', masterVolume )
+    --     if ( masterVolume > 0.0 ) then
+    --         masterVolume = masterVolume - 0.1
+    --         audio.setVolume( masterVolume )
+    --     end
+    -- end
+
+    return true
+end
+
+function App:deviceSetup()
     _G.log('Device setup...')
 
     ----------------------------------------------------------------------------
@@ -228,54 +257,8 @@ function App:deviceSetup()
     ----------------------------------------------------------------------------
     --- ANDROID BACK BUTTON
 
-    local function onKeyEvent( event )
-
-        local phase = event.phase
-        local keyName = event.keyName
-        _G.log( event.phase, event.keyName )
-
-        if ( 'back' == keyName and phase == 'up' ) then
-            _G.log('back button is not handled')
-        end
-
-        if ( keyName == 'volumeUp' and phase == 'down' ) then
-            local masterVolume = audio.getVolume()
-            _G.log( 'volume:', masterVolume )
-            if ( masterVolume < 1.0 ) then
-                masterVolume = masterVolume + 0.1
-                audio.setVolume( masterVolume )
-            end
-        elseif ( keyName == 'volumeDown' and phase == 'down' ) then
-            local masterVolume = audio.getVolume()
-            _G.log( 'volume:', masterVolume )
-            if ( masterVolume > 0.0 ) then
-                masterVolume = masterVolume - 0.1
-                audio.setVolume( masterVolume )
-            end
-        end
-
-        return true  --SEE NOTE BELOW
-    end
-
-    --add the key callback
+    Runtime:removeEventListener( 'key', onKeyEvent )
     Runtime:addEventListener( 'key', onKeyEvent )
-
-    ----------------------------------------------------------------------------
-
-    local function myUnhandledErrorListener( event )
-
-        local iHandledTheError = true
-
-        if iHandledTheError then
-            _G.log( 'Handling the unhandled error', event.errorMessage )
-        else
-            _G.log( 'Not handling the unhandled error', event.errorMessage )
-        end
-
-        return iHandledTheError
-    end
-
-    Runtime:addEventListener('unhandledError', myUnhandledErrorListener)
 
     ----------------------------------------------------------------------------
 

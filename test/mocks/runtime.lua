@@ -6,7 +6,7 @@ local Runtime = {
     table.insert(eventListeners[name], callback)
   end,
   removeEventListener = function(self, name, callback)
-    assert(eventListeners[name], "no such event name: " .. tostring(name))
+    if(not eventListeners[name]) then return end
     for i = #eventListeners[name], 1, -1 do
       if eventListeners[name][i] == callback then
         table.remove(eventListeners[name], i)

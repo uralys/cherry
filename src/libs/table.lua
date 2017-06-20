@@ -1,14 +1,10 @@
 --------------------------------------------------------------------------------
-
-local Table = {}
-
 -- joinTables join
 -- removeFromTable removeObject
 -- emptyTable empty
-
 --------------------------------------------------------------------------------
 
-function Table.join(t1, t2)
+function table.join(t1, t2)
 
     local result = {}
     if(t1 == nil) then t1 = {} end
@@ -27,7 +23,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function Table.removeObject(t, object)
+function table.removeObject(t, object)
     local index = 1
     for k,_ in pairs(t) do
         if(t[k] == object) then
@@ -40,7 +36,7 @@ function Table.removeObject(t, object)
     table.remove(t, index)
 end
 
-function Table.empty(t)
+function table.empty(t)
     if(not t) then return end
     local i, _ = next(t, nil)
     while i do
@@ -49,7 +45,7 @@ function Table.empty(t)
     end
 end
 
-function Table.contains(t, object)
+function table.contains(t, object)
     if(not t) then return end
     for _,v in pairs(t) do
         if(v == object) then
@@ -59,6 +55,14 @@ function Table.contains(t, object)
     return false
 end
 
---------------------------------------------------------------------------------
-
-return Table
+--[[---------------------------------------------------------
+    from https://github.com/Facepunch/garrysmod
+               /lua/includes/extensions/table.lua
+    Name: table.Count( table )
+    Desc: Returns the number of keys in a table
+-----------------------------------------------------------]]
+function table.count( t )
+    local i = 0
+    for _ in pairs( t ) do i = i + 1 end
+    return i
+end

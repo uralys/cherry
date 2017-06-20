@@ -11,12 +11,9 @@ _G.Effects = require 'engine.effects'
 _G.Game    = require 'engine.game'
 _G.Sound   = require 'engine.sound'
 
+-- libs extensions
+require 'libs.math'
+require 'libs.table'
+
 -- debug
-_G.log     = _G.log or function(stuff, options)
-  if(type(stuff) == 'table') then
-    local inspect = require 'inspect'
-    print(inspect(stuff, options))
-  else
-    print(stuff)
-  end
-end
+require 'logger'

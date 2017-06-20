@@ -55,9 +55,9 @@ describe('[text]', function()
     local letter2 = text.children[2].private
     local letter3 = text.children[3].private
 
-    assert.are.equal(_G.round( letter1.x, 2 ), -11.97)
-    assert.are.equal(_G.round( letter2.x, 2 ), -2.40)
-    assert.are.equal(_G.round( letter3.x, 2 ), 7.19)
+    assert.are.equal(math.round( letter1.x, 2 ), -11.97)
+    assert.are.equal(math.round( letter2.x, 2 ), -2.40)
+    assert.are.equal(math.round( letter3.x, 2 ), 7.19)
 
     assert.are.equal(letter1.rotation, -6.875)
     assert.are.equal(letter2.rotation, -1.375)

@@ -1,6 +1,6 @@
 stds.corona = {
   globals = {
-    math = {fields = {round = {}}}
+    'system'
   },
   read_globals = {
     'audio',
@@ -11,7 +11,6 @@ stds.corona = {
     'native',
     'network',
     'Runtime',
-    'system',
     'timer',
     'transition',
     'widget'
@@ -25,12 +24,11 @@ stds.cherry = {
     'CBE',
     'Effects',
     'Game',
+    'math',
     'Router',
     'Sound',
-    string = {fields = {
-        endsWith = {},
-        startsWith = {}
-    }}
+    'string',
+    'table',
   }
 }
 
