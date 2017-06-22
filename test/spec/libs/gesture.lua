@@ -9,10 +9,7 @@ describe('[gesture]', function()
 
         gesture.onTouch(foo, action)
 
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'began'
-        })
+        foo:tap()
 
         assert.are.equal(foo.alpha, 0.8)
         assert.spy(action).was.called(0)
@@ -24,10 +21,7 @@ describe('[gesture]', function()
 
         gesture.onTouch(foo, action)
 
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'ended'
-        })
+        foo:touch()
 
         assert.spy(action).was.called(1)
         assert.are.equal(foo.alpha, 1)
@@ -41,10 +35,7 @@ describe('[gesture]', function()
         gesture.onTouch(foo, action1)
         gesture.onTouch(foo, action2)
 
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'ended'
-        })
+        foo:touch()
 
         assert.spy(action1).was.called(0)
         assert.spy(action2).was.called(1)
@@ -57,11 +48,7 @@ describe('[gesture]', function()
         local action = spy.new(function() end)
 
         gesture.onTap(foo, action)
-
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'began'
-        })
+        foo:tap()
 
         assert.spy(action).was.called(1)
       end)
@@ -71,11 +58,7 @@ describe('[gesture]', function()
         local action = spy.new(function() end)
 
         gesture.onTap(foo, action)
-
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'ended'
-        })
+        foo:touch()
 
         assert.spy(action).was.called(0)
       end)
@@ -88,10 +71,7 @@ describe('[gesture]', function()
         gesture.onTap(foo, action1)
         gesture.onTap(foo, action2)
 
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'began'
-        })
+        foo:tap()
 
         assert.spy(action1).was.called(0)
         assert.spy(action2).was.called(1)
@@ -106,10 +86,7 @@ describe('[gesture]', function()
         gesture.onTap(foo, action)
         gesture.disabledTouch(foo)
 
-        foo:dispatchEvent({
-            name = 'touch',
-            phase = 'began'
-        })
+        foo:tap()
 
         assert.spy(action).was.called(0)
       end)

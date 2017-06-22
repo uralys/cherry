@@ -8,12 +8,14 @@ local function onStop ()
 end
 
 local function onStart ()
-    local introText = display.newText(
-        App.hud,
-        'Cherry !',
-        0, 0,
-        _G.FONT, 45
-    )
+    local introText = display.newText({
+        parent   = App.hud,
+        text     = 'Cherry !',
+        x        = 0,
+        y        = 0,
+        font     = _G.FONT,
+        fontSize = 45
+    })
 
     introText:setFillColor( 255 )
     introText.anchorX = 0

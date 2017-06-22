@@ -29,6 +29,7 @@ stds.cherry = {
     'Sound',
     'string',
     'table',
+    'unpack'
   }
 }
 

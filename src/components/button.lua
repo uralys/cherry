@@ -2,57 +2,74 @@
 
 local animation = require 'animation'
 local gesture   = require 'gesture'
+local file      = _G.file or require 'file'
 
 local Button = {}
 
 --------------------------------------------------------------------------------
 
 function Button:round(options)
+    options = options or {}
 
     local button = display.newGroup()
-    button.x = options.x
-    button.y = options.y
-    options.parent:insert(button)
+    button.x = options.x or 0
+    button.y = options.y or 0
+
+    if(options.parent) then
+        options.parent:insert(button)
+    end
+
+    local path = 'Cherry/assets/images/gui/buttons/'.. (options.type or '') .. '.png'
+    if(not file.exists(path)) then
+        _G.log('Button:round(): invalid options.type | check: ' .. path)
+        return nil
+    end
 
     button.image = display.newImage(
         button,
-        'Cherry/assets/images/gui/buttons/round.'.. options.type .. '.png',
+        path,
         0, 0
     );
 
-    button.text = display.newText(
-        button,
-        options.label,
-        0, 0,
-        _G.FONT,
-        60
-    );
+    button.text = display.newText({
+        parent   = button,
+        text     = options.label,
+        x        = 0,
+        y        = 0,
+        font     = _G.FONT,
+        fontSize = 60
+    });
 
     button.text.anchorX = 0.63
     button.text.anchorY = 0.61
 
-    gesture.onTap(button, function()
-        options.action()
-        Sound:playButton()
-    end)
+    if(options.action) then
+        gesture.onTap(button, options.action)
+    end
 
     return button
 end
 
 function Button:icon(options)
-    local button = display.newImage(
-        options.parent,
-        'Cherry/assets/images/gui/buttons/'.. options.type ..'.png'
-    );
+    options = options or {}
 
-    button.x = options.x
-    button.y = options.y
+    local path = 'Cherry/assets/images/gui/buttons/'.. (options.type or '') .. '.png'
+    if(not file.exists(path)) then
+        _G.log('Button:icon(): invalid options.type | check: ' .. path)
+        return nil
+    end
+
+    local button = display.newImage(path)
+
+    if(options.parent) then
+        options.parent:insert(button)
+    end
+
+    button.x = options.x or 0
+    button.y = options.y or 0
 
     if(options.action) then
-        gesture.onTap(button, function()
-            options.action()
-            Sound:playButton()
-        end)
+        gesture.onTap(button, options.action)
     end
 
     if(options.scale) then

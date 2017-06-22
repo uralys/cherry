@@ -95,6 +95,18 @@ local function newDisplayObject()
             listener[i](event)
         end
     end
+    _displayObject.tap = function(self)
+        self:dispatchEvent({
+          name = 'touch',
+          phase = 'began'
+        })
+    end
+    _displayObject.touch = function(self)
+        self:dispatchEvent({
+          name = 'touch',
+          phase = 'ended'
+        })
+    end
 
     local displayObject = {}
     local metatable = {
@@ -251,16 +263,19 @@ display = {
         end
         return group
     end,
-    newImage = function(parent, frame)
+    newImage = function(parent, path)
+        parent = parent or {}
         local image = newDisplayObject()
-        image.width = parent.width
-        image.height = parent.height
+        image.insert = function() end
+        image.width = parent.width or 0
+        image.height = parent.height or 0
         return image
     end,
     newImageRect = function(parent, frame)
+        parent = parent or {}
         local image = newDisplayObject()
-        image.width = parent.width
-        image.height = parent.height
+        image.width = parent.width or 0
+        image.height = parent.height or 0
         return image
     end,
     newSprite = function(imageSheet, sequenceData)
@@ -283,7 +298,8 @@ display = {
         newText.x = options.x
         newText.y = options.y
         newText.text = options.text
-        newText.size = options.size
+        newText.font = options.font
+        newText.fontSize = options.fontSize
         options.parent:insert(newText)
         return newText
     end,

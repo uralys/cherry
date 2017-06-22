@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _    = require 'underscore'
-local file = require 'file'
+local file = _G.file or require 'file'
 
 local User = {}
 
@@ -27,8 +27,6 @@ function User:load()
         self:resetSavedData()
     end
 
-    self:resetLevel()
-
     if (self.onLoad) then
         self:onLoad() -- from extension
     end
@@ -52,17 +50,6 @@ function User:resetSavedData()
     end
 
     self:save()
-end
-
---------------------------------------------------------------------------------
-
-function User:resetLevel()
-    self.level = 1
-end
-
-function User:growLevel()
-    self.level = self.level+1
-    return self.level
 end
 
 --------------------------------------------------------------------------------

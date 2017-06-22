@@ -2,3 +2,4 @@
 luarocks install busted;
 luarocks install luacheck;
 luarocks install luacov;
+luarocks install luafilesystem;
