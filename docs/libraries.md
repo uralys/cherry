@@ -1,3 +1,8 @@
+## gesture
+```lua
+local gesture = require('cherry.libs.gesture')
+```
+
 ### onTap
 
 Use `onTap` on any displayObject to apply a function as soon as a finger **touches** your object.

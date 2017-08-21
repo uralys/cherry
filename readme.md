@@ -11,13 +11,13 @@ Cherry is a starter for `CoronaSDK App` to help building your game.
 - [Usage](#usage)
 - [Libraries](#libraries)
 - [Starters](#starters)
-- [Components](#components-documentation)
+- [Components](#components)
 - [Music and Sounds](#music-and-sounds)
 - [License](#bsd-license)
 - [Third Parties](#third-parties)
 - [Games using Cherry](#games-using-cherry)
 
-![cherry](/docs/cherry.png)
+![cherry](/docs/assets/cherry.png)
 
 ## Introduction to Cherry
 
@@ -27,17 +27,22 @@ You may extend Cherry framework, or just pick few components, in order to start 
 - clone Cherry next to your project, and symlink the lib to your project root:
 `ln -s ../Cherry/cherry cherry`
 - add a `main.lua` with
+```lua
+-- main.lua
+require 'cherry.main'
+require 'src.app'
 ```
-require 'cherry.core.app'
-```
+
 - add a `src/app.lua`
 - then call `App.start()` with your options
-```
+```lua
+-- src/app.lua
 App:start({
   name    = 'YourGame',
   version = '1.0',
 })
 ```
+
 - add a `env/development.json`
 ```json
 {
@@ -48,31 +53,16 @@ App:start({
 ```
 see env settings for more options.
 
-Note: The loader adds `src/`, `Cherry` and `Cherry/libs` in the package.path
-so you may require your modules and Cherry's modules directy
-
-```lua
--- libs
-require 'animation'
-require 'gesture'
-
--- components
-require 'components.button'
-require 'components.panel'
-
--- your own src
-require 'extension.game'
-require 'model.phantom'
-```
 
 A typical tree should be :
 
 ```
 ├── Cherry
-│   ├── assets
-│   │   └── images
-│   ├── src
-│   │   ├── app
+│   ├── cherry
+│   │   ├── assets
+│   │   │   ├── images
+│   │   │   └── sounds
+│   │   ├── core
 │   │   ├── components
 │   │   ├── engine
 │   │   ├── libs
@@ -80,7 +70,7 @@ A typical tree should be :
 │   └── test
 │  
 ├── YourGame
-│   ├── Cherry -> ../Cherry
+│   ├── cherry -> ../Cherry/cherry
 │   ├── assets
 │   │   ├── images
 │   │   └── sounds
@@ -96,38 +86,6 @@ A typical tree should be :
 │   ├── test
 │   └── main.lua
 ```
-
-#### Doc to provide
-##### waiting for the doc, read the code
-- Look in app.App to see what you may override with `App:start(options)`
-- Look in engine.Game to see what you may override with `Game:YourStuff()`
-
-##### core
-- env files
-simple example: development.json
-```
-{
-    "silent": true,
-    "view-testing": "Playground"
-}
-```
-
-- adding custom screens
-- extending/overriding `engine.Game`
-
-##### less important misc
-- setting custom bg
-- setting custom gravity
-- defining colors
-- defining analytics ids
-- defining facebook ids
-- defining ios id
-
-#### Components
-
-Either use these components within the full workflow or pick them one by one to use it in your own game.
-
-See [below](#components-documentation) for the complete list and documentation for each component.
 
 ## Tests
 UT with busted: http://olivinelabs.com/busted/
@@ -156,176 +114,18 @@ A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/libra
 - Use `YourModel:new()` during the `LevelDrawer` parsing
 - Use `YourModel:show()` during the `Game` rendering
 
-## Components Documentation
+## Components
 
-#### ProgressBar
+Either use these components within the full workflow or pick them one by one to use it in your own game.
 
-An animated progress bar.
-
-![progress-bar](/docs/progress-bar.png)
-
-##### Requirements
-
-- Code : copy and require `src/components/ProgressBar.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L45) in Cherry) and `src/components/Icon.lua`
-
-- assets : you need to copy the assets from `_/gui/progress-bar` (and credit GraphicBurger see [Third Parties](#third-parties))
-
-##### API
-
-- init the ProgressBar
-```
-    local progress = ProgressBar:new()
-```
-
-- use parameters to draw the ProgressBar
-```
-    progress:draw({
-        parent = self.display,
-        x      = 30,
-        y      = 30,
-        width  = 200,
-        height = 30,
-        path   = 'assets/images/game/item/gem.png'
-    })
-```
-
-- either add the `value` within the previous parameters for a static bar, or init the bar from a startup percentage :
-```
-    progress:set(0)
-```
-
-- then ask the animation to start and reach the required percentage (here 88%)
-```
-    progress:reach(88)
-```
-
-#### Focus
-
-Apply animated arrows to focus any DisplayObject.
-
-You can choose one to 4 arrows, `showing` your item or `from` your item.
-
-##### Requirements
-
-- Code : copy and require `src/components/Focus.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L48) in Cherry).
-
-- assets : you need to copy the assets from `_/gui/items/arrow.right.png` (and credit GraphicBurger see [Third Parties](#third-parties))
-
-##### API
-
-The simplest focus :
-```
-Focus(item, true)
-```
-
-![default-focus](/docs/default-focus.png)
-
-Choose arrow positions : set `all` to false, and set the ones you want in `[up, down, left, right]`
-```
-Focus(item, {
-    all    = false,
-    bottom = true,
-    up     = true
-})
-```
-
-![up-bottom-focus](/docs/up-bottom-focus.png)
-
-Choose arrow ways : set `type` to `from-center` or `show-center` (default)
-```
-Focus(item, {
-    all   = false,
-    right = true,
-    type  = 'from-center'
-})
-```
-
-![right-from-center-focus](/docs/right-from-center-focus.png)
-
-You can combine focus to place arrows to/from and where you want:
-```
-    Focus(item, {
-        all   = false,
-        right = true,
-        type  = 'from-center'
-    })
-
-    Focus(item, {
-        all  = false,
-        left = true,
-        type = 'show-center'
-    })
-```
-
-![special-focus](/docs/special-focus.png)
-
-#### Scroller
-
-A custom ScrollView with an API to add and remove elements, and, *wait for it...* an animated attached `scrollbar` !
-
-![scroller](/docs/scroller.png)
-
-##### Requirements
-
-- Code : copy and require `src/components/Scroller.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L46) in Cherry)
-
-- assets : you need to copy the assets from `_/gui/scroller` (and credit GraphicBurger see [Third Parties](#third-parties))
-
-##### API
-
-Init a Scroller with the same parameters as a [`ScrollView`](https://docs.coronalabs.com/api/library/widget/newScrollView.html)
-
-You may add the following parameters :
- - `handleHeight` : if set, your scrollbar height is fixed the value. if not, the height depends on the number of elements you have inserted.
- - `gap` : the height between the elements
-```
-local scroller = Scroller:new({
-    parent                   = self.parent,
-    top                      = self.top + 7,
-    left                     = self.x - self.width * 0.45,
-    width                    = self.width * 0.9,
-    height                   = self.height - 22,
-    gap                      = display.contentHeight*0.05,
-    handleHeight             = display.contentHeight*0.07,
-    horizontalScrollDisabled = true,
-    hideBackground           = true
-})
-```
-
-You can now insert/remove whatever you need in the `scroller`, the scrollbar is refreshed dynamically
-
-```
-local element = scroller:insert(anyDisplayGroup)
-scroller:remove(element)
-scroller:removeAll()
-```
-
-#### Background
-
-Use 2 background images to switch between `dark` and `light` modes.
-
-##### Requirements
-
-- copy and require `src/components/Background.lua` ([example](https://github.com/chrisdugne/cherry/blob/master/main.lua#L38) in Cherry)
-
-##### API
-
-- Background:init() at your [App startup](https://github.com/chrisdugne/cherry/blob/master/src/App.lua#L45) to prepare your 2 pictures.
-
-- use `Background:darken()` and `Background:lighten()` wherever you need in your app to switch modes.
-
-
-#### Cooldown
-todo, read the code to understand the API
-#### Chapters
-todo, read the code to understand the API
-#### Levels
-todo, read the code to understand the API
+See [documentation](docs/components.md) for the complete components list and options.
 
 
 ## Libraries
 
-Many libraries to provide easy tooling for your app :
+See [documentation](docs/libraries.md) for the complete components list and options.
+
+## Tools
 
 - screen **routing**
 - game **Camera**
@@ -334,11 +134,6 @@ Many libraries to provide easy tooling for your app :
 - an API to register **effects** from [CBEffects](https://github.com/GymbylCoding/CBEffects).
 - **user** profile and game status
 - google **analytics** events (a lot are already plugged in the workflow)
-
-
-
-
-
 
 
 ## Music and Sounds
@@ -361,3 +156,29 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 ## Games using Cherry
 
 - [Phantoms](http://www.uralys.com/projects/phantoms/) released on November 2015 as the actual source for
+
+## [todo] Doc to provide
+##### waiting for the doc, read the code
+- Look in app.App to see what you may override with `App:start(options)`
+- Look in engine.Game to see what you may override with `Game:YourStuff()`
+
+##### core
+- env files
+simple example: development.json
+```
+{
+    "silent": true,
+    "view-testing": "Playground"
+}
+```
+
+- adding custom screens
+- extending/overriding `engine.Game`
+
+##### less important misc
+- setting custom bg
+- setting custom gravity
+- defining colors
+- defining analytics ids
+- defining facebook ids
+- defining ios id
