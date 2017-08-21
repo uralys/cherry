@@ -24,13 +24,11 @@ Cherry is a starter for `CoronaSDK App` to help building your game.
 You may extend Cherry framework, or just pick few components, in order to start your own game.
 
 #### Using Cherry
-- clone Cherry next to your project, and symlink it to your project root
-`ln -s ../Cherry Cherry`
-- add your env folder with your en settings
+- clone Cherry next to your project, and symlink the lib to your project root:
+`ln -s ../Cherry/cherry cherry`
 - add a `main.lua` with
 ```
-require 'Cherry.loader'
-require 'app'
+require 'cherry.core.app'
 ```
 - add a `src/app.lua`
 - then call `App.start()` with your options
@@ -40,6 +38,15 @@ App:start({
   version = '1.0',
 })
 ```
+- add a `env/development.json`
+```json
+{
+    "silent": true,
+    "invincible": true,
+    "view-testing": "playground"
+}
+```
+see env settings for more options.
 
 Note: The loader adds `src/`, `Cherry` and `Cherry/libs` in the package.path
 so you may require your modules and Cherry's modules directy

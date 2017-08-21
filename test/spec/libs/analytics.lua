@@ -1,4 +1,4 @@
-local analytics = require 'analytics'
+local analytics = require 'cherry.libs.analytics'
 
 describe('[analytics]', function()
   it('> should set _G.analyticsParams', function()

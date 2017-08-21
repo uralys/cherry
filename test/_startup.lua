@@ -1,5 +1,6 @@
 expose('[setting up tests Globals]', function()
-  _G.inspect    = require('inspect')
+  require 'cherry.libs.math'
+  _G.inspect    = require('cherry.libs.inspect')
   _G.display    = require('mocks.display')
   _G.App        = require('mocks.app')
   _G.audio      = require('mocks.audio')
@@ -19,7 +20,7 @@ expose('[setting up tests Globals]', function()
   _G.DEBUG = true
 
   if(_G.DEBUG) then
-    require('logger')
+    require('cherry.libs.logger')
   else
     _G.log = function() end
   end

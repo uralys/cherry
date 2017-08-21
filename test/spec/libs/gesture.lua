@@ -1,4 +1,4 @@
-local gesture = require 'gesture'
+local gesture = require 'cherry.libs.gesture'
 
 describe('[gesture]', function()
     describe('[onTouch]', function()

@@ -1,4 +1,4 @@
-local Banner = require('components.banner')
+local Banner = require('cherry.components.banner')
 
 describe('[Banner]', function()
   it('should instanciate a simple banner', function()

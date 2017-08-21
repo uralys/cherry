@@ -1,4 +1,4 @@
-local animation = require 'animation'
+local animation = require 'cherry.libs.animation'
 
 describe('[animation]', function()
   it('> rotateBackAndForth', function()

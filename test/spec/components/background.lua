@@ -1,4 +1,4 @@
-local Background = require('components.background')
+local Background = require('cherry.components.background')
 
 describe('[Background]', function()
   it('should instanciate a simple background', function()

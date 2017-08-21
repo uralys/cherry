@@ -1,4 +1,4 @@
-local Text = require 'text'
+local Text = require 'cherry.libs.text'
 
 describe('[text]', function()
   it('> should create Text.embossed', function()

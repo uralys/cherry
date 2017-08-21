@@ -1,4 +1,4 @@
-local Button = require('components.button')
+local Button = require('cherry.components.button')
 local foo = display.newGroup()
 
 describe('[Button]', function()

@@ -1,4 +1,4 @@
-local Panel = require('components.panel')
+local Panel = require('cherry.components.panel')
 
 describe('[Panel]', function()
   it('> vertical', function()
