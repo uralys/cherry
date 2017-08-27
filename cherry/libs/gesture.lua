@@ -26,6 +26,13 @@ function gesture.onTouch(object, action)
     end
 end
 
+function gesture.onceTouch(object, action)
+    gesture.onTouch(object, function()
+        action()
+        object.removeOnTouch()
+    end)
+end
+
 --------------------------------------------------------------------------------
 
 function gesture.onTap(object, action)
@@ -45,6 +52,13 @@ function gesture.onTap(object, action)
     object.removeOnTap = function()
         object:removeEventListener ('touch', tap)
     end
+end
+
+function gesture.onceTap(object, action)
+    gesture.onTap(object, function()
+        action()
+        object.removeOnTap()
+    end)
 end
 
 --------------------------------------------------------------------------------

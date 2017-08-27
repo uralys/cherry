@@ -26,6 +26,13 @@ You may remove the previous listener manually by calling `removeOnTap` on your o
 button.removeOnTap()
 ```
 
+To apply the action only once and prevent next taps, use `onceTap`
+```lua
+gesture.onceTap(button, function()
+    print('action on first tap only')
+end)
+```
+
 ### onTouch
 
 Use `onTouch` on any displayObject to apply a function when finger that touched your object is **lifted up** from the screen.
@@ -48,4 +55,11 @@ You may remove the previous listener manually by calling `removeOnTouch` on your
 
 ```lua
 button.removeOnTouch()
+```
+
+To apply the action only once and prevent next touches, use `onceTouch`
+```lua
+gesture.onceTouch(button, function()
+    print('action on first touch only')
+end)
 ```

@@ -4,7 +4,7 @@ local App = {
   hud     = display.newGroup(),
   start   = function () end,
   width   = 640,
-  height  = 1280,
+  height  = 1280
 }
 
 return App

@@ -40,6 +40,17 @@ describe('[gesture]', function()
         assert.spy(action1).was.called(0)
         assert.spy(action2).was.called(1)
       end)
+
+      it('> onceTouch should call action only once', function()
+        local foo = display.newImage(App.display)
+        local action1 = spy.new(function() end)
+
+        gesture.onceTouch(foo, action1)
+        foo:touch()
+        foo:touch()
+
+        assert.spy(action1).was.called(1)
+      end)
     end)
 
     describe('[onTap]', function()
@@ -75,6 +86,17 @@ describe('[gesture]', function()
 
         assert.spy(action1).was.called(0)
         assert.spy(action2).was.called(1)
+      end)
+
+      it('> onceTap should call action only once', function()
+        local foo = display.newImage(App.display)
+        local action1 = spy.new(function() end)
+
+        gesture.onceTap(foo, action1)
+        foo:tap()
+        foo:tap()
+
+        assert.spy(action1).was.called(1)
       end)
     end)
 
