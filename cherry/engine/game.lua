@@ -54,7 +54,7 @@ function Game:run()
     Camera:center()
     Camera:start()
 
-    App.score:createBar()
+    -- App.score:createBar()
     Background:darken()
 
     if(self.onRun) then self:onRun() end -- from extension
