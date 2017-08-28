@@ -10,12 +10,12 @@ function table.join(t1, t2)
     if(t1 == nil) then t1 = {} end
     if(t2 == nil) then t2 = {} end
 
-    for k,v in pairs(t1) do
-        result[k] = v
+    for _,v in pairs(t1) do
+        result[#result + 1] = v
     end
 
-    for k,v in pairs(t2) do
-        result[k] = v
+    for _,v in pairs(t2) do
+        result[#result + 1] = v
     end
 
     return result
