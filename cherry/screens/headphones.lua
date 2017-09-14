@@ -1,9 +1,9 @@
 --------------------------------------------------------------------------------
 
-local analytics = require 'analytics'
-local animation = require 'animation'
-local Text      = require 'text'
-local gesture   = require 'gesture'
+local analytics = require 'cherry.libs.analytics'
+local animation = require 'cherry.libs.animation'
+local Text      = require 'cherry.libs.text'
+local gesture   = require 'cherry.libs.gesture'
 
 local scene = _G.composer.newScene()
 
