@@ -25,7 +25,7 @@ end
 
 function file.exists(filename)
     local path = system.pathForFile( filename, system.ResourceDirectory)
-    return path
+    return path ~= nil
 end
 
 --------------------------------------------------------

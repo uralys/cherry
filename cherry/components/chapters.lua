@@ -5,7 +5,7 @@ local analytics = require 'cherry.libs.analytics'
 local animation = require 'cherry.libs.animation'
 local Text      = require 'cherry.libs.text'
 local gesture   = require 'cherry.libs.gesture'
-local Screen    = require 'cherry.components.Screen'
+local Screen    = require 'cherry.components.screen'
 local Scroller  = require 'cherry.components.scroller'
 local Panel     = require 'cherry.components.panel'
 local GUI       = require 'cherry.components.gui'
@@ -245,7 +245,7 @@ function Chapters:drawClosedChapter(options, panel, parent)
         y        = y1,
         width    = panel.width * 0.4,
         height   = panel.height * 0.15,
-        item     = 'mini-phantom',
+        path     = 'assets/images/gui/items/mini-phantom.icon.png',
         step     = options.percentLevels,
         disabled = true
     })
@@ -256,7 +256,7 @@ function Chapters:drawClosedChapter(options, panel, parent)
         y        = y2,
         width    = panel.width * 0.4,
         height   = panel.height * 0.15,
-        item     = 'gem',
+        path     = 'cherry/assets/images/gui/items/gem.icon.png',
         step     = options.percentGems,
         disabled = true
     })

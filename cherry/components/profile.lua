@@ -1,7 +1,6 @@
 --------------------------------------------------------------------------------
 
 local _           = require 'cherry.libs.underscore'
-local file        = require 'cherry.libs.file'
 local ProgressBar = require 'cherry.components.progress-bar'
 
 --------------------------------------------------------------------------------
@@ -20,18 +19,9 @@ end
 --------------------------------------------------------------------------------
 
 function Profile:status(options)
-    local path = nil
-    if(options.item) then
-        path = 'assets/images/gui/items/'.. options.item ..'.icon.png'
-
-        if(not file.exists(path)) then
-            path = 'cherry/assets/images/gui/items/'.. options.item ..'.icon.png'
-        end
-    end
-
     local progress = ProgressBar:new()
     progress:draw(_.extend({
-        path = path
+        path = options.path or 'cherry/assets/images/gui/items/gem.icon.png'
     }, options))
 
     progress:set(0)
