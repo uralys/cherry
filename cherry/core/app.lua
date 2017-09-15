@@ -12,7 +12,7 @@ local _          = require 'cherry.libs.underscore'
 
 local App = {
     name          = 'Uralys',
-    cherryVersion = '2.5.0',
+    cherryVersion = _G.CHERRY_VERSION,
     version       = '0.0.1',
     IOS_ID        = 'XXXXX',
 
