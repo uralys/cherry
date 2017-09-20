@@ -8,7 +8,16 @@ local Group = {}
 --------------------------------------------------------------------------------
 
 function Group.empty( group )
-    if(group ~= nil and group.numChildren ~= nil and group.numChildren > 0) then
+    if(group == nil) then return end
+
+    if(#group > 0) then
+        for i = #group, 1, -1 do
+            group[i]:removeSelf()
+            group[i] = nil
+        end
+    end
+
+    if(group.numChildren ~= nil and group.numChildren > 0) then
         for i=group.numChildren,1,-1 do
             local child = group[i]
             transition.cancel(child)
