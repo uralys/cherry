@@ -45,6 +45,7 @@ function gesture.onTap(object, action)
         elseif event.phase == 'ended' or event.phase == 'cancelled' then
             display.getCurrentStage():setFocus( nil )
         end
+        return false
     end
 
     object:addEventListener ('touch', tap)

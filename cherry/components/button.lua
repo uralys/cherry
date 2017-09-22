@@ -78,7 +78,7 @@ function Button:icon(options)
 
     if(options.bounce) then
         if(options.scale) then
-            animation.bounce(button, options.scale)
+            animation.bounce(button, {scaleTo = options.scale})
         else
             animation.bounce(button)
         end

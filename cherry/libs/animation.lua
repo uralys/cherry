@@ -1,5 +1,9 @@
 --------------------------------------------------------------------------------
 
+local _ = require 'cherry.libs.underscore'
+
+--------------------------------------------------------------------------------
+
 local animation = {}
 
 --------------------------------------------------------
@@ -24,6 +28,34 @@ end
 
 --------------------------------------------------------
 
+function animation.scaleBackAndForth(object, options)
+    options = options or {}
+    local initialScale = object.xScale
+    local scaleGrow = options.scale or 1.5
+
+    local back = function()
+        animation.bounce(object, _.extend({
+            time       = 500,
+            scaleFrom  = scaleGrow,
+            scaleTo    = initialScale,
+            transition = easing.outBounce,
+            onComplete = function ()
+                animation.scaleBackAndForth(object)
+            end
+        }, options))
+    end
+
+    animation.bounce(object, _.extend({
+        time       = 500,
+        scaleFrom  = 1,
+        scaleTo    = scaleGrow,
+        transition = easing.outSine,
+        onComplete = back
+    }, options))
+end
+
+--------------------------------------------------------
+
 function animation.easeDisplay(object, scale)
     local scaleTo = scale or 1
     object.xScale = 0.2
@@ -37,19 +69,29 @@ function animation.easeDisplay(object, scale)
     })
 end
 
-function animation.bounce(object, scale)
-    local scaleTo = scale or 1
+function animation.bounce(object, options)
+    options = options or {}
+    local scaleTo = options.scaleTo or 1
+    local scaleFrom = options.scaleFrom or 0.01
 
-    object.xScale = 0.01
-    object.yScale = 0.01
-    timer.performWithDelay(math.random(120, 330), function()
+    object.xScale = scaleFrom
+    object.yScale = scaleFrom
+
+    local doBounce = function()
         transition.to( object, {
-            xScale = scaleTo,
-            yScale = scaleTo,
-            time = 750,
-            transition = easing.outBounce
+            xScale     = scaleTo,
+            yScale     = scaleTo,
+            time       = options. time or 750,
+            transition = options.transition or easing.outBounce,
+            onComplete = options.onComplete
         })
-    end)
+    end
+
+    if(options.noDelay) then
+        doBounce()
+    else
+        timer.performWithDelay(math.random(120, 330), doBounce)
+    end
 end
 
 function animation.grow(object, fromScale, time, onComplete)

@@ -38,7 +38,7 @@ describe('[animation]', function()
     assert.are.equal(foo.xScale, 1)
     assert.are.equal(foo.yScale, 1)
 
-    animation.bounce(foo, 2)
+    animation.bounce(foo, {scaleTo = 2})
     assert.are.equal(foo.xScale, 2)
     assert.are.equal(foo.yScale, 2)
   end)
