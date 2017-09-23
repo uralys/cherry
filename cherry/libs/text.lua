@@ -30,7 +30,7 @@ end
 function Text.simple(options)
     local _text = display.newText({
         parent   = options.parent,
-        text     = options.value,
+        text     = options.text,
         x        = options.x,
         y        = options.y,
         width    = options.width,

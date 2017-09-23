@@ -49,7 +49,7 @@ function Options:drawActions(view)
 
     self.version = Text.simple({
         parent = self.actions,
-        value  = App.version,
+        text   = App.version,
         x      = 320,
         y      = 0,
         color  = 1,

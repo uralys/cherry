@@ -57,7 +57,7 @@ function Text:render()
         display.remove(self.view)
     end
 
-    self.view = TextUtils.embossed({
+    self.view = TextUtils.simple({
         parent   = self.parent,
         text     = self.value,
         font     = self.font or _G.FONT,
@@ -76,7 +76,7 @@ function Text:render()
         animate(self.view, self.animation)
     end
 
-    self.view.anchorX = self.anchorX or 0
+    self.view.anchorX = self.anchorX or 0.5
 end
 
 --------------------------------------------------------------------------------
