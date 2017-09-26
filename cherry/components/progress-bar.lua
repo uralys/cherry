@@ -2,6 +2,7 @@
 
 local _    = require 'cherry.libs.underscore'
 local Icon = require 'cherry.components.icon'
+local Text = require 'cherry.components.text'
 
 --------------------------------------------------------------------------------
 
@@ -34,11 +35,20 @@ end
 --  path
 --
 function ProgressBar:draw( options )
+    options = _.defaults(options, {
+        width    = 300,
+        height   = 35,
+        hideText = false
+    })
+
     self:prepare    ( options )
     self:background ( options )
     self:progress   ( options )
     self:icon       ( options )
-    self:text       ( options )
+
+    if(not options.hideText) then
+        self:addText(options)
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -122,10 +132,10 @@ function ProgressBar:icon(options)
     end
 end
 
-function ProgressBar:text(options)
-    self.text = display.newText({
+function ProgressBar:addText(options)
+    self.text = Text:create({
         parent   = self.display,
-        text    = '',
+        value    = '',
         x        = 0,
         y        = 0,
         font     = _G.FONT,
@@ -154,12 +164,24 @@ end
 --------------------------------------------------------------------------------
 
 function ProgressBar:set(value)
-    self.text.text = value .. '%'
+    if(self.text) then
+        self.text:setValue(value .. '%')
+    end
+
     self.progress.maskX = self:maskX(value)
     if(value == 100) then self:showGreenBG() end
 end
 
-function ProgressBar:reach(step)
+function ProgressBar:reach(step, options)
+    options = _.defaults(options, {
+        transition = easing.outQuad,
+        time       = 1400
+    })
+
+    if(self.reachTransition) then
+        transition.cancel(self.reachTransition)
+    end
+
     local value, text
 
     if('table' == type(step)) then
@@ -170,12 +192,15 @@ function ProgressBar:reach(step)
         text = value .. '%'
     end
 
-    self.text.text = text
+    if(self.text) then
+        self.text:setValue(text)
+    end
 
-    transition.to(self.progress, {
+    self.reachTransition = transition.to(self.progress, {
         maskX      = self:maskX(value),
-        transition = easing.outQuad,
-        time       = 1400
+        transition = options.transition,
+        time       = options.time,
+        onComplete = options.onComplete
     })
 
     if(self.changeBG and value == 100) then self:showGreenBG() end
@@ -185,6 +210,10 @@ end
 
 function ProgressBar:maskX(value)
     return (value * (self:progressWidth()/100)) - self:progressWidth()/1.835
+end
+
+function ProgressBar:currentValue()
+    return (self.progress.maskX + self:progressWidth()/1.835 ) / (self:progressWidth()/100)
 end
 
 --------------------------------------------------------------------------------
