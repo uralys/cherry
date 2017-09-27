@@ -39,18 +39,20 @@ function animation.scaleBackAndForth(object, options)
             scaleFrom  = scaleGrow,
             scaleTo    = initialScale,
             transition = easing.outBounce,
+            noDelay    = true,
             onComplete = function ()
-                animation.scaleBackAndForth(object)
+                animation.scaleBackAndForth(object, options)
             end
         }, options))
     end
 
     animation.bounce(object, _.extend({
         time       = 500,
-        scaleFrom  = 1,
+        scaleFrom  = initialScale,
         scaleTo    = scaleGrow,
         transition = easing.outSine,
-        onComplete = back
+        onComplete = back,
+        noDelay    = true
     }, options))
 end
 
@@ -126,6 +128,34 @@ function animation.fadeIn(object)
     transition.to( object, {
         alpha = 1,
         time = 750
+    })
+end
+
+--------------------------------------------------------------------------------
+
+function animation.rotate(o, options)
+    options = options or {}
+
+    if(o.rotateAnimation) then
+        transition.cancel(o.rotateAnimation)
+    end
+
+    local rotateTime = options.rotateTime or 3000
+    local speed = options.speed or 1
+
+    local clock = 1
+    if(options.counterClockwise) then clock = -1 end
+
+    local toRotation = o.rotation + 360 * clock * speed
+
+    o.rotateAnimation = transition.to(o, {
+        rotation = toRotation,
+        time = rotateTime,
+        onComplete = function()
+            if(not options.onlyOnce) then
+                animation.rotate(o, options)
+            end
+        end
     })
 end
 
