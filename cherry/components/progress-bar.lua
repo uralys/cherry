@@ -172,6 +172,12 @@ function ProgressBar:set(value)
     if(value == 100) then self:showGreenBG() end
 end
 
+function ProgressBar:stop()
+    if(self.reachTransition) then
+        transition.cancel(self.reachTransition)
+    end
+end
+
 function ProgressBar:reach(step, options)
     options = _.defaults(options, {
         transition = easing.outQuad,

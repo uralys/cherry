@@ -35,6 +35,10 @@ local App = {
     yGravity = 0,
 
     -----------------------------------------
+
+    hasTutorial = false,
+
+    -----------------------------------------
     -- to use gpgs, add the plugin within your build.settings
 
     useGPGS = false,
@@ -65,6 +69,7 @@ local App = {
 function App:start(options)
     options = options or {}
     App = _.extend(App, options)
+    _G = _.extend(_G, options.globals)
 
     _G.log('--------------------------------')
     _G.log( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
@@ -72,6 +77,9 @@ function App:start(options)
     _G.log('--------------------------------')
     _G.log('extensions:')
     _G.log(App.extension, {depth = 1})
+    _G.log('--------------------------------')
+    _G.log('globals:')
+    _G.log(options.globals)
     _G.log('--------------------------------')
 
     self:deviceSetup()
@@ -153,8 +161,7 @@ function App:ready()
 
     else
         local nextView = _G.Router.HOME
-
-        if(self.user:isNew()) then
+        if(self.user:isNew() and App.hasTutorial) then
             nextView = _G.Router.PLAYGROUND
         end
 

@@ -20,11 +20,11 @@ function scene:create( event )
     )
 
     phantom.rotation = -4
-    animation.rotateBackAndForth(phantom, 4, 800)
+    animation.rotateBackAndForth(phantom, 4, 1000)
 
     local text = Text.embossed({
         parent   = self.view,
-        x        = display.contentWidth * 0.4,
+        x        = display.contentWidth * 0.5,
         y        = display.contentHeight * 0.5,
         text     = 'You should use headphones for a complete experience',
         font     = _G.FONT,
@@ -34,7 +34,7 @@ function scene:create( event )
 
     text.anchorX = 0
 
-    local delay = timer.performWithDelay(4000, function()
+    local delay = timer.performWithDelay(2000, function()
         Router:open(nextView)
     end)
 
@@ -46,6 +46,8 @@ function scene:create( event )
 
     gesture.onTap(text, function()
         analytics.event('game', 'text-headphone')
+        timer.cancel(delay)
+        Router:open(nextView)
     end)
 end
 
