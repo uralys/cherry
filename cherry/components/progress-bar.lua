@@ -38,7 +38,8 @@ function ProgressBar:draw( options )
     options = _.defaults(options, {
         width    = 300,
         height   = 35,
-        hideText = false
+        hideText = false,
+        changeBG = false
     })
 
     self:prepare    ( options )
@@ -169,7 +170,7 @@ function ProgressBar:set(value)
     end
 
     self.progress.maskX = self:maskX(value)
-    if(value == 100) then self:showGreenBG() end
+    if(self.changeBG and value == 100) then self:showGreenBG() end
 end
 
 function ProgressBar:stop()

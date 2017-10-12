@@ -3,6 +3,10 @@
 -- April 2014
 --------------------------------------------------------------------------------
 
+local _ = require 'cherry.libs.underscore'
+
+--------------------------------------------------------------------------------
+
 local Cooldown    = {}
 
 -------------------------------------
@@ -30,24 +34,23 @@ local NEEDLE_ON_RIGHT = 2
 --------------------------------------------------------------------------------
 
 function Cooldown:new(options)
-    local cooldown = {
-        parent        = options.parent,
-        x             = options.x                 or 0,
-        y             = options.y                 or 0,
-        alpha         = options.alpha             or 1,
-        scale         = options.scale             or 1,
-        loops         = options.loops             or 1,
-        time          = options.time              or 2000,
-        reverseRatio  = options.reverseRatio      or 1,
-        autoStart     = options.autoStart         or false,
-        autoStartBack = options.autoStartBack     or false,
-        startBackTime = options.startBackTime     or 0,
+    local cooldown = _.defaults(options, {
+        x             = 0,
+        y             = 0,
+        alpha         = 1,
+        scale         = 1,
+        loops         = 1,
+        time          = 2000,
+        reverseRatio  = 1,
+        autoStart     = false,
+        autoStartBack = false,
+        startBackTime = 0,
         pauseTime     = system.getTimer(),
         startHalfTime = system.getTimer(),
         needle        = NEEDLE_ON_RIGHT,
         state         = EMPTY,
         tweenState    = PAUSED
-    }
+    })
 
     setmetatable(cooldown, { __index = Cooldown })
     self:prepare(cooldown)
@@ -137,6 +140,14 @@ function Cooldown:startBack()
         self.remainingHalfTime  = self.time*0.5 / self.reverseRatio
         self:tweenLeftPart()
     end
+end
+
+-------------------------------------
+
+function Cooldown:restart()
+    self:pause()
+    self:reset()
+    self:start()
 end
 
 -------------------------------------

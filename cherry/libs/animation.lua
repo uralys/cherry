@@ -103,7 +103,7 @@ function animation.grow(object, fromScale, time, onComplete)
     transition.to( object, {
         xScale = 1,
         yScale = 1,
-        time = time or 350,
+        time = time or 150,
         onComplete = onComplete
     })
 end
@@ -129,6 +129,24 @@ function animation.fadeIn(object)
         alpha = 1,
         time = 750
     })
+end
+
+--------------------------------------------------------------------------------
+
+function animation.flash()
+  local flash = display.newRect(
+      display.contentWidth/2,
+      display.contentHeight/2,
+      display.contentWidth,
+      display.contentHeight
+  )
+
+  flash:setFillColor(1)
+
+  transition.to(flash, {
+    time = 300,
+    alpha = 0
+  })
 end
 
 --------------------------------------------------------------------------------

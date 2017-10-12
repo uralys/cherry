@@ -38,6 +38,7 @@ end
 -- value present in the following list of defaults objects.
 --
 function Underscore.defaults (object, default)
+    object = object or {}
     for k,v in pairs(default) do
         if(object[k] == nil) then
             object[k] = v

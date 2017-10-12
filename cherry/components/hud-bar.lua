@@ -8,19 +8,25 @@ local HUDBar = {}
 
 --------------------------------------------------------------------------------
 
-function HUDBar:create(parent)
+function HUDBar:create(options)
+    options = _.defaults(options, {
+        height = display.contentHeight*0.07
+    })
+
     if(self.bar) then
         display.remove(self.bar)
     end
 
-    self.barHeight = display.contentHeight*0.07
+    self.barHeight = options.height
 
     self.bar   = display.newGroup()
     self.bar.x = display.contentWidth*0.5
     self.bar.y = -self.barHeight*0.5
     self.bar.anchorX = 0
 
-    parent:insert(self.bar)
+    if(options.parent) then
+        options.parent:insert(self.bar)
+    end
 
     self.barBG = display.newRect(
         self.bar,
