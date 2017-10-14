@@ -12,16 +12,15 @@ local physics = _G.physics or require( 'physics' )
 --------------------------------------------------------------------------------
 
 local Game = {
-    RUNNING = 1,
-    STOPPED = 2
+    isRunning = false
 }
 
 --------------------------------------------------------------------------------
 
 function Game:new(extension)
-    local game = _.extend({
-        state = Game.STOPPED
-    }, extension)
+    local game = _.defaults(extension, {
+        isRunning = false
+    })
 
     setmetatable(game, { __index = Game })
     return game
@@ -45,7 +44,7 @@ function Game:start()
 end
 
 function Game:run()
-    self.state = Game.RUNNING
+    self.isRunning = true
 
     physics.start()
     physics.setGravity( App.xGravity, App.yGravity )
@@ -72,8 +71,8 @@ end
 ------------------------------------------
 
 function Game:stop(userExit)
-    if(self.state == Game.STOPPED) then return end
-    self.state = Game.STOPPED
+    if(not self.isRunning) then return end
+    self.isRunning = false
 
     ------------------------------------------
 
