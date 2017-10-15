@@ -3,27 +3,63 @@
 local Background = require 'cherry.components.background'
 local Screen     = require 'cherry.components.screen'
 local Effects    = require 'cherry.engine.effects'
+local group      = require 'cherry.libs.group'
 local _          = require 'cherry.libs.underscore'
 
 --------------------------------------------------------------------------------
 
-local physics = _G.physics or require( 'physics' )
-
---------------------------------------------------------------------------------
-
-local Game = {
-    isRunning = false
-}
+local Game = {}
 
 --------------------------------------------------------------------------------
 
 function Game:new(extension)
     local game = _.defaults(extension, {
-        isRunning = false
+        isRunning = false,
+        state = {},
+        elements = {}
     })
 
     setmetatable(game, { __index = Game })
     return game
+end
+
+--------------------------------------------------------------------------------
+
+function Game:initialState() return {} end
+function Game:resetState() self.state = self:initialState() end
+function Game:getState() return self.state end
+function Game:resetElements() self.elements = {} end
+
+--------------------------------------------------------------------------------
+
+function Game:reset()
+    group.empty(App.hud)
+    if(self.onReset) then self:onReset() end -- from extension
+    self:resetState()
+    self:resetElements()
+    Camera:empty()
+    App.score:reset()
+end
+
+function Game:run()
+    self.isRunning = true
+
+    if(_G.usePhysics) then
+        _G.log('activated physics')
+        _G.physics.start()
+        _G.physics.setGravity( App.xGravity, App.yGravity )
+    end
+
+    Camera:resetZoom()
+    Camera:center()
+    Camera:start()
+
+    Background:darken()
+
+    if(self.onRun) then self:onRun() end -- from extension
+
+    if(_G.CBE) then Effects:restart() end
+    print('Game runs!')
 end
 
 --------------------------------------------------------------------------------
@@ -41,31 +77,6 @@ function Game:start()
     else
         self:run()
     end
-end
-
-function Game:run()
-    self.isRunning = true
-
-    physics.start()
-    physics.setGravity( App.xGravity, App.yGravity )
-
-    Camera:resetZoom()
-    Camera:center()
-    Camera:start()
-
-    -- App.score:createBar()
-    Background:darken()
-
-    if(self.onRun) then self:onRun() end -- from extension
-
-    if(_G.CBE) then Effects:restart() end
-    print('Game runs!')
-end
-
-function Game:reset()
-    if(self.onReset) then self:onReset() end -- from extension
-    Camera:empty()
-    App.score:reset()
 end
 
 ------------------------------------------

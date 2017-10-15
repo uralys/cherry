@@ -22,7 +22,6 @@ function HUDBar:create(options)
     self.bar   = display.newGroup()
     self.bar.x = display.contentWidth*0.5
     self.bar.y = -self.barHeight*0.5
-    self.bar.anchorX = 0
 
     if(options.parent) then
         options.parent:insert(self.bar)

@@ -380,6 +380,12 @@ function Cooldown:continue()
     end
 end
 
+function Cooldown:destroy()
+    self:stopTweens()
+    display.remove(self.leftCircle)
+    display.remove(self.rightCircle)
+end
+
 --------------------------------------------------------------------------------
 
 function Cooldown:reset(cooldown)
