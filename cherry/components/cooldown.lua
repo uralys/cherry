@@ -62,7 +62,6 @@ end
 --------------------------------------------------------------------------------
 
 function Cooldown:prepare(cooldown)
-
     cooldown.leftCircle = display.newImage(
         cooldown.parent,
         'cherry/assets/images/cooldown/half.left-' .. cooldown.alpha .. '.png'

@@ -39,17 +39,16 @@ function ProgressBar:draw( options )
         width    = 300,
         height   = 35,
         hideText = false,
+        hideIcon = false,
         changeBG = false
     })
 
     self:prepare    ( options )
     self:background ( options )
     self:progress   ( options )
-    self:icon       ( options )
 
-    if(not options.hideText) then
-        self:addText(options)
-    end
+    if(not options.hideText) then self:addText ( options ) end
+    if(not options.hideIcon) then self:icon    ( options ) end
 end
 
 --------------------------------------------------------------------------------
