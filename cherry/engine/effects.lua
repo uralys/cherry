@@ -118,14 +118,14 @@ function Effects:explosion(parent, x, y)
     local vent = CBE.newVent({
         preset = 'wisps',
         title = 'explosion',
-        scale = 2.5,
+        scale = 1.7,
         positionType = 'inRadius',
         color = {{1, 1, 0}, {1, 0.5, 0}, {0.2, 0.2, 0.2}},
         particleProperties = {blendMode = 'add'},
         emitX = x,
         emitY = y,
 
-        emissionNum = 6,
+        emissionNum = 3,
         emitDelay = 15,
         perEmit = 2,
 
