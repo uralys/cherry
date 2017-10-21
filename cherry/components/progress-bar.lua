@@ -32,15 +32,15 @@ end
 --  y
 --  width
 --  height
---  path
+--  iconImage
 --
 function ProgressBar:draw( options )
     options = _.defaults(options, {
-        width    = 300,
-        height   = 35,
-        hideText = false,
-        hideIcon = false,
-        changeBG = false
+        width     = 300,
+        height    = 35,
+        hideText  = false,
+        changeBG  = false,
+        iconImage = nil
     })
 
     self:prepare    ( options )
@@ -106,7 +106,7 @@ function ProgressBar:progress(options)
 end
 
 function ProgressBar:icon(options)
-    if(options.path) then
+    if(options.iconImage) then
         local logoContainer = display.newImage(
             self.display,
             'cherry/assets/images/gui/items/circle.simple.container.png',
@@ -118,17 +118,17 @@ function ProgressBar:icon(options)
             logoContainer.fill.effect.intensity = 0.8
         end
 
-        local ratio = (options.height / logoContainer.height) * 1.3
-        logoContainer:scale(ratio, ratio)
-
         -----------------
 
         Icon:draw(_.defaults({
             parent  = self.display,
             x       = -options.width*0.55,
             y       = 0,
-            maxSize = logoContainer.height * 0.6
+            maxSize = logoContainer.height * 0.6,
+            path    = options.iconImage
         }, options))
+
+        self.logoContainer = logoContainer
     end
 end
 
