@@ -120,7 +120,7 @@ function ProgressBar:icon(options)
 
         -----------------
 
-        Icon:draw(_.defaults({
+        logoContainer.icon = Icon:draw(_.defaults({
             parent  = self.display,
             x       = -options.width*0.55,
             y       = 0,

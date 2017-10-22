@@ -59,7 +59,7 @@ end
 --------------------------------------------------------
 
 function animation.easeDisplay(object, scale)
-    local scaleTo = scale or 1
+    local scaleTo = scale or object.xScale or 1
     object.xScale = 0.2
     object.yScale = 0.2
 
