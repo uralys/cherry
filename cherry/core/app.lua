@@ -22,8 +22,8 @@ local App = {
     -----------------------------------------
 
     font = {
-        android =  'y2kboogie',
-        ios     = 'Year2000Boogie'
+        android = 'assets/y2kboogie.ttf',
+        ios     = 'assets/y2kboogie.ttf'
     },
 
     background = {
