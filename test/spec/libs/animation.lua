@@ -17,12 +17,12 @@ describe('[animation]', function()
 
   it('> easeDisplay', function()
     local foo = display.newImage(App.display)
-    foo.xScale = 0
-    foo.yScale = 0
+    foo.xScale = 0.11
+    foo.yScale = 0.1
 
     animation.easeDisplay(foo)
-    assert.are.equal(foo.xScale, 1)
-    assert.are.equal(foo.yScale, 1)
+    assert.are.equal(foo.xScale, 0.11)
+    assert.are.equal(foo.yScale, 0.11)
 
     animation.easeDisplay(foo, 2)
     assert.are.equal(foo.xScale, 2)
