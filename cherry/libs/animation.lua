@@ -35,7 +35,7 @@ function animation.scaleBackAndForth(object, options)
 
     local back = function()
         animation.bounce(object, _.extend({
-            time       = 500,
+            time       = options.time or 500,
             scaleFrom  = scaleGrow,
             scaleTo    = initialScale,
             transition = easing.outBounce,
@@ -47,7 +47,7 @@ function animation.scaleBackAndForth(object, options)
     end
 
     animation.bounce(object, _.extend({
-        time       = 500,
+        time       = options.time or 500,
         scaleFrom  = initialScale,
         scaleTo    = scaleGrow,
         transition = easing.outSine,
