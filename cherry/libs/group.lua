@@ -21,7 +21,7 @@ function Group.empty( group )
         for i=group.numChildren,1,-1 do
             local child = group[i]
             transition.cancel(child)
-            child:removeSelf()
+            display.remove(child)
             group[i] = nil
         end
     end

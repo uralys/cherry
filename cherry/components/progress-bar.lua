@@ -164,6 +164,8 @@ end
 --------------------------------------------------------------------------------
 
 function ProgressBar:set(value)
+    self:stop()
+
     if(self.text) then
         self.text:setValue(value .. '%')
     end

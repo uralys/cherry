@@ -75,6 +75,11 @@ function User:isNew()
     return not self.savedData.profile.tutorial
 end
 
+function User:onTutorialDone()
+  self.savedData.profile.tutorial = true
+  self:save()
+end
+
 --------------------------------------------------------------------------------
 
 return User

@@ -20,7 +20,14 @@ end
 
 function Text:render()
   if (self.view) then
+    if (self.animation) then
+      transition.cancel( self.view, self.animation)
+    end
     display.remove(self.view)
+  end
+
+  if (not self.parent) then
+    return nil
   end
 
   self.view = TextUtils.simple({
