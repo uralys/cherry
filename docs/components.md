@@ -66,13 +66,13 @@ Focus(item, true)
 Choose arrow positions : set `all` to false, and set the ones you want in `[up, down, left, right]`
 ```
 Focus(item, {
-    all    = false,
-    bottom = true,
-    up     = true
+    all  = false,
+    down = true,
+    up   = true
 })
 ```
 
-![up-bottom-focus](/docs/assets/up-bottom-focus.png)
+![up-down-focus](/docs/assets/up-down-focus.png)
 
 Choose arrow ways : set `type` to `from-center` or `show-center` (default)
 ```

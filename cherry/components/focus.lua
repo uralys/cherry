@@ -72,7 +72,7 @@ return function(object, options)
         type   = 'show-center', -- 'from-center'
         all    = true,
         up     = false,
-        bottom = false,
+        down   = false,
         right  = false,
         left   = false,
         bounce = true
@@ -145,22 +145,22 @@ return function(object, options)
 
     -----------------
 
-    if(options.all or options.bottom) then
-        local bottomY = object.height / 2 + 20
-        local bottom = display.newImage(focus, 'cherry/assets/images/gui/items/arrow.right.png')
-        bottom.x = 0
-        bottom.y = bottomY
-        bottom:scale(0.5, 0.5)
+    if(options.all or options.down) then
+        local downY = object.height / 2 + 20
+        local down = display.newImage(focus, 'cherry/assets/images/gui/items/arrow.right.png')
+        down.x = 0
+        down.y = downY
+        down:scale(0.5, 0.5)
 
         if(options.type == 'show-center') then
-            bottom.rotation = -90
+            down.rotation = -90
         elseif(options.type == 'from-center') then
-            bottom.rotation = 90
+            down.rotation = 90
         end
 
         if(options.bounce) then
-            verticalBackAndForth(bottom, {
-                to = bottomY + 10,
+            verticalBackAndForth(down, {
+                to = downY + 10,
                 repeatAction = focusOnTop
             })
         end
@@ -189,10 +189,12 @@ return function(object, options)
 
     -----------------
 
-    gesture.onTap(focus, function ()
-        group.destroy(focus, true)
-        return false -- enable propagation
-    end)
+    if(options.removeOnTap) then
+        gesture.onTap(focus, function ()
+            group.destroy(focus, true)
+            return false -- enable propagation
+        end)
+    end
 
     -----------------
 
