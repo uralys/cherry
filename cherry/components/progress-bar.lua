@@ -1,8 +1,9 @@
 --------------------------------------------------------------------------------
 
-local _    = require 'cherry.libs.underscore'
-local Icon = require 'cherry.components.icon'
-local Text = require 'cherry.components.text'
+local _        = require 'cherry.libs.underscore'
+local colorize = require 'cherry.libs.colorize'
+local Icon     = require 'cherry.components.icon'
+local Text     = require 'cherry.components.text'
 
 --------------------------------------------------------------------------------
 
@@ -43,7 +44,7 @@ function ProgressBar:draw( options )
     hideText  = false,
     changeBG  = false,
     iconImage = nil
-    })
+  })
 
   self:prepare    ( options )
   self:background ( options )
@@ -69,7 +70,7 @@ function ProgressBar:background(options)
   self.bg = display.newImage(
     self.display,
     self.rail or 'cherry/assets/images/gui/progress-bar/loading-bg.png'
-    )
+  )
 
   self.bg.width  = options.width
   self.bg.height = options.height
@@ -79,71 +80,71 @@ function ProgressBar:background(options)
     self.bg.fill.effect.intensity = 0.8
   end
 
-    ------------
+  ------------
 
-    self.bgGreen = display.newImage(
+  self.bgGreen = display.newImage(
+    self.display,
+    'cherry/assets/images/gui/progress-bar/loading-bg-green.png'
+  )
+
+  self.bgGreen.width  = options.width
+  self.bgGreen.height = options.height
+  self.bgGreen.alpha = 0
+end
+
+function ProgressBar:progress(options)
+  self.progress = display.newImage(
+    self.display,
+    self.track or 'cherry/assets/images/gui/progress-bar/loading-progress.png'
+  )
+
+  self.progress.width   = self:progressWidth()
+  self.progress.height  = options.height*0.69
+  self.progress.anchorX = 0
+  self.progress.x       = -options.width/2.06
+
+  self.progress:setMask( graphics.newMask(
+    'cherry/assets/images/gui/progress-bar/loading-mask.png'
+  ))
+end
+
+function ProgressBar:icon(options)
+  if(options.iconImage) then
+    local logoContainer = display.newImage(
       self.display,
-      'cherry/assets/images/gui/progress-bar/loading-bg-green.png'
-      )
+      'cherry/assets/images/gui/items/circle.simple.container.png',
+      -options.width*0.55, 0
+    )
 
-    self.bgGreen.width  = options.width
-    self.bgGreen.height = options.height
-    self.bgGreen.alpha = 0
-  end
-
-  function ProgressBar:progress(options)
-    self.progress = display.newImage(
-      self.display,
-      self.track or 'cherry/assets/images/gui/progress-bar/loading-progress.png'
-      )
-
-    self.progress.width   = self:progressWidth()
-    self.progress.height  = options.height*0.69
-    self.progress.anchorX = 0
-    self.progress.x       = -options.width/2.06
-
-    self.progress:setMask( graphics.newMask(
-      'cherry/assets/images/gui/progress-bar/loading-mask.png'
-      ))
-  end
-
-  function ProgressBar:icon(options)
-    if(options.iconImage) then
-      local logoContainer = display.newImage(
-        self.display,
-        'cherry/assets/images/gui/items/circle.simple.container.png',
-        -options.width*0.55, 0
-        )
-
-      if(options.disabled) then
-        logoContainer.fill.effect = 'filter.desaturate'
-        logoContainer.fill.effect.intensity = 0.8
-      end
-
-        -----------------
-
-        logoContainer.icon = Icon:draw(_.defaults({
-          parent  = self.display,
-          x       = -options.width*0.55,
-          y       = 0,
-          maxSize = logoContainer.height * 0.6,
-          path    = options.iconImage
-          }, options))
-
-        self.logoContainer = logoContainer
-      end
+    if(options.disabled) then
+      logoContainer.fill.effect = 'filter.desaturate'
+      logoContainer.fill.effect.intensity = 0.8
     end
 
-    function ProgressBar:addText(options)
-      self.text = Text:create({
-        parent   = self.display,
-        value    = '',
-        x        = 0,
-        y        = 0,
-        font     = _G.FONT,
-        fontSize = self.progress.height*0.7,
-      })
-    end
+    -----------------
+
+    logoContainer.icon = Icon:draw(_.defaults({
+      parent  = self.display,
+      x       = -options.width*0.55,
+      y       = 0,
+      maxSize = logoContainer.height * 0.6,
+      path    = options.iconImage
+    }, options))
+
+    self.logoContainer = logoContainer
+  end
+end
+
+function ProgressBar:addText(options)
+  self.text = Text:create({
+    parent   = self.display,
+    value    = '',
+    x        = 0,
+    y        = 0,
+    font     = _G.FONT,
+    fontSize = self.progress.height*0.7,
+  })
+end
 
 --------------------------------------------------------------------------------
 -- Tools
@@ -174,10 +175,16 @@ end
 --------------------------------------------------------------------------------
 
 function ProgressBar:runNextInQueue()
+  if(self.currentActionRunning) then return end
   if(#self.queue == 0) then return end
   local action = table.shift(self.queue)
-  self:reach(action.value)
-  _G.log(action)
+  self.currentActionRunning = action
+  self:reach(action.value, {
+    onComplete = function()
+      self.currentActionRunning = nil
+      if(action.onComplete) then action.onComplete() end
+    end
+  })
 end
 
 --------------------------------------------------------------------------------
@@ -205,7 +212,7 @@ function ProgressBar:reach(step, options)
   options = _.defaults(options, {
     transition = easing.outQuad,
     time       = 1400
-    })
+  })
 
   if(self.reachTransition) then
     transition.cancel(self.reachTransition)
@@ -233,32 +240,51 @@ function ProgressBar:reach(step, options)
   })
 
   if(self.changeBG and value == 100) then self:showGreenBG() end
+  if(value == 100) then
+    self.progress:setFillColor(
+      colorize('FFFF00')
+    )
+    self.progress.fill.effect = "filter.brightness"
+    self.progress.fill.effect.intensity = 0.3
+  else
+    self.progress.fill.effect = nil
+    self.progress:setFillColor(1)
+  end
 end
 
 ---
 -- adds an action within the queue
--- when a "fill" animation is completed, the next action is triggered
+-- when a "fill-then-reset" animation is completed, the next action is triggered
 -- action
---   type: 'fill', 'reset', 'reach'
+--   type: 'fill-then-reset', 'reach'
 --   value: number (for type 'reach')
 function ProgressBar:add(action)
-  local onComplete
+  local defaultAction = {}
 
-  if(action.type == 'fill') then
-    onComplete = function()
+  if(self.currentActionRunning and self.currentActionRunning.type == 'reach') then
+    self.currentActionRunning = nil
+  end
+
+  if(action.type == 'fill-then-reset') then
+    defaultAction.value = 100
+    defaultAction.onComplete = function()
       self:set(0)
       self:runNextInQueue()
     end
+
   elseif(action.type == 'reach') then
-    onComplete = function()
+    defaultAction.onComplete = function()
       self:runNextInQueue()
     end
   end
 
-  self.queue[#self.queue + 1] = _.extend(action, {
-    onComplete = onComplete
-  })
-  if(#self.queue == 1) then self:runQueue() end
+  local next = #self.queue + 1
+  if(#self.queue > 0 and self.queue[#self.queue].type == 'reach') then
+    next = #self.queue
+  end
+
+  self.queue[next] = _.defaults(defaultAction, action)
+  self:runNextInQueue()
 end
 
 --------------------------------------------------------------------------------
