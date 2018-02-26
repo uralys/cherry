@@ -1,9 +1,9 @@
 --------------------------------------------------------------------------------
 
-local _        = require 'cherry.libs.underscore'
-local colorize = require 'cherry.libs.colorize'
-local Icon     = require 'cherry.components.icon'
-local Text     = require 'cherry.components.text'
+local _         = require 'cherry.libs.underscore'
+local colorize  = require 'cherry.libs.colorize'
+local Icon      = require 'cherry.components.icon'
+local Text      = require 'cherry.components.text'
 
 --------------------------------------------------------------------------------
 
@@ -174,17 +174,17 @@ end
 
 --------------------------------------------------------------------------------
 
-function ProgressBar:runNextInQueue()
+function ProgressBar:runNextInQueue(force)
+  if(force)
+    then self.currentActionRunning = nil
+  end
+
   if(self.currentActionRunning) then return end
   if(#self.queue == 0) then return end
+
   local action = table.shift(self.queue)
   self.currentActionRunning = action
-  self:reach(action.value, {
-    onComplete = function()
-      self.currentActionRunning = nil
-      if(action.onComplete) then action.onComplete() end
-    end
-  })
+  self:reach(action.value, action)
 end
 
 --------------------------------------------------------------------------------
@@ -268,13 +268,29 @@ function ProgressBar:add(action)
   if(action.type == 'fill-then-reset') then
     defaultAction.value = 100
     defaultAction.onComplete = function()
-      self:set(0)
-      self:runNextInQueue()
+      local height = self.progress.height
+      transition.to(self.progress, {
+        time = 90,
+        height = height * 1.4,
+        alpha = 0.7,
+        onComplete = function()
+          transition.to(self.progress, {
+            time = 90,
+            height = height,
+            alpha = 0.2,
+            onComplete = function()
+              self.progress.alpha = 1
+              self:set(0)
+              self:runNextInQueue(true)
+            end
+          })
+        end
+      })
     end
 
   elseif(action.type == 'reach') then
     defaultAction.onComplete = function()
-      self:runNextInQueue()
+      self:runNextInQueue(true)
     end
   end
 

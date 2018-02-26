@@ -41,7 +41,9 @@ function animation.scaleBackAndForth(object, options)
             transition = easing.outBounce,
             noDelay    = true,
             onComplete = function ()
-                animation.scaleBackAndForth(object, options)
+                if(options.loop) then
+                    animation.scaleBackAndForth(object, options)
+                end
             end
         }, options))
     end
@@ -145,7 +147,10 @@ function animation.flash()
 
   transition.to(flash, {
     time = 300,
-    alpha = 0
+    alpha = 0,
+    onComplete = function ()
+        display.remove(flash)
+    end
   })
 end
 
