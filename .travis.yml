@@ -18,12 +18,8 @@ branches:
   only:
     - master
 
-install:
-  - ./install-rocks
-
-script:
-  - luacheck .
-  - ./test/run travis
+install: ./install-rocks
+script: ./test/run travis
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

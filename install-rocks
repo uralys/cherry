@@ -1,5 +1,14 @@
 #!/bin/bash
-luarocks install busted;
-luarocks install luacheck;
-luarocks install luacov;
-luarocks install luafilesystem;
+##http://leafo.net/guides/customizing-the-luarocks-tree.html
+
+## test/mocks
+luarocks install --tree modules luafilesystem;
+
+## tests/coverage
+luarocks install --tree modules busted;
+luarocks install --tree modules luacheck;
+luarocks install --tree modules luacov;
+
+## libs
+luarocks install --tree modules fp;
+luarocks install --tree modules dkjson;

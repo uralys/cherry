@@ -1,11 +1,14 @@
 #!/bin/bash
+set -e
+./modules/luacheck/bin/luacheck .
+
 if [[ $1 = "travis" ]]; then
-    busted -v \
+    modules/busted/bin/busted -v \
         --run=tests \
         --config-file=test/.busted \
         -m '/home/travis/build/chrisdugne/cherry/test/?.lua;/home/travis/build/chrisdugne/cherry/src/libs/?.lua;/home/travis/build/chrisdugne/cherry/src/?.lua'
 else
-    busted -v \
+    modules/busted/bin/busted -v \
         --run=tests \
         --config-file=test/.busted
 fi
