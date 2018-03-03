@@ -36,4 +36,4 @@ stds.cherry = {
 std = 'min+corona+cherry'
 ignore = {'212'}
 files['test'] = {std = '+busted'}
-exclude_files = {'.rocks/*'}
+exclude_files = {'.rocks/*', 'lua_install_travis_folder'}

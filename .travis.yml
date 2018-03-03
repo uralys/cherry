@@ -1,19 +1,20 @@
 language: python
 sudo: false
 env:
-- LUA="lua=5.1"
-- LUA="lua=5.2"
-- LUA="lua=5.3"
-- LUA="luajit=2.0"
-- LUA="luajit=2.1"
-before_install:
-- pip install hererocks
-- hererocks lua_install -r^ --$LUA
-- export PATH=$PATH:$PWD/lua_install/bin
+- LUA="lua=5.1" LUA_VERSION=5.1
+- LUA="lua=5.2" LUA_VERSION=5.2
+- LUA="lua=5.3" LUA_VERSION=5.3
+- LUA="luajit=2.0"  LUA_VERSION=5.1
+- LUA="luajit=2.1"  LUA_VERSION=5.1
 branches:
   only:
   - master
-install: "make test env=travis"
+install:
+- pip install hererocks
+- hererocks lua_install_travis_folder -r^ --$LUA
+- source lua_install_travis_folder/bin/activate
+script:
+- make test env=travis
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 notifications:
