@@ -36,4 +36,4 @@ stds.cherry = {
 std = 'min+corona+cherry'
 ignore = {'212'}
 files['test'] = {std = '+busted'}
-exclude_files = {'modules/*'}
+exclude_files = {'.rocks/*'}

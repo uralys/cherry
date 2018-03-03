@@ -23,9 +23,16 @@ Cherry is a starter for `CoronaSDK App` to help building your game.
 
 You may extend Cherry framework, or just pick few components, in order to start your own game.
 
-#### Using Cherry
-- clone Cherry next to your project, and symlink the lib to your project root:
-`ln -s ../Cherry/cherry cherry`
+#### Installation
+- clone Cherry next to your project
+- install the luarocks using the `Makefile`, they will be created locally within `/.rocks`
+```
+> make
+```
+- and symlink the lib to your project root:
+```
+> ln -s ../Cherry/cherry cherry
+```
 - add a `main.lua` with
 ```lua
 -- main.lua
@@ -89,15 +96,19 @@ A typical tree should be :
 
 ## Tests
 UT with busted: http://olivinelabs.com/busted/
-use `luarocks` to install `busted` and `luacov`
 
 ```
-> ./test/run
+> make test
 ●●●●●●●●●●●●
-12 successes / 0 failures / 0 errors / 0 pending : 0.014314 seconds
+50 successes / 0 failures / 0 errors / 0 pending : 0.014314 seconds
 ```
 
-## Usage
+To display your `_G.log()` use:
+```
+> make test verbose=true
+```
+
+## Using Cherry
 
 #### Adding a new Screen
 
