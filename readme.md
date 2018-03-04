@@ -25,11 +25,7 @@ You may extend Cherry framework, or just pick few components, in order to start 
 
 #### Installation
 - clone Cherry next to your project
-- install the luarocks using the `Makefile`, they will be created locally within `/.rocks`
-```
-> make
-```
-- and symlink the lib to your project root:
+- symlink the lib to your project root:
 ```
 > ln -s ../Cherry/cherry cherry
 ```
@@ -94,20 +90,6 @@ A typical tree should be :
 │   └── main.lua
 ```
 
-## Tests
-UT with busted: http://olivinelabs.com/busted/
-
-```
-> make test
-●●●●●●●●●●●●
-50 successes / 0 failures / 0 errors / 0 pending : 0.014314 seconds
-```
-
-To display your `_G.log()` use:
-```
-> make test verbose=true
-```
-
 ## Using Cherry
 
 #### Adding a new Screen
@@ -152,6 +134,30 @@ See [documentation](docs/libraries.md) for the complete components list and opti
 Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the samples from `/assets/sounds` for your own game, providing you credit VelvetCoffee for the work and link to :
 
 `https://soundcloud.com/velvetcoffee`
+
+
+## Local development
+
+#### dependencies
+Luacheck, busted and luacov are used for the tests and coverage.
+install the luarocks using the `Makefile`, they will be created locally within `/.rocks`
+```
+> make
+```
+
+## Tests
+UT with busted: http://olivinelabs.com/busted/
+
+```
+> make test
+●●●●●●●●●●●●
+50 successes / 0 failures / 0 errors / 0 pending : 0.014314 seconds
+```
+
+To display your `_G.log()` use:
+```
+> make test verbose=true
+```
 
 ## BSD License
 You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [BSD](http://www.linfo.org/bsdlicense.html) crediting requirements, provided in the project [LICENSE](https://github.com/chrisdugne/cherry/blob/master/LICENSE)

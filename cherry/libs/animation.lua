@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _ = require 'cherry.libs.underscore'
+local isDisplayObjectsArray = require 'cherry.libs.is-display-objects-array'
 
 --------------------------------------------------------------------------------
 
@@ -73,16 +74,18 @@ function animation.easeDisplay(object, scale)
     })
 end
 
-function animation.bounce(object, options)
+function animation.bounce(objects, options)
+    if(not isDisplayObjectsArray(objects)) then objects = {objects} end
+
     options = options or {}
     local scaleTo = options.scaleTo or 1
     local scaleFrom = options.scaleFrom or 0.01
 
-    object.xScale = scaleFrom
-    object.yScale = scaleFrom
+    objects.xScale = scaleFrom
+    objects.yScale = scaleFrom
 
-    local doBounce = function()
-        transition.to( object, {
+    local _bounce = function(o)
+        transition.to( o, {
             xScale     = scaleTo,
             yScale     = scaleTo,
             time       = options. time or 750,
@@ -91,10 +94,16 @@ function animation.bounce(object, options)
         })
     end
 
+    local _bounceAll = function()
+        for _, o in ipairs(objects) do
+            _bounce(o)
+        end
+    end
+
     if(options.noDelay) then
-        doBounce()
+        _bounceAll()
     else
-        timer.performWithDelay(math.random(120, 330), doBounce)
+        timer.performWithDelay(math.random(120, 330), _bounceAll)
     end
 end
 

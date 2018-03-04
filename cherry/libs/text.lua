@@ -28,6 +28,8 @@ function Text.embossed(options)
 end
 
 function Text.simple(options)
+    if(not options.parent) then return end
+
     local _text = display.newText({
         parent   = options.parent,
         text     = options.text,

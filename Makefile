@@ -22,7 +22,6 @@ export LUA_CPATH := ${root}/.rocks/lib/lua/${LUA_VERSION}/?.so$(LUA_CPATH)
 	@luarocks install --tree .rocks busted
 	@luarocks install --tree .rocks luacheck
 	@luarocks install --tree .rocks luacov
-	@luarocks install --tree .rocks fp
 	@luarocks install --tree .rocks dkjson
 
 luacheck:
