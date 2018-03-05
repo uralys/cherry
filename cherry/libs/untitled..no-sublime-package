@@ -1,0 +1,11 @@
+{
+  "SublimeLinter":
+    {
+        "linters":
+        {
+            "luacheck": {
+                "executable": "${project}/.rocks/bin/luacheck"
+            }
+        }
+    }
+}

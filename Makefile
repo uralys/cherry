@@ -1,15 +1,12 @@
-# force rebuild targets:
-.PHONY: test
-
-ifeq ($(verbose), true)
-export DEBUG := true
+ifeq ($(env), travis)
+	root=/home/travis/build/chrisdugne/cherry
+else
+	root=.
+	LUA_VERSION=5.3
 endif
 
-ifeq ($(env), travis)
-root=/home/travis/build/chrisdugne/cherry
-else
-root=.
-LUA_VERSION=5.3
+ifeq ($(verbose), true)
+	export DEBUG := true
 endif
 
 # http://leafo.net/guides/customizing-the-luarocks-tree.html
@@ -36,3 +33,6 @@ test: .rocks luacheck busted
 clean:
 	@rm -rf .rocks
 	@echo removed .rocks
+
+# force rebuild targets:
+.PHONY: test

@@ -29,7 +29,7 @@ describe('[animation]', function()
     assert.are.equal(foo.yScale, 2)
   end)
 
-  it('> bounce', function()
+  it('> bounce one object', function()
     local foo = display.newImage(App.display)
     foo.xScale = 0
     foo.yScale = 0
@@ -41,6 +41,27 @@ describe('[animation]', function()
     animation.bounce(foo, {scaleTo = 2})
     assert.are.equal(foo.xScale, 2)
     assert.are.equal(foo.yScale, 2)
+  end)
+
+  it('> bounce many objects', function()
+    local foo = display.newImage(App.display)
+    local bar = display.newImage(App.display)
+    foo.xScale = 0
+    foo.yScale = 0
+    bar.xScale = 0
+    bar.yScale = 0
+
+    animation.bounce({foo, bar})
+    assert.are.equal(foo.xScale, 1)
+    assert.are.equal(foo.yScale, 1)
+    assert.are.equal(bar.xScale, 1)
+    assert.are.equal(bar.yScale, 1)
+
+    animation.bounce({foo, bar}, {scaleTo = 2})
+    assert.are.equal(foo.xScale, 2)
+    assert.are.equal(foo.yScale, 2)
+    assert.are.equal(bar.xScale, 2)
+    assert.are.equal(bar.yScale, 2)
   end)
 
   it('> grow', function()
