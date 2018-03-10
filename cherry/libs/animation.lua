@@ -79,12 +79,12 @@ function animation.bounce(objects, options)
 
     options = options or {}
     local scaleTo = options.scaleTo or 1
-    local scaleFrom = options.scaleFrom or 0.01
-
-    objects.xScale = scaleFrom
-    objects.yScale = scaleFrom
+    local scaleFrom = options.scaleFrom or 0.1
 
     local _bounce = function(o)
+        o.xScale = scaleFrom
+        o.yScale = scaleFrom
+
         transition.to( o, {
             xScale     = scaleTo,
             yScale     = scaleTo,

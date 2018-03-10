@@ -140,7 +140,7 @@ Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the
 
 #### dependencies
 Luacheck, busted and luacov are used for the tests and coverage.
-install the luarocks using the `Makefile`, they will be created locally within `/.rocks`
+install the luarocks using the `Makefile`, they will be created locally within `.rocks/`
 ```
 > make
 ```
