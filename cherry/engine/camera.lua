@@ -110,8 +110,8 @@ function Camera:stop()
     transition.to (self.display, {
         alpha = 0,
         time = 500,
-        xScale = 0,
-        yScale = 0
+        xScale = 0.01,
+        yScale = 0.01
     })
 end
 

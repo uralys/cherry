@@ -66,6 +66,7 @@ end
 
 function Game:start()
     self:reset()
+
     if (self.load) then
         local success = self:load()
         if(success) then
