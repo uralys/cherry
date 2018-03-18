@@ -31,6 +31,8 @@ function Game:getState() return self.state end
 function Game:resetElements() self.elements = {} end
 
 --------------------------------------------------------------------------------
+-- game.start --> reset, load?, run
+--------------------------------------------------------------------------------
 
 function Game:reset()
     group.empty(App.hud)
@@ -65,6 +67,7 @@ end
 --------------------------------------------------------------------------------
 
 function Game:start()
+    _G.isTutorial = App.user:isNew()
     self:reset()
 
     if (self.load) then
