@@ -31,14 +31,16 @@ end
 
 function animation.scaleBackAndForth(object, options)
     options = options or {}
-    local initialScale = object.xScale
+    transition.cancel(object)
+
+    object.initialScale = object.initialScale or object.xScale
     local scaleGrow = options.scale or 1.5
 
     local back = function()
         animation.bounce(object, _.extend({
             time       = options.time or 500,
             scaleFrom  = scaleGrow,
-            scaleTo    = initialScale,
+            scaleTo    = object.initialScale,
             transition = easing.outBounce,
             noDelay    = true,
             onComplete = function ()
@@ -51,7 +53,7 @@ function animation.scaleBackAndForth(object, options)
 
     animation.bounce(object, _.extend({
         time       = options.time or 500,
-        scaleFrom  = initialScale,
+        scaleFrom  = object.initialScale,
         scaleTo    = scaleGrow,
         transition = easing.outSine,
         onComplete = back,
