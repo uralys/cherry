@@ -39,7 +39,7 @@ function Text:render()
     y        = self.y
   })
 
-  self.view:setFillColor( colorize(self.color or 'ffffff') )
+  self.view:setFillColor( colorize(self.color or '#ffffff') )
 
   if (self.grow) then
     animation.grow(self.view)

@@ -43,7 +43,8 @@ function ProgressBar:draw( options )
     height    = 35,
     hideText  = false,
     changeBG  = false,
-    iconImage = nil
+    iconImage = nil,
+    vertical  = false
   })
 
   self:prepare    ( options )
@@ -62,6 +63,9 @@ function ProgressBar:prepare(options)
   self.display   = display.newGroup()
   self.display.x = options.x
   self.display.y = options.y
+  if(options.vertical) then
+    self.display.rotation = -90
+  end
   options.parent:insert(self.display)
 end
 
@@ -242,7 +246,7 @@ function ProgressBar:reach(step, options)
   if(self.changeBG and value == 100) then self:showGreenBG() end
   if(value == 100) then
     self.progress:setFillColor(
-      colorize('FFFF00')
+      colorize('#FFFF00')
     )
     self.progress.fill.effect = "filter.brightness"
     self.progress.fill.effect.intensity = 0.3
