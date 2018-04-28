@@ -10,76 +10,102 @@ local Text      = require 'cherry.components.text'
 local ProgressBar = {}
 
 --------------------------------------------------------------------------------
--- DOC desc
--- todo utils.text --> component.Text puis if Text or display.newtText
--- install component
--- install Cherry/assets
+-- options:
+--  parent, x, y, width, height
+--  useRects   : boolean: default false : when no assets are to be used
+--  rail
+--  track
+--  iconImage
+--  trackColor : string: default '#119911' to colorize progress rect
+--  trackFilledColor : string: default #FFFF00' progress rect 100%
+--  changeBG   : boolean: switch to greenBg at 100%
+--  vertical   : boolean: default false
+--  disabled   : boolean: default false
+--  hideText   : boolean: default false
+--  hideIcon   : boolean: default false
+function ProgressBar:new (options)
+  options = _.defaults(options, {
+    width     = 300,
+    height    = 35,
+    useRects  = false,
+    changeBG  = false,
+    vertical  = false,
+    disabled  = false,
+    hideText  = false,
+    hideIcon  = false,
+    iconImage = nil,
+    trackColor = '#119911',
+    trackFilledColor = '#FFFF00'
+  })
 
---- options:
---      changeBG:     boolean : greenbg at 100%
---      rail:         to override rail asset
---      track:        to override track asset
-function ProgressBar:new(options)
   local bar = _.extend({
     queue = {}
   }, options);
+
   setmetatable(bar, { __index = ProgressBar })
+
+  bar:draw()
   return bar;
 end
 
 --------------------------------------------------------------------------------
----
--- options :
---  parent
---  x
---  y
---  width
---  height
---  iconImage
---
-function ProgressBar:draw( options )
-  options = _.defaults(options, {
-    width     = 300,
-    height    = 35,
-    hideText  = false,
-    changeBG  = false,
-    iconImage = nil,
-    vertical  = false
-  })
 
-  self:prepare    ( options )
-  self:background ( options )
-  self:progress   ( options )
+function ProgressBar:draw()
+  self:prepare()
+  self:background()
+  self:progress()
 
-  if(not options.hideText) then self:addText ( options ) end
-  if(not options.hideIcon) then self:icon    ( options ) end
+  if(not self.hideText) then self:addText () end
+  if(not self.hideIcon) then self:icon() end
 end
 
 --------------------------------------------------------------------------------
 --  Construction
 --------------------------------------------------------------------------------
 
-function ProgressBar:prepare(options)
+function ProgressBar:prepare()
   self.display   = display.newGroup()
-  self.display.x = options.x
-  self.display.y = options.y
-  if(options.vertical) then
+  self.display.x = self.x
+  self.display.y = self.y
+
+  if(self.vertical) then
     self.display.rotation = -90
   end
-  options.parent:insert(self.display)
+
+  self.parent:insert(self.display)
 end
 
---- greenBG is show when 100%
-function ProgressBar:background(options)
+--------------------------------------------------------------------------------
+
+function ProgressBar:background()
+  if(self.useRects) then
+    self.bg = display.newRoundedRect(
+      self.display, 0, 0,
+      self.width,
+      self.height,
+      10
+    )
+
+    self.bg.anchorX = 0
+    self.bg.alpha = 0.8
+    self.bg:setFillColor( 0.5 )
+  else
+    self:backgroundWithAsset()
+  end
+end
+
+--------------------------------------------------------------------------------
+
+function ProgressBar:backgroundWithAsset()
   self.bg = display.newImage(
     self.display,
-    self.rail or 'cherry/assets/images/gui/progress-bar/loading-bg.png'
+    self.bgAsset or 'cherry/assets/images/gui/progress-bar/loading-bg.png'
   )
 
-  self.bg.width  = options.width
-  self.bg.height = options.height
+  self.bg.width  = self.width
+  self.bg.height = self.height
 
-  if(options.disabled) then
+  if(self.disabled) then
     self.bg.fill.effect = 'filter.desaturate'
     self.bg.fill.effect.intensity = 0.8
   end
@@ -91,55 +117,77 @@ function ProgressBar:background(options)
     'cherry/assets/images/gui/progress-bar/loading-bg-green.png'
   )
 
-  self.bgGreen.width  = options.width
-  self.bgGreen.height = options.height
+  self.bgGreen.width  = self.width
+  self.bgGreen.height = self.height
   self.bgGreen.alpha = 0
 end
 
-function ProgressBar:progress(options)
+--------------------------------------------------------------------------------
+
+function ProgressBar:progress()
+  if(self.useRects) then
+    self.progress = display.newRoundedRect(
+      self.display, 0, 0,
+      self.width,
+      self.height,
+      10
+    )
+
+    self.progress.anchorX = 0
+    self.progress:setFillColor(
+      colorize(self.trackColor)
+    )
+  else
+    self:backgroundWithAsset()
+  end
+end
+
+function ProgressBar:progressWithAsset()
   self.progress = display.newImage(
     self.display,
     self.track or 'cherry/assets/images/gui/progress-bar/loading-progress.png'
   )
 
   self.progress.width   = self:progressWidth()
-  self.progress.height  = options.height*0.69
+  self.progress.height  = self.height * 0.69
   self.progress.anchorX = 0
-  self.progress.x       = -options.width/2.06
+  self.progress.x       = - self.width / 2.06
 
   self.progress:setMask( graphics.newMask(
     'cherry/assets/images/gui/progress-bar/loading-mask.png'
   ))
 end
 
-function ProgressBar:icon(options)
-  if(options.iconImage) then
-    local logoContainer = display.newImage(
-      self.display,
-      'cherry/assets/images/gui/items/circle.simple.container.png',
-      -options.width*0.55, 0
-    )
-
-    if(options.disabled) then
-      logoContainer.fill.effect = 'filter.desaturate'
-      logoContainer.fill.effect.intensity = 0.8
-    end
-
-    -----------------
-
-    logoContainer.icon = Icon:draw(_.defaults({
-      parent  = self.display,
-      x       = -options.width*0.55,
-      y       = 0,
-      maxSize = logoContainer.height * 0.6,
-      path    = options.iconImage
-    }, options))
-
-    self.logoContainer = logoContainer
+function ProgressBar:icon()
+  if(not self.iconImage) then
+    return
   end
+
+  local logoContainer = display.newImage(
+    self.display,
+    'cherry/assets/images/gui/items/circle.simple.container.png',
+    - self.width * 0.55, 0
+  )
+
+  if(self.disabled) then
+    logoContainer.fill.effect = 'filter.desaturate'
+    logoContainer.fill.effect.intensity = 0.8
+  end
+
+  -----------------
+
+  logoContainer.icon = Icon:draw({
+    parent  = self.display,
+    x       = - self.width * 0.55,
+    y       = 0,
+    maxSize = logoContainer.height * 0.6,
+    path    = self.iconImage
+  })
+
+  self.logoContainer = logoContainer
 end
 
-function ProgressBar:addText(options)
+function ProgressBar:addText()
   self.text = Text:create({
     parent   = self.display,
     value    = '',
@@ -173,7 +221,11 @@ function ProgressBar:maskX(value)
 end
 
 function ProgressBar:currentValue()
-  return (self.progress.maskX + self:progressWidth()/1.835 ) / (self:progressWidth()/100)
+  if(self.useRects) then
+    return 100 * self.progress.width / self.width
+  else
+    return (self.progress.maskX + self:progressWidth()/1.835 ) / (self:progressWidth()/100)
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -236,23 +288,37 @@ function ProgressBar:reach(step, options)
     self.text:setValue(text)
   end
 
-  self.reachTransition = transition.to(self.progress, {
-    maskX      = self:maskX(value),
+  local params = {
     transition = options.transition,
     time       = options.time,
     onComplete = options.onComplete
-  })
+  }
+
+  if(self.useRects) then
+    params.width = self.width * value/100
+  else
+    params.maskX = self:maskX(value)
+  end
+
+  self.reachTransition = transition.to(self.progress, params)
 
   if(self.changeBG and value == 100) then self:showGreenBG() end
+
   if(value == 100) then
     self.progress:setFillColor(
-      colorize('#FFFF00')
+      colorize(self.trackFilledColor)
     )
-    self.progress.fill.effect = "filter.brightness"
-    self.progress.fill.effect.intensity = 0.3
+
+    if(not self.useRects) then
+      self.progress.fill.effect = "filter.brightness"
+      self.progress.fill.effect.intensity = 0.3
+    end
+
   else
-    self.progress.fill.effect = nil
-    self.progress:setFillColor(1)
+    if(not self.useRects) then
+      self.progress.fill.effect = nil
+      self.progress:setFillColor(1)
+    end
   end
 end
 
