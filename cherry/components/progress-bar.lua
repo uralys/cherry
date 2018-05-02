@@ -254,8 +254,12 @@ function ProgressBar:set(value)
     self.text:setValue(value .. '%')
   end
 
-  self.progress.maskX = self:maskX(value)
-  if(self.changeBG and value == 100) then self:showGreenBG() end
+  if(self.useRects) then
+    self.progress.width = self.width * value/100
+  else
+    self.progress.maskX = self:maskX(value)
+    if(self.changeBG and value == 100) then self:showGreenBG() end
+  end
 end
 
 function ProgressBar:stop()
