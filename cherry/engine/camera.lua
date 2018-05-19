@@ -11,8 +11,8 @@ local Camera = {
 
 --------------------------------------------------------------------------------
 
-local INIT_X = display.contentWidth*0.5
-local INIT_Y = display.contentHeight*0.5
+local INIT_X = display.contentWidth * 0.5
+local INIT_Y = display.contentHeight * 0.5
 
 --------------------------------------------------------------------------------
 

@@ -37,9 +37,9 @@ function Game:resetElements() self.elements = {} end
 function Game:reset()
     group.empty(App.hud)
     if(self.onReset) then self:onReset() end -- from extension
+    Camera:empty()
     self:resetState()
     self:resetElements()
-    Camera:empty()
     App.score:reset()
 end
 
