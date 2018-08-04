@@ -21,7 +21,7 @@ local function gather(movables, options)
   local TIME = options.stepTime or 600
 
   if(options.onComplete) then
-    local totalTime = TIME + #movables * 50 + 50
+    local totalTime = TIME - 50 + #movables * 50
     timer.performWithDelay(totalTime, options.onComplete)
   end
 
@@ -38,8 +38,9 @@ local function gather(movables, options)
       x, y
     )
 
-    local scale = options.scale or 1
-    c:scale(scale, scale)
+    local scaleFrom = options.scaleFrom or 1
+    local scaleTo = options.scaleTo or 0.12
+    c:scale(scaleFrom, scaleFrom)
 
     if(options.fillColorFunc) then
       c:setFillColor(options.fillColorFunc(num))
@@ -61,14 +62,14 @@ local function gather(movables, options)
 
     transition.to(c, {
       time = 70,
-      xScale = 0.7,
-      yScale = 0.7,
+      xScale = scaleFrom,
+      yScale = scaleFrom,
       onComplete = function ()
         transition.to(c, {
           transition = easing.outInQuad,
           time = 400,
-          xScale = 0.12,
-          yScale = 0.12
+          xScale = scaleTo,
+          yScale = scaleTo
         })
       end
     })
