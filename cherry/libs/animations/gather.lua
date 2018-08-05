@@ -52,6 +52,7 @@ local function gather(movables, options)
       alpha = 0.7,
       time = TIME + num * 50,
       transition = easing.inQuad,
+      rotation = options.rotation or 0,
       onComplete = function ()
         if(options.onStepComplete) then
           options.onStepComplete(num)

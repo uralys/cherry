@@ -99,7 +99,7 @@ end
 function ProgressBar:backgroundWithAsset()
   self.bg = display.newImage(
     self.display,
-    self.bgAsset or 'cherry/assets/images/gui/progress-bar/loading-bg.png'
+    self.rail or 'cherry/assets/images/gui/progress-bar/loading-bg.png'
   )
 
   self.bg.width  = self.width
@@ -138,7 +138,7 @@ function ProgressBar:progress()
       colorize(self.trackColor)
     )
   else
-    self:backgroundWithAsset()
+    self:progressWithAsset()
   end
 end
 
