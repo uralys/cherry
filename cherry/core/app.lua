@@ -228,7 +228,7 @@ local function onKeyEvent( event )
 
     local phase = event.phase
     local keyName = event.keyName
-    _G.log( event.phase, event.keyName )
+    -- _G.log( event.phase, event.keyName )
 
     if ( 'back' == keyName and phase == 'up' ) then
         _G.log('back button is not handled')

@@ -37,18 +37,20 @@ function animation.scaleBackAndForth(object, options)
     local scaleGrow = options.scale or 1.5
 
     local back = function()
-        animation.bounce(object, _.extend({
-            time       = options.time or 500,
-            scaleFrom  = scaleGrow,
-            scaleTo    = object.initialScale,
-            transition = easing.outBounce,
-            noDelay    = true,
-            onComplete = function ()
-                if(options.loop) then
-                    animation.scaleBackAndForth(object, options)
+        timer.performWithDelay(options.delay or 50, function()
+            animation.bounce(object, _.extend({
+                time       = options.time or 500,
+                scaleFrom  = scaleGrow,
+                scaleTo    = object.initialScale,
+                transition = easing.outBounce,
+                noDelay    = true,
+                onComplete = function ()
+                    if(options.loop) then
+                        animation.scaleBackAndForth(object, options)
+                    end
                 end
-            end
-        }, options))
+            }, options))
+        end)
     end
 
     animation.bounce(object, _.extend({
@@ -106,14 +108,19 @@ function animation.bounce(objects, options)
     _bounceAll()
 end
 
-function animation.grow(object, fromScale, time, onComplete)
+function animation.grow(object, options)
+    options = options or {}
+    local time       = options.time
+    local fromScale  = options.fromScale
+    local onComplete = options.onComplete
+
     object.xScale = fromScale or 0.6
     object.yScale = fromScale or 0.6
 
     transition.to( object, {
-        xScale = 1,
-        yScale = 1,
-        time = time or 150,
+        xScale = options.toScale or 1,
+        yScale = options.toScale or 1,
+        time = time or 350,
         onComplete = onComplete
     })
 end

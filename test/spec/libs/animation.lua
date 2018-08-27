@@ -68,7 +68,11 @@ describe('[animation]', function()
     local foo = display.newImage(App.display)
     local action = spy.new(function() end)
 
-    animation.grow(foo, 0, 350, action)
+    animation.grow(foo, {
+      fromScale = 0,
+      time = 350,
+      onComplete = action
+    })
 
     assert.are.equal(foo.xScale, 1)
     assert.are.equal(foo.yScale, 1)
