@@ -1,7 +1,8 @@
 
-local _       = require 'cherry.libs.underscore'
-local group   = require 'cherry.libs.group'
-local gesture = require 'cherry.libs.gesture'
+local _        = require 'cherry.libs.underscore'
+local colorize = require 'cherry.libs.colorize'
+local group    = require 'cherry.libs.group'
+local gesture  = require 'cherry.libs.gesture'
 
 --------------------------------------------------------
 
@@ -75,15 +76,19 @@ return function(object, options)
         down   = false,
         right  = false,
         left   = false,
-        bounce = true
+        bounce = true,
+
+        offsetX = 0,
+        offsetY = 0,
+        color = nil
     })
 
     -----------------
 
     local parent = object.parent or options.parent
     local focus = display.newGroup()
-    focus.x = object.x
-    focus.y = object.y
+    focus.x = object.x + options.offsetX
+    focus.y = object.y + options.offsetY
     parent:insert(focus)
 
     local focusOnTop = function()
@@ -120,6 +125,10 @@ return function(object, options)
                 repeatAction = focusOnTop
             })
         end
+
+        if(options.color) then
+            up:setFillColor(colorize(options.color))
+        end
     end
 
     -----------------
@@ -140,6 +149,10 @@ return function(object, options)
                 to = leftY - 10,
                 repeatAction = focusOnTop
             })
+        end
+
+        if(options.color) then
+            left:setFillColor(colorize(options.color))
         end
     end
 
@@ -164,6 +177,10 @@ return function(object, options)
                 repeatAction = focusOnTop
             })
         end
+
+        if(options.color) then
+            down:setFillColor(colorize(options.color))
+        end
     end
 
     -----------------
@@ -184,6 +201,11 @@ return function(object, options)
                 to = rightX + 10,
                 repeatAction = focusOnTop
             })
+        end
+
+        if(options.color) then
+            _G.log('FILL')
+            right:setFillColor(colorize(options.color))
         end
     end
 
