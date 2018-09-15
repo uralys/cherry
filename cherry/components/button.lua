@@ -33,7 +33,7 @@ function Button:round(options)
 
     button.text = display.newText({
         parent   = button,
-        text     = options.label,
+        text     = options.label or '',
         x        = 0,
         y        = 0,
         font     = _G.FONT,

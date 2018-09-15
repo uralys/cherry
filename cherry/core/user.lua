@@ -79,6 +79,11 @@ function User:name()
   return self.savedData.profile.name;
 end
 
+function User:setName(name)
+  self.savedData.profile.name = name
+  self:save()
+end
+
 --------------------------------------------------------------------------------
 
 function User:save()

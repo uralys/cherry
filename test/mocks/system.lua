@@ -7,6 +7,9 @@ local system = {
   end,
   cancelNotification = function (id)
     return true
+  end,
+  getTimer = function()
+    return '1234'
   end
 }
 

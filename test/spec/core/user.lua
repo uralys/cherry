@@ -23,7 +23,9 @@ describe('[User]', function()
             sound = true
         },
         profile = {
-            tutorial = false
+            tutorial = false,
+            name = nil,
+            id = user.savedData.profile.id -- generated, not mockable
         }
     })
 
