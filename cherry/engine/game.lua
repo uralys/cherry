@@ -97,7 +97,11 @@ function Game:stop(userExit)
 
     if(not userExit) then
         Screen:showBands()
-        App.score:display()
+        if(not App.user:name()) then
+            App.namePicker:display()
+        else
+            App.score:display()
+        end
     end
 
     ------------------------------------------

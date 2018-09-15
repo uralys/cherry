@@ -1,12 +1,13 @@
 --------------------------------------------------------------------------------
 
 local Background = require 'cherry.components.background'
+local analytics  = require 'cherry.libs.analytics'
+local _          = require 'cherry.libs.underscore'
 local demo       = require 'cherry.core.extension-demo'
 local User       = require 'cherry.core.user'
-local Score      = require 'cherry.engine.score'
-local analytics  = require 'cherry.libs.analytics'
+local Score      = require 'cherry.screens.score'
+local NamePicker = require 'cherry.screens.name-picker'
 local file       = _G.file or require 'cherry.libs.file'
-local _          = require 'cherry.libs.underscore'
 
 --------------------------------------------------------------------------------
 
@@ -30,6 +31,19 @@ local App = {
         light = 'cherry/assets/images/background-light.jpg',
         dark = 'cherry/assets/images/background-dark.jpg'
     },
+
+    -----------------------------------------
+
+    images = {
+        starImage       = 'cherry/assets/images/gui/items/star.icon.png',
+        heartImage      = 'cherry/assets/images/gui/items/heart.png',
+        heartLeftImage  = 'cherry/assets/images/gui/items/heart-left.png',
+        heartRightImage = 'cherry/assets/images/gui/items/heart-right.png',
+        stepImage       = 'cherry/assets/images/gui/buttons/empty.png',
+        verticalPanel   = 'cherry/assets/images/gui/panels/panel.vertical.png'
+    },
+
+    -----------------------------------------
 
     xGravity = 0,
     yGravity = 0,
@@ -69,7 +83,11 @@ local App = {
 
 function App:start(options)
     options = options or {}
+    local images = _.extend(App.images, options.images)
     App = _.extend(App, options)
+    App.images = images
+
+    _G.log({App})
     _G = _.extend(_G, options.globals)
 
     _G.log('--------------------------------')
@@ -139,9 +157,11 @@ end
 
 function App:ready()
     self.game  = _G.Game:new(App.extension.game)
+    self.namePicker = NamePicker:new()
     self.score = Score:new(App.extension.score)
     self.user  = User:new(App.extension.user)
     self.user:load()
+    _G.log({user = self.user})
 
     Background:init({
         light = App.background.light,

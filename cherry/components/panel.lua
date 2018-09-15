@@ -7,7 +7,7 @@ local Panel = {}
 function Panel:vertical(options)
     options = options or {}
 
-    local image = options.image or 'cherry/assets/images/gui/panels/panel.vertical.png'
+    local image = options.image or App.images.verticalPanel
     local panel = display.newImageRect(
         image,
         options.width or 0,
