@@ -22,10 +22,13 @@ describe('[User]', function()
         options = {
             sound = true
         },
-        profile = {
-            tutorial = false,
+        tutorial = false,
+        currentUser = 1,
+        users = {
+          {
             name = nil,
-            id = user.savedData.profile.id -- generated, not mockable
+            id = nil
+          }
         }
     })
 

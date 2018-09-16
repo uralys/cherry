@@ -23,8 +23,30 @@ function NamePicker:new()
 end
 
 --------------------------------------------------------------------------------
+
+local function existsUserName(name)
+  local exists = false
+  local user = App.user:current()
+
+  for i = 1, App.user:nbUsers() do
+    if(App.user:getUser(i).name == name) then
+      exists = true
+      user = i
+    end
+  end
+
+  return exists, user
+end
+
+--------------------------------------------------------------------------------
 ---  BOARD
 --------------------------------------------------------------------------------
+
+function NamePicker:refreshAction()
+  local exists, userNum = existsUserName(self.text)
+  self.createNewUser = not exists
+  self.userNum = userNum
+end
 
 function NamePicker:display(next)
   local board = display.newGroup()
@@ -54,6 +76,7 @@ function NamePicker:display(next)
   local function textListener( event )
     if ( event.phase == 'editing' ) then
       self.text = event.text
+      self:refreshAction()
     end
   end
 
@@ -66,18 +89,24 @@ function NamePicker:display(next)
   inputText:addEventListener( 'userInput', textListener )
   board:insert(inputText)
 
-  Button:icon({
+  self.validateButton = Button:icon({
     parent   = board,
     type     = 'selected',
     x        = 0,
     y        = display.contentHeight * 0.06,
     action = function()
-      App.user:setName(self.text)
+      if(self.createNewUser) then
+        App.user:newProfile(self.text)
+      else
+        _G.log('switchToProfile', self.userNum)
+        App.user:switchToProfile(self.userNum)
+      end
       group.destroy(board, true)
       if(next) then next() end
     end
   })
 
+  self:refreshAction()
   animation.easeDisplay(board)
 end
 

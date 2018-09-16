@@ -30,26 +30,19 @@ function User:load()
 end
 
 --------------------------------------------------------------------------------
-
+-- 'resetSavedData' should be for admin/test only
 function User:resetSavedData()
   local previousSavedData = self.savedData
-  local id
-
-  if(previousSavedData) then
-    id = previousSavedData.profile.id
-  else
-    id = generateUID()
-  end
 
   self.savedData = {
     version = App.version,
+    tutorial = false,
     options = {
       sound = true
     },
-    profile = {
-      id = id,
-      name = nil,
-      tutorial = false
+    currentUser = 1,
+    users = {
+      {}
     }
   };
 
@@ -72,15 +65,32 @@ function User:isSoundOff()
 end
 
 function User:id()
-  return self.savedData.profile.id;
+  return self.savedData.users[self.savedData.currentUser].id;
 end
 
 function User:name()
-  return self.savedData.profile.name;
+  return self.savedData.users[self.savedData.currentUser].name;
 end
 
-function User:setName(name)
-  self.savedData.profile.name = name
+function User:newProfile(name)
+  if(self.savedData.users[self.savedData.currentUser].name) then
+    self.savedData.currentUser = #self.savedData.users + 1
+  else
+    self.savedData.currentUser = 1
+  end
+
+  local gameUserData = {}
+  if (self.extendNewUser) then
+    gameUserData = self:extendNewUser() -- from extension
+  end
+
+  local newUser = _.extend({
+    id = generateUID(),
+    name = name
+  }, gameUserData)
+
+  self.savedData.users[self.savedData.currentUser] = newUser
+
   self:save()
 end
 
@@ -93,15 +103,31 @@ end
 --------------------------------------------------------------------------------
 
 function User:isNew()
-  return not self.savedData.profile.tutorial
+  return not self.savedData.tutorial
+end
+
+function User:current()
+  return not self.savedData.currentUser
 end
 
 function User:name()
-  return self.savedData.profile.name
+  return self.savedData.users[self.savedData.currentUser].name
+end
+
+function User:nbUsers()
+  return #self.savedData.users
+end
+
+function User:switchToProfile(i)
+  self.savedData.currentUser = i
+end
+
+function User:getUser(i)
+  return self.savedData.users[i]
 end
 
 function User:onTutorialDone()
-  self.savedData.profile.tutorial = true
+  self.savedData.tutorial = true
   self:save()
 end
 
