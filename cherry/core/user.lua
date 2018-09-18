@@ -107,7 +107,7 @@ function User:isNew()
 end
 
 function User:current()
-  return not self.savedData.currentUser
+  return self.savedData.currentUser
 end
 
 function User:name()
@@ -120,6 +120,7 @@ end
 
 function User:switchToProfile(i)
   self.savedData.currentUser = i
+  self:save()
 end
 
 function User:getUser(i)

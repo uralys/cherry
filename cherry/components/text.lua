@@ -50,6 +50,7 @@ function Text:render()
   end
 
   self.view.anchorX = self.anchorX or 0.5
+  self = _.extend(self, self.view)
 end
 
 --------------------------------------------------------------------------------
@@ -57,6 +58,10 @@ end
 function Text:setValue(value)
   self.value = value
   self:render()
+end
+
+function Text:width()
+  return self.view.width
 end
 
 --------------------------------------------------------------------------------

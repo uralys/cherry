@@ -39,7 +39,7 @@ function file.save(t, filename, directory)
     local path = system.pathForFile( filename, directory)
     local _file = io.open(path, 'w')
     if _file then
-        local contents = json.encode(t)
+        local contents = json.encode(t, {indent = true})
         _file:write( contents )
         io.close( _file )
         return true

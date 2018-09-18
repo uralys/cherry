@@ -35,6 +35,7 @@ local App = {
     -----------------------------------------
 
     images = {
+        blurBG          = 'cherry/assets/images/overlay-blur.png',
         starImage       = 'cherry/assets/images/gui/items/star.icon.png',
         heartImage      = 'cherry/assets/images/gui/items/heart.png',
         heartLeftImage  = 'cherry/assets/images/gui/items/heart-left.png',

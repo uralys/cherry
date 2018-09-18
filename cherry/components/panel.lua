@@ -32,8 +32,8 @@ function Panel:small(options)
     local image = options.image or 'cherry/assets/images/gui/panels/panel.horizontal.png'
     local panel = display.newImageRect(
         image,
-        options.width or 0,
-        options.height or 0
+        options.width or 100,
+        options.height or 100
     )
 
     if(options.parent) then
