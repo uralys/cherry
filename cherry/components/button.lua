@@ -44,7 +44,7 @@ function Button:round(options)
     button.text.anchorY = 0.61
 
     if(options.action) then
-        gesture.onTap(button, options.action)
+        gesture.onTouch(button, options.action)
     end
 
     return button

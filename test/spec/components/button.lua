@@ -24,7 +24,7 @@ describe('[Button]', function()
     assert.are.equal(button.x, 100)
     assert.are.equal(button.y, 100)
 
-    button:tap()
+    button:touch()
     assert.spy(action).was.called(1)
   end)
 

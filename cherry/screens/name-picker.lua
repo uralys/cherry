@@ -42,7 +42,7 @@ end
 
 local function usersHeight()
   local height = 0
-  for i = 1, App.user:nbUsers() do
+  for _ = 1, App.user:nbUsers() do
     height = height + display.contentHeight * 0.075
   end
   return display.contentHeight * 0.15 + height
@@ -104,10 +104,8 @@ function NamePicker:createTextBoard(next)
     y        = self.textBoard.panel.height * 0.5,
     action = function()
       if(self.createNewUser) then
-        _G.log('createNewUser')
         App.user:newProfile(self.text)
       else
-        _G.log('switchToProfile')
         App.user:switchToProfile(self.userNum)
       end
 
@@ -152,9 +150,6 @@ end
 
 function NamePicker:refreshAction()
   local exists, userNum = existsUserName(self.text)
-  _G.log('refreshAction')
-  _G.log({text= self.text, exists=exists, userNum=userNum})
-
   self.createNewUser = not exists
   self.userNum = userNum
 end
@@ -247,11 +242,8 @@ function NamePicker:addPreviousUsers(next)
 
     panel.width = nameDisplay:width() + 60
 
-    gesture.onTouch(panel, function()
-      animation.bounce(user, {
-        time = 120,
-        scaleFrom = 0.8,
-        scaleTo = 1,
+    gesture.onTouch(user, function()
+      animation.touchEffect(user, {
         onComplete = function()
           App.user:switchToProfile(i)
           self:close(next)

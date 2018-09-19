@@ -4,6 +4,7 @@ local _         = require 'cherry.libs.underscore'
 local TextUtils = require 'cherry.libs.text'
 local colorize  = require 'cherry.libs.colorize'
 local animation = require 'cherry.libs.animation'
+local gesture   = require 'cherry.libs.gesture'
 
 local Text = {}
 
@@ -50,7 +51,10 @@ function Text:render()
   end
 
   self.view.anchorX = self.anchorX or 0.5
-  self = _.extend(self, self.view)
+
+  if(self.onTap) then
+    gesture.onTap(self.view, self.onTap)
+  end
 end
 
 --------------------------------------------------------------------------------
