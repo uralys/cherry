@@ -23,19 +23,23 @@ end
 
 --------------------------------------------------------------------------------
 
+local function randomName()
+  return 'Player' .. string.sub(os.time(), -5)
+end
+
 local function existsUserName(name)
-  local exists = false
-  local user = App.user:current()
+  if(not name or #name == 0) then
+    return false, App.user:current()
+  end
 
   for i = 1, App.user:nbUsers() do
     local userName = App.user:getUser(i).name
-    if(userName ~= nil and userName == name) then
-      exists = true
-      user = i
+    if(string.lower(userName) == string.lower(name)) then
+      return true, i
     end
   end
 
-  return exists, user
+  return false, App.user:current()
 end
 
 --------------------------------------------------------------------------------
@@ -51,7 +55,6 @@ end
 --------------------------------------------------------------------------------
 
 function NamePicker:display(next)
-  self:refreshAction()
   self:createBlur()
 
   if(App.user:nbUsers() < 6) then
@@ -63,6 +66,8 @@ function NamePicker:display(next)
   if(App.user:nbUsers() > 1) then
     self:createPlayersBoard(next)
   end
+
+  self:refreshAction()
 end
 
 --------------------------------------------------------------------------------
@@ -89,7 +94,7 @@ end
 --------------------------------------------------------------------------------
 
 function NamePicker:createTextBoard(next)
-  self.text = App.user:name() or 'Player' .. string.sub(os.time(), -5)
+  self.text = App.user:name() or randomName()
 
   self.textBoard = self:createBoard({
     title       = 'New player',
@@ -103,6 +108,12 @@ function NamePicker:createTextBoard(next)
     x        = 0,
     y        = self.textBoard.panel.height * 0.5,
     action = function()
+      if(#self.text == 0) then
+        self.text = randomName()
+        self.inputText.text = self.text
+        return
+      end
+
       if(self.createNewUser) then
         App.user:newProfile(self.text)
       else
