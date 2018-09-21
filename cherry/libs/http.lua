@@ -10,31 +10,37 @@ local http = {}
 function http.request(url, method, next, data, type, authToken)
     local VERBOSE = false
     local DEV_BEARER = nil
+    local headers = {}
 
     if(VERBOSE) then print(method, url) end
     if(next == nil) then
         next = function() end
     end
 
+
     ----------------------------------------
 
-    authToken = authToken or ''
-
+    local _authToken = authToken
     if (DEV_BEARER) then
-        authToken = DEV_BEARER
+        _authToken = DEV_BEARER
         print('Warning : DEV bearer : ' .. DEV_BEARER)
     end
 
     ----------------------------------------
 
-    local headers = {}
+    if(App.API_GATEWAY_KEY) then
+        headers['x-api-key'] = App.API_GATEWAY_KEY
+    end
+
+    if(_authToken) then
+        headers['X-Auth-Token'] = _authToken
+        headers['Authorization'] = 'Bearer ' .. _authToken
+    end
 
     if(type == nil) then
-        headers["Content-Type"] = "Application/json"
-        headers["X-Auth-Token"] = authToken
-        headers["Authorization"] = 'Bearer ' .. authToken
-    elseif(type == "urlencoded") then
-        headers["Content-Type"] = "Application/x-www-form-urlencoded"
+        headers['Content-Type'] = 'Application/json'
+    elseif(type == 'urlencoded') then
+        headers['Content-Type'] = 'Application/x-www-form-urlencoded'
     end
 
     ----------------------------------------
@@ -42,7 +48,7 @@ function http.request(url, method, next, data, type, authToken)
     -- TODO use this + success/fail instead of next
     -- local listener = function(event)
     --     if ( event.isError ) then
-    --         print( "Network error!" )
+    --         print( 'Network error!' )
     --     else
     --         next()
     --     end
@@ -64,11 +70,11 @@ function http.post(url, data, next, _type)
         data = json.encode(data)
     end
 
-    http.request(url, "POST", next, data, _type)
+    http.request(url, 'POST', next, data, _type)
 end
 
 function http.get(url, next)
-    http.request(url, "GET", next)
+    http.request(url, 'GET', next)
 end
 
 function http.put(url, data, next)
@@ -76,29 +82,29 @@ function http.put(url, data, next)
         data = json.encode(data)
     end
 
-    http.request(url, "PUT", next, data)
+    http.request(url, 'PUT', next, data)
 end
 
 function http.delete(url, next)
-    http.request(url, "DELETE", next)
+    http.request(url, 'DELETE', next)
 end
 
 --------------------------------------------------------
 
 function http.url_decode(str)
-    str = string.gsub (str, "+", " ")
-    str = string.gsub (str, "%%(%x%x)",
+    str = string.gsub (str, '+', ' ')
+    str = string.gsub (str, '%%(%x%x)',
     function(h) return string.char(tonumber(h,16)) end)
-    str = string.gsub (str, "\r\n", "\n")
+    str = string.gsub (str, '\r\n', '\n')
     return str
 end
 
 function http.urlEncode(str)
     if (str) then
-        str = string.gsub (str, "\n", "\r\n")
-        str = string.gsub (str, "([^%w ])",
-        function (c) return string.format ("%%%02X", string.byte(c)) end)
-        str = string.gsub (str, " ", "+")
+        str = string.gsub (str, '\n', '\r\n')
+        str = string.gsub (str, '([^%w ])',
+        function (c) return string.format ('%%%02X', string.byte(c)) end)
+        str = string.gsub (str, ' ', '+')
     end
     return str
 end
