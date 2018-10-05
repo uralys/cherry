@@ -25,16 +25,19 @@ local ProgressBar = {}
 --  hideIcon   : boolean: default false
 function ProgressBar:new (options)
   options = _.defaults(options, {
-    width     = 300,
-    height    = 35,
+    width  = 300,
+    height = 35,
+
     useRects  = false,
     changeBG  = false,
     vertical  = false,
     disabled  = false,
     hideText  = false,
     hideIcon  = false,
+    rail      = nil,
     iconImage = nil,
-    trackColor = '#119911',
+
+    trackColor       = '#119911',
     trackFilledColor = '#FFFF00'
   })
 

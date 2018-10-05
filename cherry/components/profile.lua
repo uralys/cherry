@@ -19,9 +19,8 @@ end
 --------------------------------------------------------------------------------
 
 function Profile:status(options)
-    local progress = ProgressBar:new()
-    progress:draw(_.extend({
-        path = options.path or 'cherry/assets/images/gui/items/gem.icon.png'
+    local progress = ProgressBar:new(_.extend({
+        iconImage = options.iconImage or 'cherry/assets/images/gui/items/gem.icon.png'
     }, options))
 
     progress:set(0)

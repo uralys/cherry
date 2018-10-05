@@ -23,8 +23,8 @@ local App = {
     -----------------------------------------
 
     font = {
-        android = 'assets/y2kboogie.ttf',
-        ios     = 'assets/y2kboogie.ttf'
+        android = 'cherry/assets/y2kboogie.ttf',
+        ios     = 'cherry/assets/y2kboogie.ttf'
     },
 
     background = {
@@ -94,6 +94,7 @@ function App:start(options)
     _G.log('--------------------------------')
     _G.log( App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
     _G.log( 'Cherry: ' .. App.cherryVersion)
+    _G.log( _G._VERSION )
     _G.log('--------------------------------')
     _G.log('extensions:')
     _G.log(App.extension, {depth = 1})

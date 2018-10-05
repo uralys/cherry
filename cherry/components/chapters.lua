@@ -1,17 +1,17 @@
 --------------------------------------------------------------------------------
 
-local _         = require 'cherry.libs.underscore'
-local analytics = require 'cherry.libs.analytics'
-local animation = require 'cherry.libs.animation'
-local Text      = require 'cherry.libs.text'
-local gesture   = require 'cherry.libs.gesture'
-local Screen    = require 'cherry.components.screen'
-local Scroller  = require 'cherry.components.scroller'
-local Panel     = require 'cherry.components.panel'
-local GUI       = require 'cherry.components.gui'
-local Button    = require 'cherry.components.button'
-local Profile   = require 'cherry.components.profile'
-local Banner    = require 'cherry.components.banner'
+local _          = require 'cherry.libs.underscore'
+local analytics  = require 'cherry.libs.analytics'
+local animation  = require 'cherry.libs.animation'
+local Text       = require 'cherry.libs.text'
+local gesture    = require 'cherry.libs.gesture'
+local Screen     = require 'cherry.components.screen'
+local Scroller   = require 'cherry.components.scroller'
+local Panel      = require 'cherry.components.panel'
+local Multiplier = require 'cherry.components.multiplier'
+local Button     = require 'cherry.components.button'
+local Profile    = require 'cherry.components.profile'
+local Banner     = require 'cherry.components.banner'
 
 --------------------------------------------------------------------------------
 
@@ -240,25 +240,25 @@ function Chapters:drawClosedChapter(options, panel, parent)
     local y2 = panel.height * 0.13
 
     Profile:status({
-        parent   = parent,
-        x        = panel.width * 0.15,
-        y        = y1,
-        width    = panel.width * 0.4,
-        height   = panel.height * 0.15,
-        path     = 'assets/images/gui/items/mini-phantom.icon.png',
-        step     = options.percentLevels,
-        disabled = true
+        parent    = parent,
+        x         = panel.width * 0.15,
+        y         = y1,
+        width     = panel.width * 0.4,
+        height    = panel.height * 0.15,
+        iconImage = 'assets/images/gui/items/mini-phantom.icon.png',
+        step      = options.percentLevels,
+        disabled  = true
     })
 
     Profile:status({
-        parent   = parent,
-        x        = panel.width * 0.15,
-        y        = y2,
-        width    = panel.width * 0.4,
-        height   = panel.height * 0.15,
-        path     = 'cherry/assets/images/gui/items/gem.icon.png',
-        step     = options.percentGems,
-        disabled = true
+        parent    = parent,
+        x         = panel.width * 0.15,
+        y         = y2,
+        width     = panel.width * 0.4,
+        height    = panel.height * 0.15,
+        iconImage = 'cherry/assets/images/gui/items/gem.icon.png',
+        step      = options.percentGems,
+        disabled  = true
     })
 
     local enabled = options.status == 'on'
@@ -278,7 +278,7 @@ end
 --------------------------------------------------------------------------------
 
 function Chapters:drawOpenChapter(options, panel, parent)
-    GUI:multiplier({
+    Multiplier:draw({
         item   = 'gem',
         parent = parent,
         x      = panel.width * 0.04,
@@ -287,7 +287,7 @@ function Chapters:drawOpenChapter(options, panel, parent)
         value  = App.user:chapterGems(App.user.profile, options.chapter)
     })
 
-    GUI:multiplier({
+    Multiplier:draw({
         item   = 'star',
         parent = parent,
         x      = panel.width * 0.04,

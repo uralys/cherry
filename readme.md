@@ -159,7 +159,35 @@ To display your `_G.log()` use:
 > make test verbose=true
 ```
 
+## Lua 5.1
+
+Corona SDK [embed Lua 5.1](https://docs.coronalabs.com/guide/start/introLua/index.html) with the apps.
+
+To use native libs from luarocks, you must install and build them for lua 5.1, the move the `.so` to an embed folder as well.
+You may use [hererocks](https://github.com/mpeterv/hererocks) to switch between lua versions.
+
+```bash
+> pip install hererocks
+```
+
+then to build cherry rocks for 5.1 do
+
+```bash
+> make clean
+> sudo hererocks /Library/lua-hererocks -r^ --lua=5.1
+> make
+```
+
+now you can move your external lib to a path *in* your app,
+and use it, after having modified your `cpath`.
+
+```lua
+package.cpath = 'cherry/rocks/lib/lua/5.1/luazen.so;' .. package.cpath
+local luazen  = require('luazen')
+```
+
 ## BSD License
+
 You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [BSD](http://www.linfo.org/bsdlicense.html) crediting requirements, provided in the project [LICENSE](https://github.com/chrisdugne/cherry/blob/master/LICENSE)
 
 ## Third Parties

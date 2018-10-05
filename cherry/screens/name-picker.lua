@@ -34,6 +34,10 @@ local function existsUserName(name)
 
   for i = 1, App.user:nbUsers() do
     local userName = App.user:getUser(i).name
+    if(not userName or #userName == 0) then
+      return false, App.user:current()
+    end
+
     if(string.lower(userName) == string.lower(name)) then
       return true, i
     end
@@ -120,6 +124,7 @@ function NamePicker:createTextBoard(next)
         App.user:switchToProfile(self.userNum)
       end
 
+      native.setKeyboardFocus(nil)
       self:close(next)
     end
   })
@@ -219,7 +224,6 @@ function NamePicker:createInputText()
 
   self.inputText.font = native.newFont( _G.FONT, 80 )
   self.inputText.text = self.text
-  native.setKeyboardFocus( self.inputText )
 
   self.inputText:addEventListener( 'userInput', textListener )
   self.textBoard:insert(self.inputText)

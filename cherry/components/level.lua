@@ -4,7 +4,7 @@ local _         = require 'cherry.libs.underscore'
 local animation = require 'cherry.libs.animation'
 local gesture   = require 'cherry.libs.gesture'
 local Panel     = require 'cherry.components.panel'
-local GUI       = require 'cherry.components.gui'
+local Icon      = require 'cherry.components.icon'
 
 --------------------------------------------------------------------------------
 
@@ -114,7 +114,7 @@ function Level:buildMoves()
         return
     end
 
-    self.moves = GUI:iconText({
+    self.moves = Icon:text({
         parent = self.parent,
         value  = self.moves,
         x      = self.x + self.bg.width * 0.32,
@@ -135,7 +135,7 @@ function Level:buildGems()
         local status = 'off'
         if(self.activatedGems >= i) then status = 'on' end
 
-        local gem = GUI:miniIcon({
+        local gem = Icon:mini({
             type     = 'gem',
             parent   = self.parent,
             x        = x,
@@ -165,7 +165,7 @@ function Level:buildStars()
         local status = 'off'
         if(self.activatedStars >= i) then status = 'on' end
 
-        local star = GUI:miniIcon({
+        local star = Icon:mini({
             type     = 'star',
             parent   = self.parent,
             x        = x,

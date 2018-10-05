@@ -114,6 +114,10 @@ function User:name()
   return self.savedData.users[self.savedData.currentUser].name
 end
 
+function User:id()
+  return self.savedData.users[self.savedData.currentUser].id
+end
+
 function User:nbUsers()
   return #self.savedData.users
 end
