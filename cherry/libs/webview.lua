@@ -1,5 +1,10 @@
 --------------------------------------------------------------------------------
 
+local url = require('socket.url')
+local json = require('dkjson')
+
+--------------------------------------------------------------------------------
+
 local webview = {}
 
 -- openWeb --> open
@@ -21,16 +26,19 @@ function webview.open(url, listener, customOnClose)
 
     webView:request( url )
 
+    local _listener
     if(listener) then
-        webView:addEventListener( "urlRequest", listener )
+        _listener = function(event)
+            listener(event, webView)
+        end
+        webView:addEventListener( 'urlRequest', _listener )
     end
 
     ------------------
 
-    local onClose = function ()
-
-        if(listener) then
-            webView:removeEventListener( "urlRequest", listener )
+    local onClose = function(params)
+        if(_listener) then
+            webView:removeEventListener( 'urlRequest', _listener )
         end
 
         webView:removeSelf()
@@ -42,13 +50,28 @@ function webview.open(url, listener, customOnClose)
         webContainer = nil
 
         if(customOnClose) then
-            customOnClose()
+            customOnClose(params)
         end
     end
 
     ------------------
 
     return onClose
+end
+
+--------------------------------------------------------------------------------
+
+function webview.extractJson(customEvent, eventUrl)
+    if(not eventUrl) then return nil end
+
+    local urlString = url.unescape(eventUrl)
+    local start, _end = string.find(urlString, customEvent)
+    if start ~= nil then
+        local response = string.sub(urlString, _end + 1)
+        return json.decode(response);
+    end
+
+    return nil
 end
 
 --------------------------------------------------------------------------------

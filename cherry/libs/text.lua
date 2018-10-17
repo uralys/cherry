@@ -114,7 +114,7 @@ end
 --         parent   = App.hud,
 --         value    = 'Kodo !',
 --         x        = display.contentWidth * 0.1,
---         y        = display.contentHeight * 0.18,
+--         y        = display.cqontentHeight * 0.18,
 --         fontSize = 45,
 --         color    = 'ffffff'
 --     })
