@@ -61,7 +61,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function webview.extractJson(customEvent, eventUrl)
+function extractJson(customEvent, eventUrl)
     if(not eventUrl) then return nil end
 
     local urlString = url.unescape(eventUrl)
@@ -76,4 +76,4 @@ end
 
 --------------------------------------------------------------------------------
 
-return webview
+return extractJson

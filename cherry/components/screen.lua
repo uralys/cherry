@@ -2,7 +2,6 @@
 
 local analytics  = require 'cherry.libs.analytics'
 local gesture    = require 'cherry.libs.gesture'
-local webview    = require 'cherry.libs.webview'
 local Button     = require 'cherry.components.button'
 local Background = require 'cherry.components.background'
 
@@ -13,13 +12,13 @@ local Screen = {}
 --------------------------------------------------------------------------------
 
 function Screen:openFacebook()
-    local closeWeb = webview.open('http://facebook.com/uralys')
+    App.webView:open({url = 'http://facebook.com/uralys'})
     analytics.event('user', 'open-web', 'facebook')
     self:showBands({
         back = function ()
             analytics.event('user', 'close-web', 'facebook')
             self:hideBands()
-            closeWeb()
+            App.webView:close()
         end
     })
 end
@@ -27,13 +26,13 @@ end
 --------------------------------------------------------------------------------
 
 function Screen:openCredits()
-    local closeWeb = webview.open('http://www.uralys.com/projects/phantoms/#credits')
+    App.webView:open({url = 'http://www.uralys.com/projects/phantoms/#credits'})
     analytics.event('user', 'open-web', 'uralys')
     self:showBands({
         back = function ()
             analytics.event('user', 'close-web', 'uralys')
             self:hideBands()
-            closeWeb()
+            App.webView:close()
         end
     })
 end
