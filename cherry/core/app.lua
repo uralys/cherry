@@ -173,9 +173,6 @@ function App:ready()
   _G.Sound:init()
 
   if(App.VIEW_TESTING) then
-  end
-
-  if(App.VIEW_TESTING) then
     _G.log(' --> forced view : ' .. App.VIEW_TESTING)
     _G.log('--------------------------------')
     _G.Router:open(App.VIEW_TESTING)

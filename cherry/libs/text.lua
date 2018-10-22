@@ -1,5 +1,7 @@
 --------------------------------------------------------------------------------
 
+local _ = require 'cherry.libs.underscore'
+
 local Text = {}
 
 -- displayCounter --> counter
@@ -109,31 +111,71 @@ end
 
 --------------------------------------------------------------------------------
 
--- local function displayTitle ()
---     local introText = Text:create({
---         parent   = App.hud,
---         value    = 'Kodo !',
---         x        = display.contentWidth * 0.1,
---         y        = display.cqontentHeight * 0.18,
---         fontSize = 45,
---         color    = 'ffffff'
---     })
+function Text.appearFromSides(leftMessage, rightMessage, options)
+    options = _.defaults(options, {
+        y        = display.contentHeight * 0.25,
+        color    = 'ffffff',
+        fontSize = 45
+    })
 
---     introText.view.alpha   = 0
+    local leftText = display.newText({
+        parent   = options.parent,
+        text     = leftMessage,
+        x        = - display.contentWidth * 0.5,
+        y        = options.y,
+        font     = _G.FONT,
+        fontSize = options.fontSize,
+        color    = options.color
+    })
 
---     transition.to( introText.view, {
---         time       = 2600,
---         alpha      = 1,
---         x          = display.contentWidth * 0.13,
---         onComplete = function()
---             transition.to( introText, {
---                 time  = 3200,
---                 alpha = 0,
---                 x     = display.contentWidth * 0.16
---             })
---         end
---     })
--- end
+    local rightText = display.newText({
+        parent   = options.parent,
+        text     = rightMessage,
+        x        = display.contentWidth * 1.5,
+        y        = options.y,
+        font     = _G.FONT,
+        fontSize = options.fontSize,
+        color    = options.color
+    })
+
+    leftText.anchorX = 1
+    rightText.anchorX = 0
+
+    local widthDiff = (rightText.width - leftText.width) * 0.5
+    local center = display.contentWidth * 0.5 - widthDiff
+
+    transition.to( leftText, {
+        time  = 600,
+        x     = center - 10,
+        transition = easing.outBack,
+        onComplete = function()
+            transition.to( leftText, {
+                delay = 750,
+                time  = 750,
+                alpha = 0,
+                onComplete = function()
+                    rightText:destroy()
+                end
+            })
+        end
+    })
+
+    transition.to( rightText, {
+        time  = 600,
+        x     = center + 10,
+        transition = easing.outBack,
+        onComplete = function()
+            transition.to( rightText, {
+                delay = 750,
+                time  = 750,
+                alpha = 0,
+                onComplete = function()
+                    rightText:destroy()
+                end
+            })
+        end
+    })
+end
 
 --------------------------------------------------------------------------------
 

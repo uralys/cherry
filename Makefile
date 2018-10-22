@@ -1,38 +1,29 @@
+rocksDir=.rocks
 ifeq ($(env), travis)
 	root=/home/travis/build/chrisdugne/cherry
 else
 	root=.
-	LUA_VERSION=5.3
 endif
 
 ifeq ($(verbose), true)
 	export DEBUG := true
 endif
 
-# http://leafo.net/guides/customizing-the-luarocks-tree.html
-export LUA_PATH := ${root}/?.lua;$(LUA_PATH)
-export LUA_PATH := ${root}/.rocks/share/lua/${LUA_VERSION}/?.lua;$(LUA_PATH)
-export LUA_PATH := ${root}/.rocks/share/lua/${LUA_VERSION}/?/init.lua;$(LUA_PATH)
-export LUA_CPATH := ${root}/.rocks/lib/lua/${LUA_VERSION}/?.so$(LUA_CPATH)
-
-.rocks:
-	@luarocks install --tree .rocks busted
-	@luarocks install --tree .rocks luacheck
-	@luarocks install --tree .rocks luacov
-	@luarocks install --tree .rocks dkjson
+rocks:
+	@luarocks install --tree ${rocksDir} dkjson
+	@luarocks install --tree ${rocksDir} luacov
+	@luarocks install --tree ${rocksDir} luacheck
+	@luarocks install --tree ${rocksDir} busted
 
 luacheck:
-	@.rocks/bin/luacheck .
+	@${rocksDir}/bin/luacheck .
 
 busted:
-	@.rocks/bin/busted -v --run=tests --config-file=test/.busted \
+	@${rocksDir}/bin/busted -v --run=tests --config-file=test/.busted \
 			-m '${root}/test/?.lua;${root}/src/libs/?.lua;${root}/src/?.lua'
 
-test: .rocks luacheck busted
+test: rocks luacheck busted
 
 clean:
-	@rm -rf .rocks
-	@echo removed .rocks
-
-# force rebuild targets:
-.PHONY: test
+	@rm -rf ${rocksDir}
+	@echo removed ${rocksDir}
