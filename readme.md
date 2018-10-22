@@ -24,12 +24,16 @@ Cherry is a starter for `CoronaSDK App` to help building your game.
 You may extend Cherry framework, or just pick few components, in order to start your own game.
 
 #### Installation
+
 - clone Cherry next to your project
 - symlink the lib to your project root:
+
 ```
 > ln -s ../Cherry/cherry cherry
 ```
+
 - add a `main.lua` with
+
 ```lua
 -- main.lua
 require 'cherry.main'
@@ -38,6 +42,7 @@ require 'src.app'
 
 - add a `src/app.lua`
 - then call `App.start()` with your options
+
 ```lua
 -- src/app.lua
 App:start({
@@ -47,15 +52,16 @@ App:start({
 ```
 
 - add a `env/development.json`
+
 ```json
 {
-    "silent": true,
-    "invincible": true,
-    "view-testing": "playground"
+  "silent": true,
+  "invincible": true,
+  "view-testing": "playground"
 }
 ```
-see env settings for more options.
 
+see env settings for more options.
 
 A typical tree should be :
 
@@ -71,13 +77,13 @@ A typical tree should be :
 │   │   ├── libs
 │   │   └── screens
 │   └── test
-│  
+│
 ├── YourGame
 │   ├── cherry -> ../Cherry/cherry
 │   ├── assets
 │   │   ├── images
 │   │   └── sounds
-│   │  
+│   │
 │   ├── build.settings
 │   ├── config.lua
 │   ├── env
@@ -97,11 +103,12 @@ A typical tree should be :
 A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
 
 - Start by creating a new `screen`, for instance duplicate the simplest one `src/screens/Playground.lua`
-- Register your new screen in the [Router](https://github.com/chrisdugne/cherry/blob/master/src/Router.lua#L12)  : `YOUR_NEW_SCREEN = 'YourNewScreen'`
+- Register your new screen in the [Router](https://github.com/chrisdugne/cherry/blob/master/src/Router.lua#L12) : `YOUR_NEW_SCREEN = 'YourNewScreen'`
 - Now you can open your screen from anywhere calling :
-    `Router:open(Router.YOUR_NEW_SCREEN)`
+  `Router:open(Router.YOUR_NEW_SCREEN)`
 
 #### Adding a new Model
+
 - Each `model` should implement `new` and `show` functions, for instance read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
 - Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'game.models.YourModel'`
 - Use `YourModel:new()` during the `LevelDrawer` parsing
@@ -112,7 +119,6 @@ A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/libra
 Either use these components within the full workflow or pick them one by one to use it in your own game.
 
 See [documentation](docs/components.md) for the complete components list and options.
-
 
 ## Libraries
 
@@ -128,62 +134,56 @@ See [documentation](docs/libraries.md) for the complete components list and opti
 - **user** profile and game status
 - google **analytics** events (a lot are already plugged in the workflow)
 
-
 ## Music and Sounds
 
 Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the samples from `/assets/sounds` for your own game, providing you credit VelvetCoffee for the work and link to :
 
 `https://soundcloud.com/velvetcoffee`
 
-
 ## Local development
 
 #### dependencies
+
 Luacheck, busted and luacov are used for the tests and coverage.
 install the luarocks using the `Makefile`, they will be created locally within `.rocks/`
+
+Corona SDK [embed Lua 5.1](https://docs.coronalabs.com/guide/start/introLua/index.html) with the apps.
+To use native libs from luarocks, you must install and build them for lua 5.1, the move the `.so` to an embed folder as well.
+Cherry uses [hererocks](https://github.com/mpeterv/hererocks) to locally use this version.
+
+```bash
+> pip install hererocks
 ```
-> make
+
+```sh
+> make install
+> make test
+```
+
+#### external dependencies
+
+now you can move your external lib to a path _in_ your app,
+and use it, after having modified your `cpath`.
+
+```lua
+package.cpath = 'cherry/rocks/lib/lua/5.1/luazen.so;' .. package.cpath
+local luazen  = require('luazen')
 ```
 
 ## Tests
+
 UT with busted: http://olivinelabs.com/busted/
 
-```
+```sh
 > make test
 ●●●●●●●●●●●●
 50 successes / 0 failures / 0 errors / 0 pending : 0.014314 seconds
 ```
 
 To display your `_G.log()` use:
-```
+
+```sh
 > make test verbose=true
-```
-
-## Lua 5.1
-
-Corona SDK [embed Lua 5.1](https://docs.coronalabs.com/guide/start/introLua/index.html) with the apps.
-
-To use native libs from luarocks, you must install and build them for lua 5.1, the move the `.so` to an embed folder as well.
-You may use [hererocks](https://github.com/mpeterv/hererocks) to switch between lua versions.
-
-```bash
-> pip install hererocks
-```
-
-then to build cherry rocks for 5.1 do
-
-```bash
-> make clean
-> sudo hererocks /Library/lua-hererocks -r^ --lua=5.1
-> make
-```
-
-now you can move your external lib to a path *in* your app,
-and use it, after having modified your `cpath`.
-
-```lua
-package.cpath = 'cherry/rocks/lib/lua/5.1/luazen.so;' .. package.cpath
-local luazen  = require('luazen')
 ```
 
 ## BSD License
@@ -203,16 +203,21 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 - [Phantoms](http://www.uralys.com/projects/phantoms/) released on November 2015 as the actual source for
 
 ## game/ui assets
+
 https://www.garagegames.com/community/resources/view/23092
 
 ## [todo] Doc to provide
+
 ##### waiting for the doc, read the code
+
 - Look in app.App to see what you may override with `App:start(options)`
 - Look in engine.Game to see what you may override with `Game:YourStuff()`
 
 ##### core
+
 - env files
-simple example: development.json
+  simple example: development.json
+
 ```
 {
     "silent": true,
@@ -224,6 +229,7 @@ simple example: development.json
 - extending/overriding `engine.Game`
 
 ##### less important misc
+
 - setting custom bg
 - setting custom gravity
 - defining colors

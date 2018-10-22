@@ -1,22 +1,23 @@
 language: python
 sudo: false
 env:
-- LUA="lua=5.1" LUA_VERSION=5.1
-- LUA="lua=5.2" LUA_VERSION=5.2
-- LUA="lua=5.3" LUA_VERSION=5.3
-- LUA="luajit=2.0"  LUA_VERSION=5.1
-- LUA="luajit=2.1"  LUA_VERSION=5.1
+  - LUA="lua=5.1" LUA_VERSION=5.1
+  - LUA="lua=5.2" LUA_VERSION=5.2
+  - LUA="lua=5.3" LUA_VERSION=5.3
+  - LUA="luajit=2.0"  LUA_VERSION=5.1
+  - LUA="luajit=2.1"  LUA_VERSION=5.1
 branches:
   only:
-  - master
+    - master
 install:
-- pip install hererocks
-- hererocks lua_install_travis_folder -r^ --$LUA
-- source lua_install_travis_folder/bin/activate
+  - pip install hererocks
+  - hererocks .rocks -r^ --$LUA
+  - source .rocks/bin/activate
 script:
-- make test env=travis
+  - make rocks
+  - make test env=travis
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
 notifications:
   slack:
     secure: pVTU1oCpZ1ivCSO9iRjMklO70WSiTG0m1Wsl7SWBv0r0E2mgUcKYPVdhrGYC2jr6xJEjEkE0h0lNt5QMC1LQ6uvjRylu58I4u+rzDAl+hz6zZWZvIgDjzs34riedhQRSnsnM9FaqzaQSn9pG0qv9D4p6lw6+5vWtbVd+/pIGyiQ=
