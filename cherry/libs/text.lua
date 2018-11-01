@@ -154,7 +154,7 @@ function Text.appearFromSides(leftMessage, rightMessage, options)
                 time  = 750,
                 alpha = 0,
                 onComplete = function()
-                    rightText:destroy()
+                    display.remove(leftText)
                 end
             })
         end
@@ -170,7 +170,7 @@ function Text.appearFromSides(leftMessage, rightMessage, options)
                 time  = 750,
                 alpha = 0,
                 onComplete = function()
-                    rightText:destroy()
+                    display.remove(rightText)
                 end
             })
         end

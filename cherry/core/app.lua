@@ -55,11 +55,6 @@ local App = {
   hasTutorial = false,
 
   -----------------------------------------
-  -- to use gpgs, add the plugin within your build.settings
-
-  useGPGS = false,
-
-  -----------------------------------------
 
   extension = {
     game = demo
@@ -106,7 +101,6 @@ function App:start(options)
   self:deviceSetup()
   self:setup()
   self:loadSettings()
-  self:initGPGS(options)
   self:ready()
 end
 
@@ -131,28 +125,6 @@ function App:loadSettings()
     App.TESTING_LEVEL   = App.LEVEL_TESTING.level
     App.TESTING_STEPS   = App.LEVEL_TESTING.step
   end
-end
-
---------------------------------------------------------------------------------
-
-function App:initGPGS(options)
-  if(not options.useGPGS) then
-    return
-  end
-
-  local gpgs = _G.gpgs or require 'plugin.gpgs'
-
-  local function gpgsLoginListener( event )
-  end
-
-  local function gpgsInitListener( event )
-    if not event.isError then
-      -- Try to automatically log in the user without displaying the login screen
-      gpgs.login( { listener = gpgsLoginListener } )
-    end
-  end
-
-  gpgs.init( gpgsInitListener )
 end
 
 --------------------------------------------------------------------------------
@@ -199,10 +171,7 @@ end
 --------------------------------------------------------------------------------
 
 function App:setup()
-
   _G.log('Application setup...')
-
-  ----------------------------------------------------------------------------
 
   App.colors = _.defaults(App.colors or {}, {
     '7f00ff',
@@ -212,36 +181,36 @@ function App:setup()
   ----------------------------------------------------------------------------
 
   analytics.init(
-  App.ANALYTICS_VERSION,
-  App.ANALYTICS_TRACKING_ID,
-  App.ANALYTICS_PROFILE_ID,
-  App.name,
-  App.version
-)
+    App.ANALYTICS_VERSION,
+    App.ANALYTICS_TRACKING_ID,
+    App.ANALYTICS_PROFILE_ID,
+    App.name,
+    App.version
+  )
 
-----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
-_G.IOS         = system.getInfo( 'platformName' )  == 'iPhone OS'
-_G.ANDROID     = system.getInfo( 'platformName' )  == 'Android'
-_G.SIMULATOR   = system.getInfo( 'environment' )   == 'simulator'
+  _G.IOS         = system.getInfo( 'platformName' )  == 'iPhone OS'
+  _G.ANDROID     = system.getInfo( 'platformName' )  == 'Android'
+  _G.SIMULATOR   = system.getInfo( 'environment' )   == 'simulator'
 
-----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
-if(_G.IOS or _G.SIMULATOR) then
-  display.setStatusBar( display.HiddenStatusBar )
-end
+  if(_G.IOS or _G.SIMULATOR) then
+    display.setStatusBar( display.HiddenStatusBar )
+  end
 
-----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
-if _G.ANDROID then
-  _G.FONT   = App.font.android
-else
-  _G.FONT   = App.font.ios
-end
+  if _G.ANDROID then
+    _G.FONT   = App.font.android
+  else
+    _G.FONT   = App.font.ios
+  end
 
-----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
-self.aspectRatio = display.pixelHeight / display.pixelWidth
+  self.aspectRatio = display.pixelHeight / display.pixelWidth
 end
 
 --------------------------------------------------------------------------------
@@ -272,83 +241,82 @@ local function onKeyEvent( event )
           --     end
           -- end
 
-          return true
-        end
+  return true
+end
 
-        function App:deviceSetup()
-          _G.log('Device setup...')
+function App:deviceSetup()
+  _G.log('Device setup...')
 
-          ----------------------------------------------------------------------------
-          -- prepare notifications for this session
-          -- these notifications can be removed as long as the App is ON
+  ----------------------------------------------------------------------------
+  -- prepare notifications for this session
+  -- these notifications can be removed as long as the App is ON
 
-          self.deviceNotifications = {}
+  self.deviceNotifications = {}
 
-          ----------------------------------------------------------------------------
-          --- ANDROID BACK BUTTON
+  ----------------------------------------------------------------------------
+  --- ANDROID BACK BUTTON
 
-          Runtime:removeEventListener( 'key', onKeyEvent )
-          Runtime:addEventListener( 'key', onKeyEvent )
+  Runtime:removeEventListener( 'key', onKeyEvent )
+  Runtime:addEventListener( 'key', onKeyEvent )
 
-          ----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
-          -- local fonts = native.getFontNames()
+  -- local fonts = native.getFontNames()
 
-          -- count = 0
+  -- count = 0
 
-          -- -- Count the number of total fonts
-          -- for i,fontname in ipairs(fonts) do
-            --    count = count+1
-            -- end
+  -- -- Count the number of total fonts
+  -- for i,fontname in ipairs(fonts) do
+    --    count = count+1
+    -- end
 
-            -- _G.log( '\rFont count = ' .. count )
+    -- _G.log( '\rFont count = ' .. count )
 
-            -- local name = 'pt'     -- part of the Font name we are looking for
+    -- local name = 'pt'     -- part of the Font name we are looking for
 
-            -- name = string.lower( name )
+    -- name = string.lower( name )
 
-            -- -- Display each font in the terminal console
-            -- for i, fontname in ipairs(fonts) do
+    -- -- Display each font in the terminal console
+    -- for i, fontname in ipairs(fonts) do
 
-              --        _G.log( 'fontname = ' .. tostring( fontname ) )
-              -- end
-            end
+      --        _G.log( 'fontname = ' .. tostring( fontname ) )
+      -- end
+end
 
-            --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-            function App:deviceNotification(text, secondsFromNow, id)
+function App:deviceNotification(text, secondsFromNow, id)
+  _G.log('----> deviceNotification : [' .. id .. '] --> ' ..
+    text .. ' (' .. secondsFromNow .. ')'
+  )
 
-              _G.log('----> deviceNotification : [' .. id .. '] --> ' ..
-              text .. ' (' .. secondsFromNow .. ')'
-            )
+  local options = {
+    alert = text,
+    badge = 1,
+  }
 
-            local options = {
-              alert = text,
-              badge = 1,
-            }
+  if(self.deviceNotifications[id]) then
+    _G.log('cancelling device notification : ', self.deviceNotifications[id])
+    system.cancelNotification( self.deviceNotifications[id] )
+  end
 
-            if(self.deviceNotifications[id]) then
-              _G.log('cancelling device notification : ', self.deviceNotifications[id])
-              system.cancelNotification( self.deviceNotifications[id] )
-            end
+  _G.log('scheduling : ', id, secondsFromNow)
+  self.deviceNotifications[id] = system.scheduleNotification(
+    secondsFromNow,
+    options
+  )
 
-            _G.log('scheduling : ', id, secondsFromNow)
-            self.deviceNotifications[id] = system.scheduleNotification(
-            secondsFromNow,
-            options
-          )
-          _G.log('scheduled : ', self.deviceNotifications[id])
+  _G.log('scheduled : ', self.deviceNotifications[id])
+end
 
-        end
+--------------------------------------------------------------------------------
+-- API
+--------------------------------------------------------------------------------
 
-        --------------------------------------------------------------------------------
-        -- API
-        --------------------------------------------------------------------------------
+function App:adaptToRatio(value)
+  return value * self.aspectRatio * self.aspectRatio
+end
 
-        function App:adaptToRatio(value)
-          return value * self.aspectRatio * self.aspectRatio
-        end
+--------------------------------------------------------------------------------
 
-        --------------------------------------------------------------------------------
-
-        return App
+return App

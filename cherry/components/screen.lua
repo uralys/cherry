@@ -3,7 +3,6 @@
 local analytics  = require 'cherry.libs.analytics'
 local gesture    = require 'cherry.libs.gesture'
 local Button     = require 'cherry.components.button'
-local Background = require 'cherry.components.background'
 
 --------------------------------------------------------------------------------
 
@@ -41,7 +40,6 @@ end
 
 function Screen:showBands(options)
     options = options or {}
-    Background:darken()
 
     self.topBand = display.newGroup()
     App.hud:insert(self.topBand)
@@ -109,8 +107,6 @@ function Screen:showBands(options)
 end
 
 function Screen:hideBands()
-    Background:lighten()
-
     transition.to( self.topBand, {
         time  = 800,
         y     = -display.contentHeight/12
