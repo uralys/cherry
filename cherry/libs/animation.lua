@@ -121,6 +121,7 @@ function animation.grow(object, options)
     xScale = options.toScale or 1,
     yScale = options.toScale or 1,
     time = time or 350,
+    transition = options.easing or easing.inSine,
     onComplete = onComplete
   })
 end

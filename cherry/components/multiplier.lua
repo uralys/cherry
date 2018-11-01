@@ -25,14 +25,15 @@ function Multiplier:draw(options)
   icon:scale(scale, scale)
   multiplier.icon = icon
 
-  local multiply = display.newImage(
+  local sign = display.newImage(
     options.parent,
     'cherry/assets/images/gui/items/multiply.png',
     options.x + icon.width * scale * 0.8,
     options.y
   )
 
-  animation.bounce(multiply)
+  animation.bounce(sign)
+  multiplier.sign = sign
 
   timer.performWithDelay(150, function ()
     local num = Text:create({
@@ -43,7 +44,6 @@ function Multiplier:draw(options)
       fontSize = options.fontSize or 75,
       anchorX  = 0
     })
-
 
     multiplier.text = num
     animation.bounce(num.view)
