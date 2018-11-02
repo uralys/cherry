@@ -72,17 +72,17 @@ function Screen:showBands(options)
     gesture.disabledTouch(self.bottom)
 
     transition.to( self.topRect, {
-        time  = 800,
+        time  = options.time or 800,
         alpha = 1
     })
 
     transition.to( self.topBand, {
-        time  = 800,
+        time  = options.time or 800,
         y     = display.contentHeight/24
     })
 
     transition.to( self.bottom, {
-        time  = 800,
+        time  = options.time or 800,
         alpha = 1,
         y     = display.contentHeight - display.contentHeight/24,
         onComplete = function()
@@ -106,19 +106,20 @@ function Screen:showBands(options)
     end
 end
 
-function Screen:hideBands()
+function Screen:hideBands(options)
+    options = options or {}
     transition.to( self.topBand, {
-        time  = 800,
+        time  = options.time or 800,
         y     = -display.contentHeight/12
     })
 
     transition.to( self.top, {
-        time  = 800,
+        time  = options.time or 800,
         alpha = 0
     })
 
     transition.to( self.bottom, {
-        time  = 800,
+        time  = options.time or 800,
         alpha = 0,
         y     = display.contentHeight + display.contentHeight/12
     })

@@ -19,7 +19,11 @@ function WebView:new(options)
   webView.x = display.contentCenterX + display.contentWidth
 
   if(options.url) then
-    webView:request(options.url)
+    if(options.resourceDirectory) then
+      webView:request(options.url, system.ResourceDirectory)
+    else
+      webView:request(options.url)
+    end
   end
 
   local o = {webView = webView}
