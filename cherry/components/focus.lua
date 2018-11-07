@@ -204,7 +204,6 @@ return function(object, options)
         end
 
         if(options.color) then
-            _G.log('FILL')
             right:setFillColor(colorize(options.color))
         end
     end

@@ -83,7 +83,6 @@ function App:start(options)
   App = _.extend(App, options)
   App.images = images
 
-  _G.log({App})
   _G = _.extend(_G, options.globals)
 
   _G.log('--------------------------------')
@@ -135,7 +134,6 @@ function App:ready()
   self.score = Score:new(App.extension.score)
   self.user  = User:new(App.extension.user)
   self.user:load()
-  _G.log({user = self.user})
 
   Background:init({
     light = App.background.light,
