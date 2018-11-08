@@ -319,6 +319,9 @@ display = {
         options.parent:insert(newText)
         return newText
     end,
+    remove = function(displayObject)
+        displayObject:removeSelf()
+    end,
     currentStage = _currentStage,
     getCurrentStage = function() return display.currentStage end,
     setStatusBar = function() return true end,

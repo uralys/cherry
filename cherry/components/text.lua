@@ -22,7 +22,7 @@ end
 function Text:render()
   if (self.view) then
     if (self.animation) then
-      transition.cancel( self.view, self.animation)
+      transition.cancel(self.currentAnimation)
     end
     display.remove(self.view)
   end
@@ -36,8 +36,8 @@ function Text:render()
     text     = self.value,
     font     = self.font or _G.FONT,
     fontSize = self.fontSize or 55,
-    x        = self.x,
-    y        = self.y
+    x        = self.x or 0,
+    y        = self.y or 0
   })
 
   self.view:setFillColor( colorize(self.color or '#ffffff') )
@@ -47,7 +47,7 @@ function Text:render()
   end
 
   if (self.animation) then
-    transition.to( self.view, self.animation)
+    self.currentAnimation = transition.to( self.view, self.animation)
   end
 
   self.view.anchorX = self.anchorX or 0.5
