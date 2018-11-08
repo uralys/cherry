@@ -61,17 +61,11 @@ end
 function NamePicker:display(next)
   self:createBlur()
 
-  if(App.user:nbUsers() < 6) then
-    self:createTextBoard(next)
-  else
-    self.hideCreation = true
-  end
-
-  if(App.user:nbUsers() > 1) then
+  if(App.user:nbUsers() > 0) then
     self:createPlayersBoard(next)
+  else
+    self:createTextBoard(next)
   end
-
-  self:refreshAction()
 end
 
 --------------------------------------------------------------------------------
@@ -99,6 +93,7 @@ end
 
 function NamePicker:createTextBoard(next)
   self.text = App.user:name() or randomName()
+  self:refreshAction()
 
   self.textBoard = self:createBoard({
     title       = 'New player',
@@ -129,6 +124,19 @@ function NamePicker:createTextBoard(next)
     end
   })
 
+  if(App.user:name()) then
+    Button:icon({
+      parent   = self.textBoard,
+      type     = 'close',
+      x        = self.textBoard.panel.width * 0.5  - 10,
+      y        = - self.textBoard.panel.height * 0.5 + 10,
+      action = function()
+        group.destroy(self.textBoard, true)
+        self:createPlayersBoard(next)
+      end
+    })
+  end
+
   self:createInputText()
 end
 
@@ -136,13 +144,8 @@ end
 
 function NamePicker:createPlayersBoard(next)
   local height = usersHeight()
-  local title = 'Previous player'
-  local y = display.contentHeight * 0.68
-
-  if(self.hideCreation == true) then
-    title = 'Who are you ?'
-    y = display.contentHeight * 0.5
-  end
+  local title = 'Who are you ?'
+  local y = display.contentHeight * 0.5
 
   self.playersBoard = self:createBoard({
     title       = title,
@@ -151,6 +154,19 @@ function NamePicker:createPlayersBoard(next)
   })
 
   self:addPreviousUsers(next)
+
+  if(App.user:nbUsers() < 6) then
+    Button:icon({
+      parent   = self.playersBoard,
+      type     = 'add',
+      x        = 0,
+      y        = self.playersBoard.panel.height * 0.5,
+      action = function()
+        group.destroy(self.playersBoard, true)
+        self:createTextBoard(next)
+      end
+    })
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -166,6 +182,7 @@ end
 
 function NamePicker:refreshAction()
   local exists, userNum = existsUserName(self.text)
+  _G.log({exists, userNum})
   self.createNewUser = not exists
   self.userNum = userNum
 end
