@@ -2,6 +2,7 @@
 
 local _         = require 'cherry.libs.underscore'
 local animation = require 'cherry.libs.animation'
+local colorize  = require 'cherry.libs.colorize'
 local group     = require 'cherry.libs.group'
 local gesture   = require 'cherry.libs.gesture'
 local Banner    = require 'cherry.components.banner'
@@ -61,17 +62,11 @@ end
 function NamePicker:display(next)
   self:createBlur()
 
-  if(App.user:nbUsers() < 6) then
-    self:createTextBoard(next)
-  else
-    self.hideCreation = true
-  end
-
   if(App.user:nbUsers() > 1) then
     self:createPlayersBoard(next)
+  else
+    self:createTextBoard(next)
   end
-
-  self:refreshAction()
 end
 
 --------------------------------------------------------------------------------
@@ -99,6 +94,7 @@ end
 
 function NamePicker:createTextBoard(next)
   self.text = App.user:name() or randomName()
+  self:refreshAction()
 
   self.textBoard = self:createBoard({
     title       = 'New player',
@@ -129,6 +125,19 @@ function NamePicker:createTextBoard(next)
     end
   })
 
+  if(App.user:name()) then
+    Button:icon({
+      parent   = self.textBoard,
+      type     = 'close',
+      x        = self.textBoard.panel.width * 0.5  - 10,
+      y        = - self.textBoard.panel.height * 0.5 + 10,
+      action = function()
+        group.destroy(self.textBoard, true)
+        self:createPlayersBoard(next)
+      end
+    })
+  end
+
   self:createInputText()
 end
 
@@ -136,13 +145,8 @@ end
 
 function NamePicker:createPlayersBoard(next)
   local height = usersHeight()
-  local title = 'Previous player'
-  local y = display.contentHeight * 0.68
-
-  if(self.hideCreation == true) then
-    title = 'Who are you ?'
-    y = display.contentHeight * 0.5
-  end
+  local title = 'Who are you ?'
+  local y = display.contentHeight * 0.5
 
   self.playersBoard = self:createBoard({
     title       = title,
@@ -151,6 +155,19 @@ function NamePicker:createPlayersBoard(next)
   })
 
   self:addPreviousUsers(next)
+
+  if(App.user:nbUsers() < 6) then
+    Button:icon({
+      parent   = self.playersBoard,
+      type     = 'add',
+      x        = 0,
+      y        = self.playersBoard.panel.height * 0.5,
+      action = function()
+        group.destroy(self.playersBoard, true)
+        self:createTextBoard(next)
+      end
+    })
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -248,14 +265,23 @@ function NamePicker:addPreviousUsers(next)
     local nameDisplay = Text:create({
       parent = user,
       value  = playerName,
-      x      = 0,
+      x      = 30,
       y      = 0,
       grow   = true,
       color  = '#000000',
       fontSize = 43
     })
 
-    panel.width = nameDisplay:width() + 60
+    panel.width = nameDisplay:width() + 120
+    panel.height = 100
+
+    local icon = display.newImage(
+      user,
+      'cherry/assets/images/gui/items/profile.png',
+      50 - panel.width * 0.5, 0
+    );
+
+    icon:setFillColor(colorize('#60b763'))
 
     gesture.onTouch(user, function()
       animation.touchEffect(user, {
