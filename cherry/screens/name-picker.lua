@@ -2,6 +2,7 @@
 
 local _         = require 'cherry.libs.underscore'
 local animation = require 'cherry.libs.animation'
+local colorize  = require 'cherry.libs.colorize'
 local group     = require 'cherry.libs.group'
 local gesture   = require 'cherry.libs.gesture'
 local Banner    = require 'cherry.components.banner'
@@ -61,7 +62,7 @@ end
 function NamePicker:display(next)
   self:createBlur()
 
-  if(App.user:nbUsers() > 0) then
+  if(App.user:nbUsers() > 1) then
     self:createPlayersBoard(next)
   else
     self:createTextBoard(next)
@@ -182,7 +183,6 @@ end
 
 function NamePicker:refreshAction()
   local exists, userNum = existsUserName(self.text)
-  _G.log({exists, userNum})
   self.createNewUser = not exists
   self.userNum = userNum
 end
@@ -265,14 +265,23 @@ function NamePicker:addPreviousUsers(next)
     local nameDisplay = Text:create({
       parent = user,
       value  = playerName,
-      x      = 0,
+      x      = 30,
       y      = 0,
       grow   = true,
       color  = '#000000',
       fontSize = 43
     })
 
-    panel.width = nameDisplay:width() + 60
+    panel.width = nameDisplay:width() + 120
+    panel.height = 100
+
+    local icon = display.newImage(
+      user,
+      'cherry/assets/images/gui/items/profile.png',
+      50 - panel.width * 0.5, 0
+    );
+
+    icon:setFillColor(colorize('#60b763'))
 
     gesture.onTouch(user, function()
       animation.touchEffect(user, {
