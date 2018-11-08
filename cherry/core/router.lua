@@ -9,10 +9,11 @@ local Effects   = require 'cherry.engine.effects'
 --------------------------------------------------------------------------------
 
 local Router = {
-    view = nil,
-    HOME       = 'home',
-    PLAYGROUND = 'playground',
-    HEADPHONES = 'headphones'
+    view        = nil,
+    HOME        = 'home',
+    LEADERBOARD = 'leaderboard',
+    PLAYGROUND  = 'playground',
+    HEADPHONES  = 'headphones'
 }
 
 --------------------------------------------------------------------------------

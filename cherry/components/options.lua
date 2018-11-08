@@ -10,8 +10,30 @@ local Options = {}
 
 --------------------------------------------------------------------------------
 
-local initActionX =  display.contentWidth*0.95
-local initActionY =  display.contentHeight*0.9
+local initActionX =  display.contentWidth - 50
+local initActionY =  display.contentHeight - 75
+
+--------------------------------------------------------------------------------
+
+function Options:create(view)
+    self:drawActions(view)
+    self:drawLeaderboardButton(view)
+end
+
+--------------------------------------------------------------------------------
+
+function Options:drawLeaderboardButton(view)
+    self.leaderboardButton = Button:icon({
+        parent = view,
+        type   = 'leaderboard',
+        x      = initActionX,
+        y      = initActionY - 100,
+        scale  = .7,
+        action = function()
+            Router:open(Router.LEADERBOARD)
+        end
+    })
+end
 
 --------------------------------------------------------------------------------
 
