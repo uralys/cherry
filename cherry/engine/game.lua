@@ -85,17 +85,17 @@ end
 
 ------------------------------------------
 
-function Game:stop(userExit)
+function Game:stop(noScore)
     if(not self.isRunning) then return end
     self.isRunning = false
 
     ------------------------------------------
 
-    if(self.onStop) then self:onStop(userExit) end -- from extension
+    if(self.onStop) then self:onStop(noScore) end -- from extension
 
     ------------------------------------------
 
-    if(not userExit) then
+    if(not noScore) then
         Screen:showBands()
         if(not App.user:name()) then
             App.namePicker:display(App.score.display)
