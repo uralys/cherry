@@ -79,38 +79,47 @@ local function displayData(field, refresh)
       color = '#32cd32'
     end
 
-    Text:create({
-      parent   = board,
-      value    = line.position,
-      x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 30,
-      y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
-      color    = color,
-      font     = _G.FONT,
-      fontSize = 45,
-      anchorX  = 0
-    })
+    timer.performWithDelay(math.random(100, 700), function()
+      Text:create({
+        parent   = board,
+        value    = line.position,
+        x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 30,
+        y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
+        color    = color,
+        font     = _G.FONT,
+        fontSize = 45,
+        anchorX  = 0,
+        grow     = true
+      })
+    end)
 
-    Text:create({
-      parent   = board,
-      value    = line.playerName,
-      x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 80,
-      y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
-      color    = color,
-      font     = _G.FONT,
-      fontSize = 45,
-      anchorX  = 0
-    })
+    timer.performWithDelay(math.random(100, 700), function()
+      Text:create({
+        parent   = board,
+        value    = line.playerName,
+        x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 80,
+        y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
+        color    = color,
+        font     = _G.FONT,
+        fontSize = 45,
+        anchorX  = 0,
+        grow     = true
+      })
+    end)
 
-    Text:create({
-      parent   = board,
-      value    = line[field.name],
-      x        = BOARD_CENTER_X + BOARD_WIDTH * 0.5 - 100,
-      y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
-      color    = color,
-      font     = _G.FONT,
-      fontSize = 45,
-      anchorX  = 0
-    })
+    timer.performWithDelay(math.random(100, 700), function()
+      Text:create({
+        parent   = board,
+        value    = line[field.name],
+        x        = BOARD_CENTER_X + BOARD_WIDTH * 0.5 - 100,
+        y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
+        color    = color,
+        font     = _G.FONT,
+        fontSize = 45,
+        anchorX  = 0,
+        grow     = true
+      })
+    end)
   end
 end
 
