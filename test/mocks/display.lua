@@ -320,6 +320,8 @@ display = {
         return newText
     end,
     remove = function(displayObject)
+        assert(displayObject.parent, "no parent set!")
+        displayObject.parent:remove(displayObject)
         displayObject:removeSelf()
     end,
     currentStage = _currentStage,

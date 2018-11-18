@@ -11,8 +11,26 @@ local Text = {}
 --------------------------------------------------------------------------------
 
 function Text:create(options)
-  local text = _.extend({}, options);
+  local text = _.defaults(options, {
+    x = 0,
+    y = 0
+  })
+
   setmetatable(text, { __index = Text })
+
+  text.display = display.newGroup()
+
+  if(text.parent) then
+    text.parent:insert(text.display)
+  end
+
+  text.display.x = text.x
+  text.display.y = text.y
+
+  if(options.onTap) then
+    gesture.onTap(text.display, options.onTap)
+  end
+
   text:render()
   return text
 end
@@ -20,41 +38,35 @@ end
 --------------------------------------------------------------------------------
 
 function Text:render()
-  if (self.view) then
-    if (self.animation) then
+  if (self.currentValue) then
+    if (self.currentAnimation) then
       transition.cancel(self.currentAnimation)
     end
-    display.remove(self.view)
+    display.remove(self.currentValue)
   end
 
-  if (not self.parent) then
-    return nil
-  end
+  if(self.display == nil) then return end
 
-  self.view = TextUtils.simple({
-    parent   = self.parent,
+  self.currentValue = TextUtils.simple({
+    parent   = self.display,
     text     = self.value,
     font     = self.font or _G.FONT,
     fontSize = self.fontSize or 55,
-    x        = self.x or 0,
-    y        = self.y or 0
+    x        = 0,
+    y        = 0
   })
 
-  self.view:setFillColor( colorize(self.color or '#ffffff') )
+  self.currentValue:setFillColor( colorize(self.color or '#ffffff') )
 
   if (self.grow) then
-    animation.grow(self.view)
+    animation.grow(self.currentValue)
   end
 
   if (self.animation) then
-    self.currentAnimation = transition.to( self.view, self.animation)
+    self.currentAnimation = transition.to(self.display, self.animation)
   end
 
-  self.view.anchorX = self.anchorX or 0.5
-
-  if(self.onTap) then
-    gesture.onTap(self.view, self.onTap)
-  end
+  self.currentValue.anchorX = self.anchorX or 0.5
 end
 
 --------------------------------------------------------------------------------
@@ -65,13 +77,13 @@ function Text:setValue(value)
 end
 
 function Text:width()
-  return self.view.width
+  return self.display.width
 end
 
 --------------------------------------------------------------------------------
 
 function Text:destroy()
-  display.remove(self.view)
+  display.remove(self.display)
 end
 
 --------------------------------------------------------------------------------

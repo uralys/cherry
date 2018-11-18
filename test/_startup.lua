@@ -16,7 +16,7 @@ expose('[setting up tests Globals]', function()
   _G.easing     = {}
   _G.timer      = {performWithDelay = function(time, func) func() end}
 
-  _G.DEBUG = os.getenv('DEBUG')
+  _G.DEBUG = os.getenv('DEBUG') -- make busted verbose=true
 
   if(_G.DEBUG) then
     require('cherry.libs.logger')

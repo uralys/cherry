@@ -21,11 +21,11 @@ describe('[Text]', function()
       onTap = action
     })
 
-    assert.are.equal(text.view.x, 12)
-    assert.are.equal(text.view.y, 52)
-    assert.are.equal(text.view.text, 'plop')
+    assert.are.equal(12, text.display.x)
+    assert.are.equal(52, text.display.y)
+    assert.are.equal('plop', text.currentValue.text)
 
-    text.view:tap()
+    text.display:tap()
     assert.spy(action).was.called(1)
   end)
 
@@ -36,13 +36,13 @@ describe('[Text]', function()
       parent = foo,
       value = 'plop',
       animation = {
-        y = 52
-      },
+        y = 0
+      }
     })
 
-    assert.are.equal(text.view.text, 'plop')
+    assert.are.equal(text.currentValue.text, 'plop')
     text:setValue('plup')
-    assert.are.equal(text.view.text, 'plup')
+    assert.are.equal(text.currentValue.text, 'plup')
 
     assert.are.equal(text:width(), 0)
     text:destroy()

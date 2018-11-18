@@ -65,7 +65,7 @@ see env settings for more options.
 
 A typical tree should be :
 
-```
+```sh
 ├── Cherry
 │   ├── cherry
 │   │   ├── assets
@@ -98,7 +98,7 @@ A typical tree should be :
 
 ## Using Cherry
 
-#### Adding a new Screen
+### Adding a new Screen
 
 A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
 
@@ -107,7 +107,7 @@ A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/libra
 - Now you can open your screen from anywhere calling :
   `Router:open(Router.YOUR_NEW_SCREEN)`
 
-#### Adding a new Model
+### Adding a new Model
 
 - Each `model` should implement `new` and `show` functions, for instance read how [Item](https://github.com/chrisdugne/cherry/blob/master/src/game/models/Item.lua) is built.
 - Register your model in [main.lua](https://github.com/chrisdugne/cherry/blob/master/main.lua#L55) : `YourModel = require 'game.models.YourModel'`
@@ -142,7 +142,7 @@ Courtesy of [VelvetCoffee](https://soundcloud.com/velvetcoffee), you may use the
 
 ## Local development
 
-#### dependencies
+### dependencies
 
 Luacheck, busted and luacov are used for the tests and coverage.
 install the luarocks using the `Makefile`, they will be created locally within `.rocks/`
@@ -160,7 +160,7 @@ Cherry uses [hererocks](https://github.com/mpeterv/hererocks) to locally use thi
 > make test
 ```
 
-#### external dependencies
+### external dependencies
 
 now you can move your external lib to a path _in_ your app,
 and use it, after having modified your `cpath`.

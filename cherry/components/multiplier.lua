@@ -46,7 +46,7 @@ function Multiplier:draw(options)
     })
 
     multiplier.text = num
-    animation.bounce(num.view)
+    animation.bounce(num.display)
   end)
 
   return multiplier
