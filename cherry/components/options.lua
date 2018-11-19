@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 
-local Text   = require 'cherry.libs.text'
-local Button = require 'cherry.components.button'
-local Screen = require 'cherry.components.screen'
+local Text      = require 'cherry.libs.text'
+local Button    = require 'cherry.components.button'
+local Screen    = require 'cherry.components.screen'
 
 --------------------------------------------------------------------------------
 
@@ -12,6 +12,8 @@ local Options = {}
 
 local initActionX =  display.contentWidth - 50
 local initActionY =  display.contentHeight - 75
+
+local ANIMATION_TIME = 1200
 
 --------------------------------------------------------------------------------
 
@@ -23,6 +25,7 @@ end
 --------------------------------------------------------------------------------
 
 function Options:drawLeaderboardButton(view)
+    if(not App.scoreFields) then return end
     self.leaderboardButton = Button:icon({
         parent = view,
         type   = 'leaderboard',
@@ -32,6 +35,29 @@ function Options:drawLeaderboardButton(view)
         action = function()
             Router:open(Router.LEADERBOARD)
         end
+    })
+end
+
+--------------------------------------------------------------------------------
+
+function Options:drawProfileButton()
+    if(not App.useNamePicker) then return end
+    local buttonLock = false
+    local pickPlayer = function()
+      if(buttonLock) then return end
+      buttonLock = true
+      App.namePicker:display(function()
+        buttonLock = false
+      end)
+    end
+
+    self.profileButton = Button:icon({
+        parent = self.actions,
+        type   = 'profile',
+        x      = 330,
+        y      = 0,
+        scale  = .7,
+        action = pickPlayer
     })
 end
 
@@ -69,10 +95,12 @@ function Options:drawActions(view)
         end
     })
 
+    self:drawProfileButton()
+
     self.version = Text.simple({
         parent = self.actions,
         text   = App.version,
-        x      = 320,
+        x      = 440,
         y      = 0,
         color  = 1,
         font   = _G.FONT,
@@ -96,8 +124,8 @@ end
 function Options:openActions()
     transition.cancel(self.actions)
     transition.to(self.actions, {
-        x = initActionX - 330,
-        time = 850,
+        x = initActionX - 450,
+        time = ANIMATION_TIME,
         transition = easing.inOutBack,
         onComplete = function()
             self.actions.open = true
@@ -108,13 +136,14 @@ function Options:openActions()
     self:rotateButton(self.toggleActionsButton)
     self:rotateButton(self.infoButton)
     self:rotateButton(self.musicButton)
+    self:rotateButton(self.profileButton)
 end
 
 function Options:closeActions()
     transition.cancel(self.actions)
     transition.to(self.actions, {
         x = initActionX,
-        time = 850,
+        time = ANIMATION_TIME,
         transition = easing.inOutBack,
         onComplete = function()
             self.actions.open = false
@@ -125,13 +154,14 @@ function Options:closeActions()
     self:rotateButton(self.toggleActionsButton, true)
     self:rotateButton(self.infoButton, true)
     self:rotateButton(self.musicButton, true)
+    self:rotateButton(self.profileButton, true)
 end
 
 function Options:rotateButton(button, back)
     local rotation = function() if (back) then return 0 else return -360 end end
     transition.to(button, {
         rotation = rotation(),
-        time = 850,
+        time = ANIMATION_TIME,
         transition = easing.inOutBack
     })
 end
