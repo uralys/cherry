@@ -51,8 +51,9 @@ local App = {
 
   -----------------------------------------
 
-  usePhysics = false,
-  hasTutorial = false,
+  usePhysics     = false,
+  useNamePicker  = true,
+  hasTutorial    = false,
 
   -----------------------------------------
 
