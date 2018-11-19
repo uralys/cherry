@@ -69,7 +69,18 @@ function Button:icon(options)
     button.y = options.y or 0
 
     if(options.action) then
-        gesture.onTap(button, options.action)
+        local scaleFrom = options.scale or 1
+        local SCALE = scaleFrom * 0.7
+        gesture.onTap(button, function()
+            animation.touchEffect(button, {
+                scaleTo = SCALE,
+                scaleFrom = scaleFrom,
+                onComplete = function()
+                    button:scale(scaleFrom/SCALE, scaleFrom/SCALE)
+                    timer.performWithDelay(10, options.action)
+                end
+            })
+        end)
     end
 
     if(options.scale) then
