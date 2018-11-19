@@ -40,17 +40,12 @@ local function fetchData(field, next)
     local data = json.decode(event.response)
     local lines = {}
 
-    for _,entry in pairs(data.Items) do
+    for position,entry in pairs(data.Items) do
       local num = #lines + 1
-      local position = num
       local value = entry[field.name].N
 
-      if(num > 1) then
-        if(lines[num - 1][field.name] == value) then
-          position = lines[num - 1].position
-        else
-          position = lines[num - 1].position + 1
-        end
+      if(num > 1 and lines[num - 1][field.name] == value) then
+        position = lines[num - 1].position
       end
 
       lines[num] = {
@@ -69,7 +64,7 @@ end
 
 --------------------------------------------------------------------------------
 
-local function displayData(field, refresh)
+local function displayData(field)
   local lines = boardData[field.name]
 
   for i, line in pairs(lines) do
@@ -80,6 +75,7 @@ local function displayData(field, refresh)
     end
 
     timer.performWithDelay(math.random(100, 700), function()
+      if(board.field ~= field) then return end
       Text:create({
         parent   = board,
         value    = line.position,
@@ -94,6 +90,7 @@ local function displayData(field, refresh)
     end)
 
     timer.performWithDelay(math.random(100, 700), function()
+      if(board.field ~= field) then return end
       Text:create({
         parent   = board,
         value    = line.playerName,
@@ -108,6 +105,7 @@ local function displayData(field, refresh)
     end)
 
     timer.performWithDelay(math.random(100, 700), function()
+      if(board.field ~= field) then return end
       Text:create({
         parent   = board,
         value    = line[field.name],
@@ -120,6 +118,7 @@ local function displayData(field, refresh)
         grow     = true
       })
     end)
+
   end
 end
 
@@ -131,6 +130,7 @@ local function refreshBoard(field)
   end
 
   board = display.newGroup()
+  board.field = field
   App.hud:insert(board)
 
   local bg = display.newRect(
@@ -143,14 +143,10 @@ local function refreshBoard(field)
 
   bg:setFillColor(0, 0, 0, 0.7)
 
-  local fetchAndDisplay = function()
-    fetchData(field, refreshBoard)
-  end
-
   if(not boardData[field.name]) then
-    fetchAndDisplay()
+    fetchData(field, refreshBoard)
   else
-    displayData(field, fetchAndDisplay)
+    displayData(field)
   end
 end
 
@@ -268,6 +264,7 @@ function scene:show( event )
 end
 
 function scene:hide( event )
+  board.field = nil
 end
 
 function scene:destroy( event )
