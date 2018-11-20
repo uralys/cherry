@@ -12,8 +12,10 @@ local Text = {}
 
 function Text:create(options)
   local text = _.defaults(options, {
-    x = 0,
-    y = 0
+    x        = 0,
+    y        = 0,
+    font     = _G.FONT,
+    fontSize = 40
   })
 
   setmetatable(text, { __index = Text })

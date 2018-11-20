@@ -1,5 +1,9 @@
 --------------------------------------------------------------------------------
 
+local _ = require 'cherry.libs.underscore'
+
+--------------------------------------------------------------------------------
+
 local Background = {}
 
 --------------------------------------------------------------------------------
@@ -22,9 +26,13 @@ end
 --------------------------------------------------------------------------------
 
 function Background:init(options)
-    options = options or {}
-    local lightImage = options.light or 'cherry/assets/images/background-light.jpg'
-    local darkImage  = options.dark or 'cherry/assets/images/background-dark.jpg'
+    options = _.defaults(options or {}, {
+        light = 'cherry/assets/images/background-light.jpg',
+        dark = 'cherry/assets/images/background-dark.jpg',
+        desaturate = false
+    })
+    local lightImage = options.light
+    local darkImage  = options.dark
 
     self.time = options.time or 700
 
@@ -36,6 +44,11 @@ function Background:init(options)
         display.contentWidth,
         display.contentHeight
     )
+
+    if(options.desaturate) then
+        self.bg.fill.effect = 'filter.desaturate'
+        self.bg.fill.effect.intensity = options.desaturate
+    end
 
     self.darkBG = display.newImageRect(
         App.display,

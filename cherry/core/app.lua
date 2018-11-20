@@ -136,10 +136,7 @@ function App:ready()
   self.user  = User:new(App.extension.user)
   self.user:load()
 
-  Background:init({
-    light = App.background.light,
-    dark = App.background.dark
-  })
+  Background:init(App.background)
 
   _G.Sound:init()
 
