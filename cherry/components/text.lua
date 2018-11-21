@@ -79,7 +79,7 @@ function Text:setValue(value)
 end
 
 function Text:width()
-  return self.display.width
+  return self.currentValue.width
 end
 
 --------------------------------------------------------------------------------

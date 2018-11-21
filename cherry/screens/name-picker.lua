@@ -61,12 +61,7 @@ end
 
 function NamePicker:display(next)
   self:createBlur()
-
-  if(App.user:nbUsers() > 1) then
-    self:createPlayersBoard(next)
-  else
-    self:createTextBoard(next)
-  end
+  self:createPlayersBoard(next)
 end
 
 --------------------------------------------------------------------------------
@@ -132,6 +127,7 @@ function NamePicker:createTextBoard(next)
       x        = self.textBoard.panel.width * 0.5  - 10,
       y        = - self.textBoard.panel.height * 0.5 + 10,
       action = function()
+        native.setKeyboardFocus(nil)
         group.destroy(self.textBoard, true)
         self:createPlayersBoard(next)
       end
@@ -154,7 +150,16 @@ function NamePicker:createPlayersBoard(next)
     y           = y
   })
 
-  self:addPreviousUsers(next)
+  local previousUsersAreDisplayed = self:addPreviousUsers(next)
+
+  local openTextBox = function()
+    group.destroy(self.playersBoard, true)
+    self:createTextBoard(next)
+  end
+
+  if(not previousUsersAreDisplayed) then
+    openTextBox()
+  end
 
   if(App.user:nbUsers() < 6) then
     Button:icon({
@@ -162,10 +167,7 @@ function NamePicker:createPlayersBoard(next)
       type     = 'add',
       x        = 0,
       y        = self.playersBoard.panel.height * 0.5,
-      action = function()
-        group.destroy(self.playersBoard, true)
-        self:createTextBoard(next)
-      end
+      action = openTextBox
     })
   end
 end
@@ -239,11 +241,13 @@ function NamePicker:createInputText()
     display.contentWidth * 0.6, 80
   )
 
-  self.inputText.font = native.newFont( _G.FONT, 80 )
+  self.inputText.font = native.newFont( _G.FONT, 40 )
   self.inputText.text = self.text
 
   self.inputText:addEventListener( 'userInput', textListener )
   self.textBoard:insert(self.inputText)
+
+  native.setKeyboardFocus( self.inputText )
 end
 
 --------------------------------------------------------------------------------
@@ -251,6 +255,8 @@ end
 function NamePicker:addPreviousUsers(next)
   for i = 1, App.user:nbUsers() do
     local playerName = App.user:getUser(i).name
+    if(playerName == nil) then return false end
+
     local user = display.newGroup()
     self.playersBoard:insert(user)
     user.x = 0
@@ -269,7 +275,7 @@ function NamePicker:addPreviousUsers(next)
       y      = 0,
       grow   = true,
       color  = '#000000',
-      fontSize = 43
+      fontSize = 30
     })
 
     panel.width = nameDisplay:width() + 120
@@ -292,6 +298,8 @@ function NamePicker:addPreviousUsers(next)
       })
     end)
   end
+
+  return true
 end
 
 --------------------------------------------------------------------------------
