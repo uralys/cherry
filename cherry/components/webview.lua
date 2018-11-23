@@ -1,5 +1,9 @@
 --------------------------------------------------------------------------------
 
+local _ = require 'cherry.libs.underscore'
+
+--------------------------------------------------------------------------------
+
 local WebView = {}
 
 --------------------------------------------------------------------------------
@@ -9,26 +13,28 @@ local HEADER_HEIGHT = display.contentHeight / 6
 --------------------------------------------------------------------------------
 
 function WebView:new(options)
+  options = _.defaults(options or {}, {
+    x      = display.contentCenterX,
+    y      = display.contentCenterY,
+    width  = display.contentWidth,
+    height = display.contentHeight - HEADER_HEIGHT
+  })
+
   local webView = native.newWebView(
-    display.contentCenterX,
-    display.contentCenterY,
-    display.contentWidth,
-    display.contentHeight - HEADER_HEIGHT
+    options.x,
+    options.y,
+    options.width,
+    options.height
   )
+  -- defaut: hide
+  webView.x = options.x + display.contentWidth
 
-  webView.x = display.contentCenterX + display.contentWidth
-
-  if(options.url) then
-    if(options.resourceDirectory) then
-      webView:request(options.url, system.ResourceDirectory)
-    else
-      webView:request(options.url)
-    end
-  end
-
-  local o = {webView = webView}
+  local o = {webView = webView, options = options}
   setmetatable(o, { __index = WebView })
 
+  if(options.url) then
+    o:request(options.url)
+  end
   return o;
 end
 
@@ -59,19 +65,23 @@ end
 --------------------------------------------------------------------------------
 
 function WebView:request(url)
-  self.webView:request(url)
+  if(self.options.resourceDirectory) then
+    self.webView:request(url, system.ResourceDirectory)
+  else
+    self.webView:request(url)
+  end
 end
 
 function WebView:show()
   transition.to(self.webView, {
-    x = display.contentCenterX,
+    x = self.options.x,
     time = 150
   })
 end
 
 function WebView:hide()
   transition.to(self.webView, {
-    x = display.contentCenterX + display.contentWidth,
+    x = self.options.x + display.contentWidth,
     time = 150
   })
 end
