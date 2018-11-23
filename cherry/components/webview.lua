@@ -27,7 +27,7 @@ function WebView:new(options)
     options.height
   )
   -- defaut: hide
-  webView.x = options.x + display.contentWidth
+  webView.x = options.x + display.contentWidth + 50
 
   local o = {webView = webView, options = options}
   setmetatable(o, { __index = WebView })
@@ -85,7 +85,7 @@ end
 
 function WebView:hide()
   transition.to(self.webView, {
-    x = self.options.x + display.contentWidth,
+    x = self.options.x + display.contentWidth + 50,
     time = 150
   })
 end
