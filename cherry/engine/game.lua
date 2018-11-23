@@ -15,6 +15,7 @@ local Game = {}
 function Game:new(extension)
     local game = _.defaults(extension, {
         isRunning = false,
+        preset = {}, -- may be used to set a preset data during `resetState`
         state = {},
         elements = {}
     })
@@ -41,6 +42,7 @@ function Game:reset()
     self:resetState()
     self:resetElements()
     App.score:reset()
+    self.preset = {} -- by now preset should have been used to init state and can be reset
 end
 
 function Game:run()
