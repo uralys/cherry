@@ -11,11 +11,11 @@ local ToggleableImage = {}
 
 function ToggleableImage:new(options)
   options = _.defaults(options, {
-    scale = 1,
+    isOn       = true,
+    scale      = 1,
     bounceTime = 200
   })
 
-  self.options = options
 
   local image = display.newImage(
     options.parent,
@@ -27,8 +27,13 @@ function ToggleableImage:new(options)
   local scale = options.scale
   image:scale(scale, scale)
 
-  self.image = image
-  return self
+  local o = {
+    image = image,
+    options = options
+  }
+
+  setmetatable(o, { __index = ToggleableImage })
+  return o
 end
 
 --------------------------------------------------------------------------------
@@ -45,6 +50,7 @@ end
 function ToggleableImage:on()
   local changed = self.image.fill.effect ~= nil
   self.image.fill.effect = nil
+  self.isOn = true
 
   if(changed) then
     self:bounce()
@@ -55,10 +61,18 @@ function ToggleableImage:off()
   local changed = self.image.fill.effect == nil
   self.image.fill.effect = 'filter.desaturate'
   self.image.fill.effect.intensity = 1
+  self.isOn = false
 
   if(changed) then
     self:bounce()
   end
+end
+
+--------------------------------------------------------------------------------
+
+function ToggleableImage:destroy()
+  display.remove(self.image)
+  self.image = nil
 end
 
 --------------------------------------------------------------------------------

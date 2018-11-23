@@ -50,16 +50,20 @@ function WebView:open(options)
     self:request(options.url)
   end
 
-  self:show()
+  if(options.show) then
+    self:show()
+  end
 end
 
-function WebView:close()
+function WebView:close(hide)
   if(self.listener) then
     self.webView:removeEventListener( 'urlRequest', self.listener )
     self.listener = nil
   end
 
-  self:hide()
+  if(hide) then
+    self:hide()
+  end
 end
 
 --------------------------------------------------------------------------------
