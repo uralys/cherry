@@ -11,7 +11,7 @@ local Icon = {}
 function Icon:draw(options)
     local icon = display.newImage(
         options.parent,
-        options.path
+        options.image
     )
 
     if(options.disabled) then
@@ -27,6 +27,10 @@ function Icon:draw(options)
         local widthRatio  = options.maxSize / icon.width
         local ratio = math.min(widthRatio, heigthRatio)
         icon:scale(ratio, ratio)
+    end
+
+    if(options.scale) then
+        icon:scale(options.scale, options.scale)
     end
 
     return icon

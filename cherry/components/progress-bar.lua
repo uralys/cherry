@@ -1,9 +1,10 @@
 --------------------------------------------------------------------------------
 
-local _         = require 'cherry.libs.underscore'
-local colorize  = require 'cherry.libs.colorize'
-local Icon      = require 'cherry.components.icon'
-local Text      = require 'cherry.components.text'
+local _        = require 'cherry.libs.underscore'
+local group    = require 'cherry.libs.group'
+local colorize = require 'cherry.libs.colorize'
+local Icon     = require 'cherry.components.icon'
+local Text     = require 'cherry.components.text'
 
 --------------------------------------------------------------------------------
 
@@ -60,6 +61,10 @@ function ProgressBar:draw()
 
   if(not self.hideText) then self:addText () end
   if(not self.hideIcon) then self:icon() end
+end
+
+function ProgressBar:destroy()
+  group.destroy(self.display)
 end
 
 --------------------------------------------------------------------------------
@@ -184,7 +189,7 @@ function ProgressBar:icon()
     x       = - self.width * 0.55,
     y       = 0,
     maxSize = logoContainer.height * 0.6,
-    path    = self.iconImage
+    image   = self.iconImage
   })
 
   self.logoContainer = logoContainer

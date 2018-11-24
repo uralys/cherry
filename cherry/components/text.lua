@@ -58,6 +58,8 @@ function Text:render()
     y        = 0
   })
 
+  if(self.currentValue == nil) then return end
+
   self.currentValue:setFillColor( colorize(self.color or '#ffffff') )
 
   if (self.grow) then

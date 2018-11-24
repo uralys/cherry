@@ -10,10 +10,10 @@ function gesture.onTouch(object, action)
     local touch = function(event)
         if(event.phase == 'began') then
             object.alpha = 0.8
-            display.getCurrentStage():setFocus( object )
+            -- display.getCurrentStage():setFocus( object )
         elseif event.phase == 'ended' or event.phase == 'cancelled' then
             object.alpha = 1
-            display.getCurrentStage():setFocus( nil )
+            -- display.getCurrentStage():setFocus( nil )
             action()
         end
         return true
@@ -40,10 +40,10 @@ function gesture.onTap(object, action)
 
     local tap = function(event)
         if(event.phase == 'began') then
-            display.getCurrentStage():setFocus( object )
+            -- display.getCurrentStage():setFocus( object )
             return action()
-        elseif event.phase == 'ended' or event.phase == 'cancelled' then
-            display.getCurrentStage():setFocus( nil )
+        -- elseif event.phase == 'ended' or event.phase == 'cancelled' then
+            -- display.getCurrentStage():setFocus( nil )
         end
         return false
     end

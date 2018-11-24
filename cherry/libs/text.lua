@@ -30,7 +30,8 @@ function Text.embossed(options)
 end
 
 function Text.simple(options)
-    if(options.parent == nil) then return end
+    if(options.parent == nil) then return nil end
+    if(options.text == nil) then return nil end
 
     local _text = display.newText({
         parent   = options.parent,

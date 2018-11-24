@@ -7,11 +7,11 @@ local App = {
   height  = 1280,
 
   images = {
-    starImage       = 'items/star.icon.png',
-    heartImage      = 'items/heart.png',
-    heartLeftImage  = 'items/heart-left.png',
-    heartRightImage = 'items/heart-right.png',
-    stepImage       = 'buttons/empty.png',
+    star            = 'items/star.icon.png',
+    heart           = 'items/heart.png',
+    heartLeft       = 'items/heart-left.png',
+    heartRight      = 'items/heart-right.png',
+    step            = 'buttons/empty.png',
     verticalPanel   = 'panels/panel.vertical.png'
   }
 

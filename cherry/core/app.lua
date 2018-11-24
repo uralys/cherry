@@ -29,19 +29,20 @@ local App = {
 
   background = {
     light = 'cherry/assets/images/background-light.jpg',
-    dark = 'cherry/assets/images/background-dark.jpg'
+    dark  = 'cherry/assets/images/background-dark.jpg'
   },
 
   -----------------------------------------
 
   images = {
-    blurBG          = 'cherry/assets/images/overlay-blur.png',
-    starImage       = 'cherry/assets/images/gui/items/star.icon.png',
-    heartImage      = 'cherry/assets/images/gui/items/heart.png',
-    heartLeftImage  = 'cherry/assets/images/gui/items/heart-left.png',
-    heartRightImage = 'cherry/assets/images/gui/items/heart-right.png',
-    stepImage       = 'cherry/assets/images/gui/buttons/empty.png',
-    verticalPanel   = 'cherry/assets/images/gui/panels/panel.vertical.png'
+    blurBG        = 'cherry/assets/images/overlay-blur.png',
+    star          = 'cherry/assets/images/gui/items/star.icon.png',
+    heart         = 'cherry/assets/images/gui/items/heart.png',
+    heartLeft     = 'cherry/assets/images/gui/items/heart-left.png',
+    heartRight    = 'cherry/assets/images/gui/items/heart-right.png',
+    step          = 'cherry/assets/images/gui/buttons/empty.png',
+    verticalPanel = 'cherry/assets/images/gui/panels/panel.vertical.png',
+    greenGem      = 'cherry/assets/images/gui/items/gem.green.png'
   },
 
   -----------------------------------------
@@ -130,15 +131,14 @@ end
 --------------------------------------------------------------------------------
 
 function App:ready()
-  self.game  = _G.Game:new(App.extension.game)
+  self.game  = Game:new(App.extension.game)
   self.namePicker = NamePicker:new()
   self.score = Score:new(App.extension.score)
   self.user  = User:new(App.extension.user)
   self.user:load()
 
   Background:init(App.background)
-
-  _G.Sound:init()
+  Sound:init()
 
   if(App.VIEW_TESTING) then
     _G.log(' --> forced view : ' .. App.VIEW_TESTING)
@@ -169,9 +169,17 @@ end
 function App:setup()
   _G.log('Application setup...')
 
+  ----------------------------------------------------------------------------
+
+  _G.IOS       = system.getInfo( 'platformName' )  == 'iPhone OS'
+  _G.ANDROID   = system.getInfo( 'platformName' )  == 'Android'
+  _G.SIMULATOR = system.getInfo( 'environment' )   == 'simulator'
+  _G.FONT      = App.font
+
+  ----------------------------------------------------------------------------
   App.colors = _.defaults(App.colors or {}, {
-    '7f00ff',
-    'ff00ff'
+    '#7f00ff',
+    '#ff00ff'
   })
 
   ----------------------------------------------------------------------------
@@ -186,22 +194,8 @@ function App:setup()
 
   ----------------------------------------------------------------------------
 
-  _G.IOS         = system.getInfo( 'platformName' )  == 'iPhone OS'
-  _G.ANDROID     = system.getInfo( 'platformName' )  == 'Android'
-  _G.SIMULATOR   = system.getInfo( 'environment' )   == 'simulator'
-
-  ----------------------------------------------------------------------------
-
   if(_G.IOS or _G.SIMULATOR) then
     display.setStatusBar( display.HiddenStatusBar )
-  end
-
-  ----------------------------------------------------------------------------
-
-  if _G.ANDROID then
-    _G.FONT   = App.font.android
-  else
-    _G.FONT   = App.font.ios
   end
 
   ----------------------------------------------------------------------------

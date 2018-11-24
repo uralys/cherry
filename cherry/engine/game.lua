@@ -15,9 +15,9 @@ local Game = {}
 function Game:new(extension)
     local game = _.defaults(extension, {
         isRunning = false,
-        preset = {}, -- may be used to set a preset data during `resetState`
-        state = {},
-        elements = {}
+        preset    = {}, -- may be used to set a preset data during `resetState`
+        state     = {},
+        elements  = {}
     })
 
     setmetatable(game, { __index = Game })
