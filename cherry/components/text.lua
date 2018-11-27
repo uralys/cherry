@@ -15,6 +15,7 @@ function Text:create(options)
     x        = 0,
     y        = 0,
     font     = _G.FONT,
+    color    = '#ffffff',
     fontSize = 40
   })
 
@@ -60,7 +61,7 @@ function Text:render()
 
   if(self.currentValue == nil) then return end
 
-  self.currentValue:setFillColor( colorize(self.color or '#ffffff') )
+  self.currentValue:setFillColor( colorize(self.color) )
 
   if (self.grow) then
     animation.grow(self.currentValue)
