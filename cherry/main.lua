@@ -22,4 +22,3 @@ _G.Camera  = require 'cherry.engine.camera'
 _G.Effects = require 'cherry.engine.effects'
 _G.Game    = require 'cherry.engine.game'
 _G.Sound   = require 'cherry.engine.sound'
-

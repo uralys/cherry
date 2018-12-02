@@ -237,6 +237,20 @@ end
 function App:deviceSetup()
   _G.log('Device setup...')
 
+  if(self.pushSubscriptions) then
+    _G.log('  Setting up FCM:')
+    local notifications = require( 'plugin.notifications.v2' )
+    _G.log('    Closed previous notifications.')
+    notifications.cancelNotification()
+    _G.log('    Registering to notifications...')
+    notifications.registerForPushNotifications({useFCM = true})
+
+    for _,topic in pairs(self.pushSubscriptions) do
+      notifications.subscribe(topic)
+      _G.log('    Subscribed to topic ' .. topic)
+    end
+  end
+
   ----------------------------------------------------------------------------
   -- prepare notifications for this session
   -- these notifications can be removed as long as the App is ON
@@ -246,8 +260,10 @@ function App:deviceSetup()
   ----------------------------------------------------------------------------
   --- ANDROID BACK BUTTON
 
-  Runtime:removeEventListener( 'key', onKeyEvent )
-  Runtime:addEventListener( 'key', onKeyEvent )
+  if(_G.ANDROID) then
+    Runtime:removeEventListener( 'key', onKeyEvent )
+    Runtime:addEventListener( 'key', onKeyEvent )
+  end
 
   ----------------------------------------------------------------------------
 
