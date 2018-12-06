@@ -7,15 +7,11 @@
 
 Cherry is a starter for `CoronaSDK App` to help building your game.
 
-- [Introduction](#introduction-to-cherry)
-- [Usage](#usage)
-- [Libraries](#libraries)
-- [Starters](#starters)
-- [Components](#components)
-- [Music and Sounds](#music-and-sounds)
-- [License](#bsd-license)
-- [Third Parties](#third-parties)
-- [Games using Cherry](#games-using-cherry)
+#### coucou
+
+- plop
+- plup
+- plip
 
 ![cherry](/docs/assets/cherry.png)
 
