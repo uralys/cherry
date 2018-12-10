@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _         = require 'cherry.libs.underscore'
+local animation = require 'cherry.libs.animation'
 local group     = require 'cherry.libs.group'
 local Button    = require 'cherry.components.button'
 local Text      = require 'cherry.components.text'
@@ -66,7 +67,7 @@ end
 --------------------------------------------------------------------------------
 
 function Counter:createAddButton()
-  self.icon = Button:icon({
+  self.addButton = Button:icon({
     parent = self.display,
     type   = 'add',
     x      = 40 - self.display.width/2,
@@ -95,6 +96,14 @@ end
 
 function Counter:setValue(newValue)
   self.text:setValue(newValue)
+end
+
+function Counter:bounce()
+  animation.bounce(self.icon, {
+    time = 150,
+    scaleFrom = self.options.iconScale * 0.7,
+    scaleTo = self.options.iconScale
+  })
 end
 
 --------------------------------------------------------------------------------
