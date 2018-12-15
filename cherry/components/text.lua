@@ -81,6 +81,11 @@ function Text:setValue(value)
   self:render()
 end
 
+function Text:setColor(color)
+  self.color = color
+  self.currentValue:setFillColor( colorize(self.color) )
+end
+
 function Text:width()
   return self.currentValue.width
 end

@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _ = require 'cherry.libs.underscore'
+local group = require 'cherry.libs.group'
 
 --------------------------------------------------------------------------------
 
@@ -64,6 +65,37 @@ function Background:init(options)
     self.darkBG.alpha = 1
 
     return self
+end
+
+--------------------------------------------------------------------------------
+
+function Background:showBlur()
+    self.blurBG = display.newImageRect(
+        App.hud,
+        App.images.blurBG,
+        display.contentWidth,
+        display.contentHeight
+    )
+
+    self.blurBG.alpha = 0
+
+    transition.to(self.blurBG, {
+        alpha = 1,
+        time = 300
+    })
+
+    self.blurBG.x = display.contentWidth * 0.5
+    self.blurBG.y = display.contentHeight * 0.5
+end
+
+function Background:hideBlur()
+    transition.to(self.blurBG, {
+        alpha = 0,
+        time = 300,
+        onComplete = function()
+          group.destroy(self.blurBG)
+        end
+      })
 end
 
 --------------------------------------------------------------------------------

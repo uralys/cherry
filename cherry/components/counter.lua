@@ -73,7 +73,10 @@ function Counter:createAddButton()
     x      = 40 - self.display.width/2,
     y      = 0,
     scale  = 0.7,
-    action = function() App.namePicker:display() end
+    action = function()
+      if(self.isLocked) then return end
+      App.namePicker:display()
+    end
   })
 end
 
@@ -96,6 +99,18 @@ end
 
 function Counter:setValue(newValue)
   self.text:setValue(newValue)
+end
+
+function Counter:setColor(color)
+  self.text:setColor(color)
+end
+
+function Counter:lock()
+  self.isLocked = true
+end
+
+function Counter:unlock()
+  self.isLocked = false
 end
 
 function Counter:bounce()

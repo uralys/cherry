@@ -1,14 +1,15 @@
 --------------------------------------------------------------------------------
 
-local _         = require 'cherry.libs.underscore'
-local animation = require 'cherry.libs.animation'
-local colorize  = require 'cherry.libs.colorize'
-local group     = require 'cherry.libs.group'
-local gesture   = require 'cherry.libs.gesture'
-local Banner    = require 'cherry.components.banner'
-local Button    = require 'cherry.components.button'
-local Panel     = require 'cherry.components.panel'
-local Text      = require 'cherry.components.text'
+local _          = require 'cherry.libs.underscore'
+local animation  = require 'cherry.libs.animation'
+local colorize   = require 'cherry.libs.colorize'
+local group      = require 'cherry.libs.group'
+local gesture    = require 'cherry.libs.gesture'
+local Background = require 'cherry.components.background'
+local Banner     = require 'cherry.components.banner'
+local Button     = require 'cherry.components.button'
+local Panel      = require 'cherry.components.panel'
+local Text       = require 'cherry.components.text'
 
 --------------------------------------------------------------------------------
 
@@ -60,29 +61,8 @@ end
 --------------------------------------------------------------------------------
 
 function NamePicker:display(next)
-  self:createBlur()
+  Background:showBlur()
   self:createPlayersBoard(next)
-end
-
---------------------------------------------------------------------------------
-
-function NamePicker:createBlur()
-  self.blurBG = display.newImageRect(
-    App.hud,
-    App.images.blurBG,
-    display.contentWidth,
-    display.contentHeight
-  )
-
-  self.blurBG.alpha = 0
-
-  transition.to(self.blurBG, {
-    alpha = 1,
-    time = 300
-  })
-
-  self.blurBG.x = display.contentWidth * 0.5
-  self.blurBG.y = display.contentHeight * 0.5
 end
 
 --------------------------------------------------------------------------------
@@ -177,7 +157,7 @@ end
 function NamePicker:close(next)
   group.destroy(self.textBoard, true)
   group.destroy(self.playersBoard, true)
-  group.destroy(self.blurBG, false)
+  Background:hideBlur()
   if(next) then next() end
 end
 
