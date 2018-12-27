@@ -1,7 +1,8 @@
 --------------------------------------------------------------------------------
 
-local _ = require 'cherry.libs.underscore'
-local group = require 'cherry.libs.group'
+local _       = require 'cherry.libs.underscore'
+local group   = require 'cherry.libs.group'
+local gesture = require 'cherry.libs.gesture'
 
 --------------------------------------------------------------------------------
 
@@ -86,6 +87,8 @@ function Background:showBlur()
 
     self.blurBG.x = display.contentWidth * 0.5
     self.blurBG.y = display.contentHeight * 0.5
+
+    gesture.disabledTouch(self.blurBG)
 end
 
 function Background:hideBlur()

@@ -18,6 +18,7 @@ local isArray = require 'cherry.libs.is-array'
 local function gather(movables, options)
   if(not isArray(movables)) then movables = {movables} end
   local newParent = options.newParent
+
   local TIME = options.stepTime or 600
 
   if(options.onComplete) then
