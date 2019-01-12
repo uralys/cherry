@@ -75,7 +75,8 @@ function Counter:createAddButton()
     scale  = 0.7,
     action = function()
       if(self.isLocked) then return end
-      App.namePicker:display()
+      if(not self.options.onAdd) then return end
+      self.options:onAdd()
     end
   })
 end

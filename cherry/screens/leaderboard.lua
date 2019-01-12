@@ -25,15 +25,7 @@ local BOARD_HEIGHT   = display.contentHeight * 0.85
 --------------------------------------------------------------------------------
 
 local function fetchData(field, next)
-  display.newText({
-    parent   = board,
-    text     = 'loading...',
-    font     = _G.FONT,
-    fontSize = 40,
-    x = BOARD_CENTER_X,
-    y = BOARD_CENTER_Y
-  })
-
+  _G.log('Fetching data')
   local url = App.API_GATEWAY_URL .. '/leaderboard/' .. App.name .. '/' .. field.name
 
   http.get(url, function(event)
@@ -144,7 +136,25 @@ local function refreshBoard(field)
   bg:setFillColor(0, 0, 0, 0.7)
 
   if(not boardData[field.name]) then
-    fetchData(field, refreshBoard)
+    local message = Text:create({
+      parent   = board,
+      value    = 'Connecting...',
+      font     = _G.FONT,
+      fontSize = 40,
+      x = BOARD_CENTER_X,
+      y = BOARD_CENTER_Y
+    })
+
+    timer.performWithDelay(1000, function()
+      if(not http.networkConnection()) then
+        if(message) then
+          message:setValue('No connection')
+        end
+        return
+      end
+
+      fetchData(field, refreshBoard)
+    end)
   else
     displayData(field)
   end
