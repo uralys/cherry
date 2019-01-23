@@ -44,7 +44,7 @@ describe('[Text]', function()
     text:setValue('plup')
     assert.are.equal(text.currentValue.text, 'plup')
 
-    assert.are.equal(text:width(), 0)
+    assert.are.equal(text:getWidth(), 0)
     text:destroy()
   end)
 end)

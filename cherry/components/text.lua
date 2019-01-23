@@ -56,12 +56,22 @@ function Text:render()
     font     = self.font or _G.FONT,
     fontSize = self.fontSize or 55,
     x        = 0,
-    y        = 0
+    y        = 0,
+    width    = self.width,
+    align    = self.align
   })
 
   if(self.currentValue == nil) then return end
 
   self.currentValue:setFillColor( colorize(self.color) )
+
+  -- if(self.width) then
+  --   self.currentValue.width = self.width
+  -- end
+
+  -- if(self.height) then
+  --   self.currentValue.height = self.height
+  -- end
 
   if (self.grow) then
     animation.grow(self.currentValue)
@@ -72,6 +82,7 @@ function Text:render()
   end
 
   self.currentValue.anchorX = self.anchorX or 0.5
+  self.currentValue.anchorY = self.anchorY or 0.5
 end
 
 --------------------------------------------------------------------------------
@@ -86,8 +97,12 @@ function Text:setColor(color)
   self.currentValue:setFillColor( colorize(self.color) )
 end
 
-function Text:width()
+function Text:getWidth()
   return self.currentValue.width
+end
+
+function Text:getHeight()
+  return self.currentValue.height
 end
 
 --------------------------------------------------------------------------------

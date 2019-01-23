@@ -122,15 +122,12 @@ function http.networkConnection()
     -- Note that the test does not work if we put http:// in front
     local testResult = test:connect('www.google.com', 80)
     local hasConnection = not(testResult == nil)
-
-    _G.log({hasConnection})
     if (hasConnection) then
         status = true
     else
         status = false
     end
 
-    _G.log('closing connection...')
     test:close()
     _G.log({status})
     return status

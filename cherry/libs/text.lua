@@ -14,6 +14,7 @@ function Text.embossed(options)
         text     = options.text,
         x        = options.x,
         y        = options.y,
+        align    = options.align or 'center',
         width    = options.width,
         height   = options.height,
         font     = options.font,
@@ -38,8 +39,8 @@ function Text.simple(options)
         text     = options.text,
         x        = options.x,
         y        = options.y,
+        align    = options.align or 'center',
         width    = options.width,
-        height   = options.height,
         font     = options.font,
         fontSize = options.fontSize
     })
