@@ -3,6 +3,7 @@ _G.CHERRY_VERSION = '3.0.0-RC1'
 --------------------------------------------------------------------------------
 -- debug
 require 'cherry.libs.logger'
+require 'cherry.libs.test-rect'
 
 -- libs extensions
 require 'cherry.libs.math'
