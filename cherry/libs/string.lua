@@ -10,3 +10,7 @@ function string.split(str, delimiter)
   table.insert( result, string.sub( str, from  ) )
   return result
 end
+
+function string.trim(str)
+  return str:match "^%s*(.-)%s*$"
+end

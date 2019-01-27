@@ -83,6 +83,7 @@ function NamePicker:createTextBoard(next)
     x        = 0,
     y        = self.textBoard.panel.height * 0.5,
     action = function()
+      self.text = string.trim(self.text)
       if(#self.text == 0) then
         self.text = randomName()
         self.inputText.text = self.text
@@ -258,7 +259,7 @@ function NamePicker:addPreviousUsers(next)
       fontSize = 30
     })
 
-    panel.width = nameDisplay:width() + 120
+    panel.width = nameDisplay:getWidth() + 120
     panel.height = 100
 
     local icon = display.newImage(
