@@ -70,15 +70,16 @@ end
 
 --------------------------------------------------------------------------------
 
-function Background:showBlur()
+function Background:showBlur(parent)
     self.blurBG = display.newImageRect(
-        App.hud,
+        parent or App.hud,
         App.images.blurBG,
         display.contentWidth,
         display.contentHeight
     )
 
     self.blurBG.alpha = 0
+    self.blurBG:toBack()
 
     transition.to(self.blurBG, {
         alpha = 1,

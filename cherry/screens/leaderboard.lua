@@ -5,6 +5,7 @@ local gesture    = require 'cherry.libs.gesture'
 local group      = require 'cherry.libs.group'
 local http       = require 'cherry.libs.http'
 local Background = require 'cherry.components.background'
+local Button     = require 'cherry.components.button'
 local Text       = require 'cherry.components.text'
 local json       = require 'dkjson'
 
@@ -187,18 +188,16 @@ end
 --------------------------------------------------------------------------------
 
 local function drawBackArrow()
-  local backArrow = display.newImage(
-    App.hud,
-    'cherry/assets/images/gui/items/arrow.right.png',
-    50, 50
-  )
-
-  backArrow.rotation = 180
-  backArrow:scale(0.6, 0.6)
-
-  gesture.onTap(backArrow, function()
-    Router:open(Router.HOME)
-  end)
+  Button:icon({
+    parent = App.hud,
+    type   = 'back',
+    x      = 50,
+    y      = 50,
+    scale  = 0.7,
+    action = function()
+      Router:open(Router.HOME)
+    end
+  })
 end
 
 --------------------------------------------------------------------------------

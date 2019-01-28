@@ -25,9 +25,9 @@ end
 
 --------------------------------------------------------------------------------
 
-local function randomName()
-  return 'Player' .. string.sub(os.time(), -5)
-end
+-- local function randomName()
+--   return 'Player' .. string.sub(os.time(), -5)
+-- end
 
 local function existsUserName(name)
   if(not name or #name == 0) then
@@ -68,7 +68,7 @@ end
 --------------------------------------------------------------------------------
 
 function NamePicker:createTextBoard(next)
-  self.text = App.user:name() or randomName()
+  self.text = ''
   self:refreshAction()
 
   self.textBoard = self:createBoard({
@@ -85,7 +85,7 @@ function NamePicker:createTextBoard(next)
     action = function()
       self.text = string.trim(self.text)
       if(#self.text == 0) then
-        self.text = randomName()
+        self.text = ''
         self.inputText.text = self.text
         return
       end
@@ -129,6 +129,16 @@ function NamePicker:createPlayersBoard(next)
     title       = title,
     panelheight = height,
     y           = y
+  })
+
+  Button:icon({
+    parent   = self.playersBoard,
+    type     = 'close',
+    x        = self.playersBoard.panel.width * 0.5  - 10,
+    y        = - self.playersBoard.panel.height * 0.5 + 10,
+    action = function()
+      self:close(next)
+    end
   })
 
   local previousUsersAreDisplayed = self:addPreviousUsers(next)
