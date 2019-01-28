@@ -1,33 +1,46 @@
 #!/bin/sh
-## https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_ref-Asset_Catalog_Format/AppIconType.html
-base="kodo-logo-512.png"
-# convert "$base" -resize '29x29'     -unsharp 1x4 "Icon-Small.png"
-convert "$base" -resize '40x40'     -unsharp 1x4 "Icon-40.png"
-convert "$base" -resize '80x80'   -unsharp 1x4 "Icon-40@2x.png"
-convert "$base" -resize '120x120'   -unsharp 1x4 "Icon-40@3x.png"
-# convert "$base" -resize '50x50'     -unsharp 1x4 "Icon-Small-50.png"
-# convert "$base" -resize '57x57'     -unsharp 1x4 "Icon.png"
-# convert "$base" -resize '58x58'     -unsharp 1x4 "Icon-Small@2x.png"
-# convert "$base" -resize '72x72'     -unsharp 1x4 "Icon-72.png"
-convert "$base" -resize '60x60'     -unsharp 1x4 "Icon-60.png"
-convert "$base" -resize '120x120'   -unsharp 1x4 "Icon-60@2x.png"
-convert "$base" -resize '180x180'   -unsharp 1x4 "Icon-60@3x.png"
-convert "$base" -resize '76x76'     -unsharp 1x4 "Icon-76.png"
-convert "$base" -resize '152x152'   -unsharp 1x4 "Icon-76@2x.png"
-convert "$base" -resize '228x228'   -unsharp 1x4 "Icon-76@3x.png"
-convert "$base" -resize '167x167'   -unsharp 1x4 "Icon-167.png"
-# convert "$base" -resize '80x80'     -unsharp 1x4 "Icon-Small-40@2x.png"
-# convert "$base" -resize '100x100'   -unsharp 1x4 "Icon-Small-50@2x.png"
-# convert "$base" -resize '114x114'   -unsharp 1x4 "Icon@2x.png"
-# convert "$base" -resize '144x144'   -unsharp 1x4 "Icon-72@2x.png"
-# convert "$base" -resize '180x180'   -unsharp 1x4 "Icon-60@3x.png"
-# convert "$base" -resize '512x512'   -unsharp 1x4 "iTunesArtwork"
-# convert "$base" -resize '1024x1024' -unsharp 1x4 "iTunesArtwork@2x"
+iosBase=$PWD/assets/brand/logo-1024-ios.png
+androidBase=$PWD/assets/brand/logo-1024-android.png
+xcassetsPath=$PWD/Images.xcassets/AppIcon.appiconset
+androidPath=$PWD
 
-base="kodo-logo-512.png"
-# convert "$base" -resize '36x36'     -unsharp 1x4 "Icon-ldpi.png"
-# convert "$base" -resize '48x48'     -unsharp 1x4 "Icon-mdpi.png"
-# convert "$base" -resize '72x72'     -unsharp 1x4 "Icon-hdpi.png"
-# convert "$base" -resize '96x96'     -unsharp 1x4 "Icon-xhdpi.png"
-# convert "$base" -resize '144x144'   -unsharp 1x4 "Icon-xxhdpi.png"
-# convert "$base" -resize '192x192'   -unsharp 1x4 "Icon-xxxhdpi.png"
+if [ ! -f "$iosBase" ]
+then
+    echo "[error] File $iosBase does not exist"
+    exit
+fi
+
+if [ ! -f "$androidBase" ]
+then
+    echo "[error] File $androidBase does not exist"
+    exit
+fi
+
+
+## https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_ref-Asset_Catalog_Format/AppIconType.html
+echo 'creating iOS icons...'
+convert "$iosBase" -resize '20x20'      -unsharp 1x4 "$xcassetsPath/Icon-20.png"
+convert "$iosBase" -resize '29x29'      -unsharp 1x4 "$xcassetsPath/Icon-29.png"
+convert "$iosBase" -resize '58x58'      -unsharp 1x4 "$xcassetsPath/Icon-29@2x.png"
+convert "$iosBase" -resize '87x87'      -unsharp 1x4 "$xcassetsPath/Icon-29@3x.png"
+convert "$iosBase" -resize '40x40'      -unsharp 1x4 "$xcassetsPath/Icon-40.png"
+convert "$iosBase" -resize '80x80'      -unsharp 1x4 "$xcassetsPath/Icon-40@2x.png"
+convert "$iosBase" -resize '120x120'    -unsharp 1x4 "$xcassetsPath/Icon-40@3x.png"
+convert "$iosBase" -resize '60x60'      -unsharp 1x4 "$xcassetsPath/Icon-60.png"
+convert "$iosBase" -resize '120x120'    -unsharp 1x4 "$xcassetsPath/Icon-60@2x.png"
+convert "$iosBase" -resize '180x180'    -unsharp 1x4 "$xcassetsPath/Icon-60@3x.png"
+convert "$iosBase" -resize '76x76'      -unsharp 1x4 "$xcassetsPath/Icon-76.png"
+convert "$iosBase" -resize '152x152'    -unsharp 1x4 "$xcassetsPath/Icon-76@2x.png"
+convert "$iosBase" -resize '167x167'    -unsharp 1x4 "$xcassetsPath/Icon-167.png"
+convert "$iosBase" -resize '1024x1024'  -unsharp 1x4 "$xcassetsPath/Icon-1024.png"
+
+## -----------------------------------------------------------------------------
+echo 'creating android icons...'
+convert "$androidBase" -resize '36x36'     -unsharp 1x4 "$androidPath/Icon-ldpi.png"
+convert "$androidBase" -resize '48x48'     -unsharp 1x4 "$androidPath/Icon-mdpi.png"
+convert "$androidBase" -resize '72x72'     -unsharp 1x4 "$androidPath/Icon-hdpi.png"
+convert "$androidBase" -resize '96x96'     -unsharp 1x4 "$androidPath/Icon-xhdpi.png"
+convert "$androidBase" -resize '144x144'   -unsharp 1x4 "$androidPath/Icon-xxhdpi.png"
+convert "$androidBase" -resize '192x192'   -unsharp 1x4 "$androidPath/Icon-xxxhdpi.png"
+
+echo 'done!'
