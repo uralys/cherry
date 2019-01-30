@@ -26,10 +26,13 @@ local BOARD_HEIGHT   = display.contentHeight * 0.85
 --------------------------------------------------------------------------------
 
 local function fetchData(field, next)
-  _G.log('Fetching data')
   local url = App.API_GATEWAY_URL .. '/leaderboard/' .. App.name .. '/' .. field.name
 
   http.get(url, function(event)
+    if(Router.view ~= Router.LEADERBOARD) then
+      _G.log({v= Router.view})
+      return
+    end
     local data = json.decode(event.response)
     local lines = {}
 
@@ -146,16 +149,14 @@ local function refreshBoard(field)
       y = BOARD_CENTER_Y
     })
 
-    timer.performWithDelay(1000, function()
-      if(not http.networkConnection()) then
-        if(message) then
-          message:setValue('No connection')
-        end
-        return
+    if(not http.networkConnection()) then
+      if(message) then
+        message:setValue('No connection')
       end
+      return
+    end
 
-      fetchData(field, refreshBoard)
-    end)
+    fetchData(field, refreshBoard)
   else
     displayData(field)
   end
