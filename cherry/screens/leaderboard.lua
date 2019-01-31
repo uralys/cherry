@@ -6,6 +6,7 @@ local group      = require 'cherry.libs.group'
 local http       = require 'cherry.libs.http'
 local Background = require 'cherry.components.background'
 local Button     = require 'cherry.components.button'
+local Scroller   = require 'cherry.components.scroller'
 local Text       = require 'cherry.components.text'
 local json       = require 'dkjson'
 
@@ -18,10 +19,9 @@ local boardData = {}
 
 local CLOSED_Y       = 35
 local OPEN_Y         = 70
-local BOARD_CENTER_X = display.contentWidth * 0.5
-local BOARD_CENTER_Y = display.contentHeight * 0.5 + 100
+local BOARD_CENTER_X = 0
+local BOARD_CENTER_Y = 0
 local BOARD_WIDTH    = display.contentWidth * 0.9
-local BOARD_HEIGHT   = display.contentHeight * 0.85
 
 --------------------------------------------------------------------------------
 
@@ -60,11 +60,17 @@ end
 
 --------------------------------------------------------------------------------
 
+local function refreshScrollerHeight()
+  board.scroller:refreshHandle()
+  board.scroller:refreshContentHeight()
+end
+
 local function displayData(field)
   local lines = boardData[field.name]
 
   for i, line in pairs(lines) do
     local color = '#ffffff'
+    local lineY = (i - 1) * 50 - 30
 
     if(line.playerId == App.user:id()) then
       color = '#32cd32'
@@ -76,13 +82,15 @@ local function displayData(field)
         parent   = board,
         value    = line.position,
         x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 30,
-        y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
+        y        = lineY,
         color    = color,
         font     = _G.FONT,
         fontSize = 45,
         anchorX  = 0,
         grow     = true
       })
+
+      refreshScrollerHeight()
     end)
 
     timer.performWithDelay(math.random(100, 700), function()
@@ -91,13 +99,15 @@ local function displayData(field)
         parent   = board,
         value    = line.playerName,
         x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 80,
-        y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
+        y        = lineY,
         color    = color,
         font     = _G.FONT,
         fontSize = 45,
         anchorX  = 0,
         grow     = true
       })
+
+      refreshScrollerHeight()
     end)
 
     timer.performWithDelay(math.random(100, 700), function()
@@ -105,48 +115,45 @@ local function displayData(field)
       Text:create({
         parent   = board,
         value    = line[field.name],
-        x        = BOARD_CENTER_X + BOARD_WIDTH * 0.5 - 100,
-        y        = BOARD_CENTER_Y - BOARD_HEIGHT * 0.5 + 50 + (i - 1) * 50,
+        x        = BOARD_CENTER_X + BOARD_WIDTH * 0.5 - 30,
+        y        = lineY,
         color    = color,
         font     = _G.FONT,
         fontSize = 45,
-        anchorX  = 0,
+        anchorX  = 1,
         grow     = true
       })
-    end)
 
+      refreshScrollerHeight()
+    end)
   end
 end
 
 --------------------------------------------------------------------------------
 
-local function refreshBoard(field)
+local function reset()
   if(board) then
+    if(board.scroller) then
+      board.scroller:destroy()
+      board.scroller = nil
+    end
     group.destroy(board)
   end
+end
 
+local function refreshBoard(field)
+  reset()
   board = display.newGroup()
   board.field = field
-  App.hud:insert(board)
-
-  local bg = display.newRect(
-    board,
-    BOARD_CENTER_X,
-    BOARD_CENTER_Y,
-    BOARD_WIDTH,
-    BOARD_HEIGHT
-  )
-
-  bg:setFillColor(0, 0, 0, 0.7)
 
   if(not boardData[field.name]) then
     local message = Text:create({
-      parent   = board,
+      parent   = App.hud,
       value    = 'Connecting...',
       font     = _G.FONT,
       fontSize = 40,
-      x = BOARD_CENTER_X,
-      y = BOARD_CENTER_Y
+      x = display.contentWidth * 0.5,
+      y = display.contentHeight * 0.5
     })
 
     if(not http.networkConnection()) then
@@ -156,13 +163,27 @@ local function refreshBoard(field)
       return
     end
 
+    message:destroy()
     fetchData(field, refreshBoard)
   else
+    board.scroller = Scroller:new({
+      parent = App.hud,
+      top    = display.contentHeight * 0.15,
+      left   = display.contentWidth * 0.05,
+      width  = display.contentWidth * 0.9,
+      height = display.contentHeight - 250,
+      gap    = display.contentHeight*0.05,
+
+      handleHeight   = display.contentHeight*0.07,
+      horizontalScrollDisabled = true,
+    })
+
+    board.scroller:insert(board)
     displayData(field)
   end
 end
 
---------------------------------------------------------------------------------
+----------------------------------- ---------------------------------------------
 
 local function select(button)
   if(selectedButton) then
@@ -275,6 +296,7 @@ end
 
 function scene:hide( event )
   board.field = nil
+  reset()
 end
 
 function scene:destroy( event )

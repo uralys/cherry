@@ -41,9 +41,15 @@ end
 --------------------------------------------------------------------------------
 
 function Scroller:destroy()
-    self:removeAll()
-    display.remove(self.scrollView)
-    display.remove(self.scrollbar)
+    self:removeChildren()
+    if(self.scrollView) then
+        display.remove(self.scrollView)
+        self.scrollView = nil
+    end
+    if(self.scrollbar) then
+        display.remove(self.scrollbar)
+        self.scrollbar = nil
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -57,9 +63,10 @@ end
 
 --------------------------------------------------------------------------------
 
-function Scroller:insert(child)
-    child.x = self.options.width/2
-    child.y = self:contentHeight() + child.height/2 + self.options.gap
+function Scroller:insert(child, options)
+    options = options or {}
+    child.x = options.x or self.options.width/2
+    child.y = options.y or self:contentHeight() + child.height/2 + self.options.gap
     self.children[#self.children + 1] = child
     self.scrollView:insert(child)
 
@@ -86,7 +93,7 @@ function Scroller:remove(child)
     return child
 end
 
-function Scroller:removeAll()
+function Scroller:removeChildren()
     self.scrollView._view.y = 0
     while #self.children > 0 do
         self:remove(self.children[1])
@@ -120,6 +127,7 @@ function Scroller:prepareScrollView()
         horizontalScrollDisabled = self.options.horizontalScrollDisabled,
         hideBackground           = self.options.hideBackground,
         hideScrollBar            = true,
+        backgroundColor          = self.options.backgroundColor or {0, 0, 0, 0.5},
         listener                 = function(event) self:listen(event) end
     })
 
