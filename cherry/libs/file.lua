@@ -14,7 +14,7 @@ local function load(path)
     if _file then
         -- read all contents of file into a string
         local contents = _file:read( "*a" )
-        local myTable = json.decode(contents);
+        local myTable = json.decode(contents, 1, nil, nil);
         io.close( _file )
         return myTable
     end
