@@ -68,20 +68,20 @@ function table.contains(t, object)
 end
 
 --[[---------------------------------------------------------
-    https://github.com/Facepunch/garrysmod/lua/includes/extensions/table.lua
-    Name: table.Count( table )
-    Desc: Returns the number of keys in a table
-    -----------------------------------------------------------]]
-    function table.count( t )
-      local i = 0
-      for _ in pairs( t ) do i = i + 1 end
-      return i
-    end
+https://github.com/Facepunch/garrysmod/lua/includes/extensions/table.lua
+Name: table.Count( table )
+Desc: Returns the number of keys in a table
+-----------------------------------------------------------]]
+function table.count( t )
+  local i = 0
+  for _ in pairs( t ) do i = i + 1 end
+  return i
+end
 
-    function table.simpleEquals(t1, t2)
-      for k,v1 in pairs(t1) do
-        if(t2[k] ~= v1) then return false end
-      end
+function table.simpleEquals(t1, t2)
+  for k,v1 in pairs(t1) do
+    if(t2[k] ~= v1) then return false end
+  end
 
-      return true
-    end
+  return true
+end
