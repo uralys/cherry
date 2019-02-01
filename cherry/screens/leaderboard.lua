@@ -20,7 +20,6 @@ local boardData = {}
 local CLOSED_Y       = 35
 local OPEN_Y         = 70
 local BOARD_CENTER_X = 0
-local BOARD_CENTER_Y = 0
 local BOARD_WIDTH    = display.contentWidth * 0.9
 
 --------------------------------------------------------------------------------
