@@ -138,4 +138,12 @@ end
 
 --------------------------------------------------------------------------------
 
+function User:getBestScore(field)
+  local user = self.savedData.users[self.savedData.currentUser]
+  if(not user.bestScores) then return nil end
+  return user.bestScores[field]
+end
+
+--------------------------------------------------------------------------------
+
 return User

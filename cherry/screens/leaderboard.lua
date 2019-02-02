@@ -24,15 +24,24 @@ local BOARD_WIDTH    = display.contentWidth * 0.9
 
 --------------------------------------------------------------------------------
 
-local function fetchData(field, next)
+local function fetchRank(field, next)
+  local score = App.user:getBestScore(field.name)
+  local url = App.API_GATEWAY_URL .. '/rank/' .. App.name .. '/' .. field.name .. '/' .. score
+  http.get(url, function(aws)
+    local response = json.decode(aws.response)
+    _G.log({result = response.Count + 1})
+  end)
+end
+
+local function fetchLeaderboard(field, next)
   local url = App.API_GATEWAY_URL .. '/leaderboard/' .. App.name .. '/' .. field.name
 
-  http.get(url, function(event)
+  http.get(url, function(aws)
     if(Router.view ~= Router.LEADERBOARD) then
       _G.log({v= Router.view})
       return
     end
-    local data = json.decode(event.response)
+    local data = json.decode(aws.response)
     local lines = {}
 
     for position,entry in pairs(data.Items) do
@@ -163,7 +172,11 @@ local function refreshBoard(field)
     end
 
     message:destroy()
-    fetchData(field, refreshBoard)
+
+    fetchLeaderboard(field, function()
+      refreshBoard(field)
+      fetchRank(field)
+    end)
   else
     board.scroller = Scroller:new({
       parent = App.hud,
