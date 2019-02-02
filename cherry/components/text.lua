@@ -23,7 +23,7 @@ function Text:create(options)
 
   text.display = display.newGroup()
 
-  if(text.parent) then
+  if(text.parent and text.parent.insert) then
     text.parent:insert(text.display)
   end
 

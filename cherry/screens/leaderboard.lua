@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local _          = require 'cherry.libs.underscore'
+local colorize   = require 'cherry.libs.colorize'
 local gesture    = require 'cherry.libs.gesture'
 local group      = require 'cherry.libs.group'
 local http       = require 'cherry.libs.http'
@@ -23,15 +24,6 @@ local BOARD_CENTER_X = 0
 local BOARD_WIDTH    = display.contentWidth * 0.9
 
 --------------------------------------------------------------------------------
-
-local function fetchRank(field, next)
-  local score = App.user:getBestScore(field.name)
-  local url = App.API_GATEWAY_URL .. '/rank/' .. App.name .. '/' .. field.name .. '/' .. score
-  http.get(url, function(aws)
-    local response = json.decode(aws.response)
-    _G.log({result = response.Count + 1})
-  end)
-end
 
 local function fetchLeaderboard(field, next)
   local url = App.API_GATEWAY_URL .. '/leaderboard/' .. App.name .. '/' .. field.name
@@ -61,7 +53,22 @@ local function fetchLeaderboard(field, next)
       lines[num][field.name] = value
     end
 
-    boardData[field.name] = lines
+    boardData[field.name] = {
+      lines = lines
+    }
+
+    next(field)
+  end)
+end
+
+--------------------------------------------------------------------------------
+
+local function fetchRank(field, next)
+  local score = App.user:getBestScore(field.name)
+  local url = App.API_GATEWAY_URL .. '/rank/' .. App.name .. '/' .. field.name .. '/' .. score
+  http.get(url, function(aws)
+    local response = json.decode(aws.response)
+    boardData[field.name].rank = response.Count + 1
     next(field)
   end)
 end
@@ -73,8 +80,8 @@ local function refreshScrollerHeight()
   board.scroller:refreshContentHeight()
 end
 
-local function displayData(field)
-  local lines = boardData[field.name]
+local function displayBoard(field)
+  local lines = boardData[field.name].lines
 
   for i, line in pairs(lines) do
     local color = '#ffffff'
@@ -106,7 +113,7 @@ local function displayData(field)
       Text:create({
         parent   = board,
         value    = line.playerName,
-        x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 80,
+        x        = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 120,
         y        = lineY,
         color    = color,
         font     = _G.FONT,
@@ -139,18 +146,81 @@ end
 
 --------------------------------------------------------------------------------
 
-local function reset()
+local function resetView()
   if(board) then
     if(board.scroller) then
       board.scroller:destroy()
       board.scroller = nil
     end
+
+    if(board.rankComponent) then
+      group.destroy(board.rankComponent)
+      board.rankComponent = nil
+    end
+
     group.destroy(board)
   end
 end
 
+--------------------------------------------------------------------------------
+
+local function displayRank(field)
+  board.rankComponent = display.newGroup()
+  App.hud:insert(board.rankComponent)
+  board.rankComponent.x = display.contentWidth * 0.5
+  board.rankComponent.y = display.contentHeight - 60
+
+  local bg = display.newRoundedRect(
+    board.rankComponent,
+    0, 0,
+    BOARD_WIDTH,
+    100,
+    10
+  )
+
+  bg.alpha = 0.75
+  bg.strokeWidth = 3
+  bg:setStrokeColor(colorize('#ffffff'))
+  bg:setFillColor(colorize('#000000'))
+
+  Text:create({
+    parent   = board.rankComponent,
+    value    = boardData[field.name].rank,
+    font     = _G.FONT,
+    fontSize = 50,
+    x        = - BOARD_WIDTH/2 + 30,
+    y        = 0,
+    anchorX  = 0,
+    color    = '#32cd32'
+  })
+
+  Text:create({
+    parent   = board.rankComponent,
+    value    = App.user:name(),
+    font     = _G.FONT,
+    fontSize = 50,
+    x        = - BOARD_WIDTH/2 + 120,
+    y        = 0,
+    anchorX  = 0,
+    color    = '#32cd32'
+  })
+
+  Text:create({
+    parent   = board.rankComponent,
+    value    = App.user:getBestScore(field.name),
+    font     = _G.FONT,
+    fontSize = 50,
+    x        = BOARD_WIDTH/2 - 30,
+    y        = 0,
+    anchorX  = 1,
+    color    = '#32cd32'
+  })
+end
+
+--------------------------------------------------------------------------------
+
 local function refreshBoard(field)
-  reset()
+  resetView()
   board = display.newGroup()
   board.field = field
 
@@ -174,8 +244,9 @@ local function refreshBoard(field)
     message:destroy()
 
     fetchLeaderboard(field, function()
-      refreshBoard(field)
-      fetchRank(field)
+      fetchRank(field, function()
+        refreshBoard(field)
+      end)
     end)
   else
     board.scroller = Scroller:new({
@@ -191,7 +262,8 @@ local function refreshBoard(field)
     })
 
     board.scroller:insert(board)
-    displayData(field)
+    displayBoard(field)
+    displayRank(field)
   end
 end
 
@@ -248,7 +320,7 @@ local function drawButton(num)
 
   button.field = field
   button.x = 250 + (num - 1) * 150
-  button.y = CLOSED_Y
+  button.y = -400
 
   ----------------------
 
@@ -300,15 +372,25 @@ function scene:show( event )
     local buttons = {}
     for i = 1, #App.scoreFields do
       buttons[i] = drawButton(i)
+
+      transition.to( buttons[i] , {
+        y          = CLOSED_Y,
+        time       = 500,
+        delay      = 50 * (i - 1),
+        transition = easing.outBack
+      })
+
     end
 
-    select(buttons[1])
+    timer.performWithDelay(300, function()
+      select(buttons[1])
+    end)
   end
 end
 
 function scene:hide( event )
   board.field = nil
-  reset()
+  resetView()
 end
 
 function scene:destroy( event )
