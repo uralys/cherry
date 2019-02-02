@@ -72,12 +72,17 @@ function Button:icon(options)
         local scaleFrom = options.scale or 1
         local SCALE = scaleFrom * 0.7
         gesture.onTap(button, function()
+            if(button.locked) then return end
+            button.locked = true
             animation.touchEffect(button, {
                 scaleTo = SCALE,
                 scaleFrom = scaleFrom,
                 onComplete = function()
-                    button:scale(scaleFrom/SCALE, scaleFrom/SCALE)
-                    timer.performWithDelay(10, options.action)
+                    if(button.scale) then
+                        button:scale(scaleFrom/SCALE, scaleFrom/SCALE)
+                        button.locked = false
+                        timer.performWithDelay(10, options.action)
+                    end
                 end
             })
         end)
