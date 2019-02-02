@@ -79,7 +79,6 @@ function Background:showBlur(parent)
     )
 
     self.blurBG.alpha = 0
-    self.blurBG:toBack()
 
     transition.to(self.blurBG, {
         alpha = 1,
