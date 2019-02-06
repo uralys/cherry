@@ -22,10 +22,7 @@ local App = {
   ENV = 'development',
   -----------------------------------------
 
-  font = {
-    android = 'cherry/assets/y2kboogie.ttf',
-    ios     = 'cherry/assets/y2kboogie.ttf'
-  },
+  font = 'cherry/assets/PatrickHand-Regular.ttf',
 
   background = {
     light = 'cherry/assets/images/background-light.jpg',
@@ -132,13 +129,15 @@ end
 
 function App:ready()
   self.game  = Game:new(App.extension.game)
-  self.namePicker = NamePicker:new()
-  self.score = Score:new(App.extension.score)
   self.user  = User:new(App.extension.user)
   self.user:load()
 
+  self.namePicker = NamePicker:new()
+  
+  self.score = Score:new(App.extension.score)
+  self.sound = Sound:init(App.extension.sound)
+
   Background:init(App.background)
-  Sound:init()
 
   if(App.VIEW_TESTING) then
     _G.log(' --> forced view : ' .. App.VIEW_TESTING)

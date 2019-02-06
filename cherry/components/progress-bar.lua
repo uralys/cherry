@@ -173,7 +173,7 @@ function ProgressBar:icon()
 
   local logoContainer = display.newImage(
     self.display,
-    'cherry/assets/images/gui/items/circle.simple.container.png',
+    'cherry/assets/images/gui/items/circle.container.simple.png',
     - self.width * 0.55, 0
   )
 
