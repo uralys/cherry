@@ -133,7 +133,7 @@ function App:ready()
   self.user:load()
 
   self.namePicker = NamePicker:new()
-  
+
   self.score = Score:new(App.extension.score)
   self.sound = Sound:init(App.extension.sound)
 

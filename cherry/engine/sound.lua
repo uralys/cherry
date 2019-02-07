@@ -60,6 +60,7 @@ end
 
 function Sound:toggleMusic()
   self:toggle(self.channels.music)
+  -- if(not self.isOff) then self:loop() end
 end
 
 function Sound:toggleEffects()
@@ -77,8 +78,7 @@ function Sound:on(channel)
 end
 
 function Sound:toggle(channel)
-  local current = audio.getVolume( { channel = channel } )
-  if(current > 0 ) then
+  if(self.isOff) then
     self:off(channel)
   else
     self:on(channel)
@@ -104,6 +104,8 @@ function Sound:effect(effect)
 end
 
 function Sound:play(track)
+  self:stop()
+
   if(not self.isOff and not App.SOUND_OFF) then
     self.channels.music = audio.play(track)
   end
@@ -114,6 +116,9 @@ function Sound:loop(num)
   self:nextTheme()
 end
 
+function Sound:stop()
+  audio.stop()
+end
 
 --------------------------------------------------------------------------------
 

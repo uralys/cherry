@@ -2,7 +2,10 @@
 
 local _           = require 'cherry.libs.underscore'
 local generateUID = require 'cherry.libs.generate-uid'
+local toVersionNum = require 'cherry.libs.version-number'
 local file = _G.file or require 'cherry.libs.file'
+
+--------------------------------------------------------------------------------
 
 local User = {}
 
@@ -16,6 +19,13 @@ end
 
 --------------------------------------------------------------------------------
 
+-- exemple extention.onLoad:
+-- function User:onLoad()
+--   if(self.savedData.version < 20000) then
+--     manually update self.savedData
+--   end
+-- end
+--
 function User:load()
   self.savedData = file.loadUserData('savedData.json');
 
@@ -35,7 +45,7 @@ function User:resetSavedData()
   local previousSavedData = self.savedData
 
   self.savedData = {
-    version = App.version,
+    version = toVersionNum(App.version),
     tutorial = false,
     options = {
       sound = true

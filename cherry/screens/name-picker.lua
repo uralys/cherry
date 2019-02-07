@@ -17,6 +17,10 @@ local NamePicker = {}
 
 --------------------------------------------------------------------------------
 
+local BOARD_WIDTH = 700
+
+--------------------------------------------------------------------------------
+
 function NamePicker:new()
   local namePicker = {}
   setmetatable(namePicker, { __index = NamePicker })
@@ -83,7 +87,7 @@ function NamePicker:createTextBoard(next)
     x        = 0,
     y        = self.textBoard.panel.height * 0.5,
     action = function()
-      self.text = string.trim(self.text)
+      self.text = self.text:trim()
       if(#self.text == 0) then
         self.text = ''
         self.inputText.text = self.text
@@ -195,7 +199,7 @@ function NamePicker:createBoard(options)
 
   board.panel = Panel:vertical({
     parent = board,
-    width  = display.contentWidth * 0.7,
+    width  = BOARD_WIDTH,
     height = panelheight,
     x      = 0,
     y      = 0
@@ -229,7 +233,7 @@ function NamePicker:createInputText()
   -- Create text field
   self.inputText = native.newTextField(
     0, self.textBoard.banner.y + display.contentHeight * 0.085,
-    display.contentWidth * 0.6, 80
+    BOARD_WIDTH - 100, 80
   )
 
   self.inputText.font = native.newFont( _G.FONT, 40 )

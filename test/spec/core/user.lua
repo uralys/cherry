@@ -18,7 +18,7 @@ describe('[User]', function()
     user:load()
 
     assert.are.same(user.savedData, {
-        version = 'cherry.tests',
+        version = 0,
         options = {
             sound = true
         },

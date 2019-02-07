@@ -174,7 +174,7 @@ function Options:redrawMusicButton()
     end
 
     local musicType = 'music'
-    if(Sound.isOff) then
+    if(App.sound.isOff) then
         musicType = 'music-off'
     end
 
@@ -185,7 +185,7 @@ function Options:redrawMusicButton()
         y      = 0,
         scale  = .7,
         action = function()
-            Sound:toggleAll()
+            App.sound:toggleAll()
             self:redrawMusicButton()
         end
     })

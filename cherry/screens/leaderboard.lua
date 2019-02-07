@@ -30,7 +30,6 @@ local function fetchLeaderboard(field, next)
 
   http.get(url, function(aws)
     if(Router.view ~= Router.LEADERBOARD) then
-      _G.log({v= Router.view})
       return
     end
     local data = json.decode(aws.response)
@@ -64,7 +63,7 @@ end
 --------------------------------------------------------------------------------
 
 local function fetchRank(field, next)
-  local score = App.user:getBestScore(field.name)
+  local score = App.user:getBestScore(field.name) or 0
   local url = App.API_GATEWAY_URL .. '/rank/' .. App.name .. '/' .. field.name .. '/' .. score
   http.get(url, function(aws)
     local response = json.decode(aws.response)

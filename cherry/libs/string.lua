@@ -1,16 +1,17 @@
-function string.split(str, delimiter)
+-- note: delimiter is a regex, to split by '.' use '%.' for instance
+function string:split(delimiter)
   local result = { }
   local from  = 1
-  local delim_from, delim_to = string.find( str, delimiter, from  )
+  local delim_from, delim_to = self:find( delimiter, from  )
   while delim_from do
-    table.insert( result, string.sub( str, from , delim_from-1 ) )
+    table.insert( result, self:sub( from , delim_from-1 ) )
     from  = delim_to + 1
-    delim_from, delim_to = string.find( str, delimiter, from  )
+    delim_from, delim_to = self:find( delimiter, from  )
   end
-  table.insert( result, string.sub( str, from  ) )
+  table.insert( result, self:sub( from ) )
   return result
 end
 
-function string.trim(str)
-  return str:match "^%s*(.-)%s*$"
+function string:trim()
+  return self:match "^%s*(.-)%s*$"
 end
