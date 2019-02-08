@@ -152,7 +152,7 @@ function Text.appearFromSides(leftMessage, rightMessage, options)
         transition = easing.outBack,
         onComplete = function()
             transition.to( leftText, {
-                delay = 750,
+                delay = options.delay or 750,
                 time  = 750,
                 alpha = 0,
                 onComplete = function()
@@ -168,7 +168,7 @@ function Text.appearFromSides(leftMessage, rightMessage, options)
         transition = easing.outBack,
         onComplete = function()
             transition.to( rightText, {
-                delay = 750,
+                delay = options.delay or 750,
                 time  = 750,
                 alpha = 0,
                 onComplete = function()
