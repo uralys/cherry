@@ -48,7 +48,8 @@ function User:resetSavedData()
     version = toVersionNum(App.version),
     tutorial = false,
     options = {
-      sound = true
+      sound = true,
+      soundVolume = 1
     },
     currentUser = 1,
     users = {
@@ -122,6 +123,10 @@ end
 
 function User:name()
   return self.savedData.users[self.savedData.currentUser].name
+end
+
+function User:soundVolume()
+  return self.savedData.options.soundVolume
 end
 
 function User:id()

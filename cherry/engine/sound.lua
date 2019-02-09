@@ -15,6 +15,7 @@ function Sound:init(extension)
     sfx      = {},
     options  = {},
     channels = {},
+    volume   = App.user:soundVolume() or 1,
     loopOnStart = false
   })
 
@@ -27,6 +28,10 @@ function Sound:init(extension)
 
   if(_sound.loopOnStart) then
     _sound:loop()
+  end
+
+  if(_sound.onStart) then
+    _sound:onStart()
   end
 
   return _sound
@@ -98,17 +103,23 @@ end
 --------------------------------------------------------------------------------
 
 function Sound:effect(effect)
-  if(not self.isOff and not App.SOUND_OFF) then
-    self.channels.effect = audio.play(effect)
+  if(self.isOff or App.SOUND_OFF) then
+    return
   end
+
+  self.channels.effects = audio.play(effect)
 end
 
 function Sound:play(track)
   self:stop()
 
-  if(not self.isOff and not App.SOUND_OFF) then
-    self.channels.music = audio.play(track)
+  if(self.isOff or App.SOUND_OFF) then
+    return
   end
+
+  timer.performWithDelay(100, function()
+    self.channels.music = audio.play(track)
+  end)
 end
 
 function Sound:loop(num)

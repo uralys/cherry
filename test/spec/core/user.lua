@@ -18,9 +18,10 @@ describe('[User]', function()
     user:load()
 
     assert.are.same(user.savedData, {
-        version = 0,
-        options = {
-            sound = true
+      version = 0,
+      options = {
+          sound = true,
+          soundVolume = 1
         },
         tutorial = false,
         currentUser = 1,
@@ -30,19 +31,20 @@ describe('[User]', function()
             id = nil
           }
         }
-    })
+      })
 
-    assert.spy(onLoad).was.called(1)
-    assert.spy(onResetSavedData).was.called(1)
-  end)
+      assert.spy(onLoad).was.called(1)
+      assert.spy(onResetSavedData).was.called(1)
+    end)
 
-  it('> should toggle sound settings', function()
-    local user = User:new()
-    user:load()
-    user:saveSoundSettings(true)
+    it('> should toggle sound settings', function()
+      local user = User:new()
+      user:load()
+      user:saveSoundSettings(true)
 
-    assert.are.same(user.savedData.options, {
-      sound = false
+      assert.are.same(user.savedData.options, {
+        sound = false,
+        soundVolume = 1
     })
   end)
 end)
