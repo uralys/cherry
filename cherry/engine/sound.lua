@@ -118,7 +118,11 @@ function Sound:play(track)
   end
 
   timer.performWithDelay(100, function()
-    self.channels.music = audio.play(track)
+    self.channels.music = audio.play(track, {
+      onComplete = function()
+        self:play(track)
+      end
+    })
   end)
 end
 
