@@ -117,13 +117,7 @@ function Sound:play(track)
     return
   end
 
-  timer.performWithDelay(100, function()
-    self.channels.music = audio.play(track, {
-      onComplete = function()
-        self:play(track)
-      end
-    })
-  end)
+  self.channels.music = audio.play(track, {loops = -1})
 end
 
 function Sound:loop(num)
