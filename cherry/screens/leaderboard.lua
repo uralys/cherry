@@ -218,35 +218,56 @@ end
 
 --------------------------------------------------------------------------------
 
-local function refreshBoard(field)
+local fetchBoard
+local refreshBoard
+
+fetchBoard = function(field)
+  local message = Text:create({
+    parent   = App.hud,
+    value    = 'Connecting...',
+    font     = _G.FONT,
+    fontSize = 40,
+    x = display.contentWidth * 0.5,
+    y = display.contentHeight * 0.5
+  })
+
+  message.display.alpha = 0
+
+  transition.to(message.display, {
+    alpha = 1,
+    time  = 500,
+    delay = 1000
+  })
+
+  http.ifNetworkConnection(
+    function()
+      message:destroy()
+
+      fetchLeaderboard(field, function()
+        fetchRank(field, function()
+          refreshBoard(field)
+        end)
+      end)
+    end,
+    function()
+      if(message) then
+        message:setValue('No connection')
+      end
+    end
+  )
+end
+
+--------------------------------------------------------------------------------
+
+refreshBoard = function (field)
   resetView()
   board = display.newGroup()
   board.field = field
 
-  if(not boardData[field.name]) then
-    local message = Text:create({
-      parent   = App.hud,
-      value    = 'Connecting...',
-      font     = _G.FONT,
-      fontSize = 40,
-      x = display.contentWidth * 0.5,
-      y = display.contentHeight * 0.5
-    })
+  local isBoardFetched = boardData[field.name]
 
-    if(not http.networkConnection()) then
-      if(message) then
-        message:setValue('No connection')
-      end
-      return
-    end
-
-    message:destroy()
-
-    fetchLeaderboard(field, function()
-      fetchRank(field, function()
-        refreshBoard(field)
-      end)
-    end)
+  if(not isBoardFetched) then
+    fetchBoard(field)
   else
     board.scroller = Scroller:new({
       parent = App.hud,

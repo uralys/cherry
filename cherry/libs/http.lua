@@ -111,26 +111,19 @@ end
 
 --------------------------------------------------------
 
-function http.networkConnection()
-    local status
-
-    local socket = require('socket')
-    local test = socket.tcp()
+function http.ifNetworkConnection(onSuccess, onError)
     _G.log('checking connection...')
-    test:settimeout(2000)
-
-    -- Note that the test does not work if we put http:// in front
-    local testResult = test:connect('www.google.com', 80)
-    local hasConnection = not(testResult == nil)
-    if (hasConnection) then
-        status = true
-    else
-        status = false
-    end
-
-    test:close()
-    _G.log({status})
-    return status
+    network.request('http://www.google.com', 'GET', function(event)
+        if(event.isError == false and event.phase == 'ended') then
+            _G.log('--> network ok')
+            onSuccess()
+        else
+            _G.log('--> network KO after 30 sec..')
+            if(onError) then
+                onError()
+            end
+        end
+    end, {timeout = 30})
 end
 
 --------------------------------------------------------------------------------
