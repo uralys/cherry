@@ -66,7 +66,6 @@ local App = {
 
   ANALYTICS_VERSION     = 1,
   ANALYTICS_TRACKING_ID = 'UA-XXXXX-XX',
-  ANALYTICS_PROFILE_ID  = 'XXXXXXXX',
 
   -----------------------------------------
 
@@ -139,6 +138,14 @@ function App:ready()
 
   Background:init(App.background)
 
+  analytics.init(
+    self.ANALYTICS_VERSION,
+    self.ANALYTICS_TRACKING_ID,
+    self.user:deviceId(),
+    self.name,
+    self.version
+  )
+
   if(App.VIEW_TESTING) then
     _G.log(' --> forced view : ' .. App.VIEW_TESTING)
     _G.log('--------------------------------')
@@ -176,20 +183,11 @@ function App:setup()
   _G.FONT      = App.font
 
   ----------------------------------------------------------------------------
+
   App.colors = _.defaults(App.colors or {}, {
     '#7f00ff',
     '#ff00ff'
   })
-
-  ----------------------------------------------------------------------------
-
-  analytics.init(
-    App.ANALYTICS_VERSION,
-    App.ANALYTICS_TRACKING_ID,
-    App.ANALYTICS_PROFILE_ID,
-    App.name,
-    App.version
-  )
 
   ----------------------------------------------------------------------------
 
@@ -205,30 +203,12 @@ end
 --------------------------------------------------------------------------------
 
 local function onKeyEvent( event )
-
   local phase = event.phase
   local keyName = event.keyName
-  -- _G.log( event.phase, event.keyName )
 
   if ( 'back' == keyName and phase == 'up' ) then
     _G.log('back button is not handled')
   end
-
-  -- if ( keyName == 'volumeUp' and phase == 'down' ) then
-    --     local masterVolume = audio.getVolume()
-    --     _G.log( 'volume:', masterVolume )
-    --     if ( masterVolume < 1.0 ) then
-      --         masterVolume = masterVolume + 0.1
-      --         audio.setVolume( masterVolume )
-      --     end
-      -- elseif ( keyName == 'volumeDown' and phase == 'down' ) then
-        --     local masterVolume = audio.getVolume()
-        --     _G.log( 'volume:', masterVolume )
-        --     if ( masterVolume > 0.0 ) then
-          --         masterVolume = masterVolume - 0.1
-          --         audio.setVolume( masterVolume )
-          --     end
-          -- end
 
   return true
 end
@@ -263,29 +243,6 @@ function App:deviceSetup()
     Runtime:removeEventListener( 'key', onKeyEvent )
     Runtime:addEventListener( 'key', onKeyEvent )
   end
-
-  ----------------------------------------------------------------------------
-
-  -- local fonts = native.getFontNames()
-
-  -- count = 0
-
-  -- -- Count the number of total fonts
-  -- for i,fontname in ipairs(fonts) do
-    --    count = count+1
-    -- end
-
-    -- _G.log( '\rFont count = ' .. count )
-
-    -- local name = 'pt'     -- part of the Font name we are looking for
-
-    -- name = string.lower( name )
-
-    -- -- Display each font in the terminal console
-    -- for i, fontname in ipairs(fonts) do
-
-      --        _G.log( 'fontname = ' .. tostring( fontname ) )
-      -- end
 end
 
 --------------------------------------------------------------------------------

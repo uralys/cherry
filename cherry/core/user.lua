@@ -46,6 +46,7 @@ function User:resetSavedData()
 
   self.savedData = {
     version = toVersionNum(App.version),
+    deviceId = (previousSavedData ~= nil and previousSavedData.deviceId) or generateUID(),
     tutorial = false,
     options = {
       sound = true,
@@ -112,6 +113,10 @@ function User:save()
 end
 
 --------------------------------------------------------------------------------
+
+function User:deviceId()
+  return self.savedData.deviceId
+end
 
 function User:isNew()
   return not self.savedData.tutorial

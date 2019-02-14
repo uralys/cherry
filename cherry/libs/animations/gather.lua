@@ -47,12 +47,16 @@ local function gather(movables, options)
       c:setFillColor(options.fillColorFunc(num))
     end
 
+    local delay = 0
+    if(options.delay) then delay = options.delay() end
+
     transition.to(c, {
       x = options.toX,
       y = options.toY,
       alpha = 0.7,
       time = TIME + num * 50,
-      transition = easing.inQuad,
+      delay = delay,
+      transition = options.easing or easing.inQuad,
       rotation = options.rotation or 0,
       onComplete = function ()
         if(options.onStepComplete) then

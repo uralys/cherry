@@ -16,6 +16,7 @@ describe('[User]', function()
     })
 
     user:load()
+    user.savedData.deviceId = nil
 
     assert.are.same(user.savedData, {
       version = 0,
