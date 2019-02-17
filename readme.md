@@ -28,7 +28,7 @@ You may extend Cherry framework, or just pick few components, in order to start 
 - clone Cherry next to your project
 - symlink the lib to your project root:
 
-```
+```sh
 > ln -s ../Cherry/cherry cherry
 ```
 

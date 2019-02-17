@@ -17,7 +17,9 @@ describe('[gesture]', function()
 
       it('> phase.ended: action is called, opacity is back to 1', function()
         local foo = display.newImage(App.display)
-        local action = spy.new(function() end)
+        local action = spy.new(function(event)
+          assert.are.equal(event.name, 'touch')
+        end)
 
         gesture.onTouch(foo, action)
 
@@ -56,7 +58,10 @@ describe('[gesture]', function()
     describe('[onTap]', function()
       it('> phase.began: action is called', function()
         local foo = display.newImage(App.display)
-        local action = spy.new(function() end)
+        local action = spy.new(function(event)
+          assert.are.equal(event.name, 'touch')
+          assert.are.equal(event.phase, 'began')
+        end)
 
         gesture.onTap(foo, action)
         foo:tap()

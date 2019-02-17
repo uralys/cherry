@@ -14,7 +14,7 @@ function gesture.onTouch(object, action)
         elseif event.phase == 'ended' or event.phase == 'cancelled' then
             object.alpha = 1
             -- display.getCurrentStage():setFocus( nil )
-            action()
+            action(event)
         end
         return true
     end
@@ -27,8 +27,8 @@ function gesture.onTouch(object, action)
 end
 
 function gesture.onceTouch(object, action)
-    gesture.onTouch(object, function()
-        action()
+    gesture.onTouch(object, function(event)
+        action(event)
         object.removeOnTouch()
     end)
 end
@@ -41,7 +41,7 @@ function gesture.onTap(object, action)
     local tap = function(event)
         if(event.phase == 'began') then
             -- display.getCurrentStage():setFocus( object )
-            return action()
+            return action(event)
         -- elseif event.phase == 'ended' or event.phase == 'cancelled' then
             -- display.getCurrentStage():setFocus( nil )
         end
@@ -56,8 +56,8 @@ function gesture.onTap(object, action)
 end
 
 function gesture.onceTap(object, action)
-    gesture.onTap(object, function()
-        action()
+    gesture.onTap(object, function(event)
+        action(event)
         object.removeOnTap()
     end)
 end

@@ -107,10 +107,10 @@ function App:loadSettings()
   _G.log('---------- SETTINGS ------------')
   local path = 'env/' .. App.ENV .. '.json'
   local settings = file.load(path)
-  _G.log(settings)
-  _G.log('--------------------------------')
+  _G = _.extend(_G, settings)
 
-  App.INVINCIBLE     = settings.invincible
+  -----------------------------')
+
   App.SOUND_OFF      = settings.silent
   App.EDITOR_TESTING = settings.editor
   App.EDITOR_PLAY    = settings.play

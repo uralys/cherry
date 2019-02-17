@@ -115,4 +115,43 @@ end
 
 --------------------------------------------------------------------------------
 
+function Game:displayText(options)
+    options = _.defaults(options or {}, {
+        text = '',
+        y = display.contentHeight * 0.5,
+    })
+
+    local introText = display.newText(
+        App.hud,
+        options.text,
+        0, 0,
+        _G.FONT, 145
+    )
+
+    introText:setFillColor( 255 )
+    introText.x     = display.contentWidth * 0.1
+    introText.y     = options.y
+    introText.alpha = 0
+
+    transition.to( introText, {
+        time       = 500,
+        alpha      = 1,
+        x          = display.contentWidth * 0.5,
+        transition = easing.outBounce,
+        onComplete = function()
+        transition.to( introText, {
+            time  = 300,
+            alpha = 0,
+            delay = options.persistTime or 600,
+            x     = display.contentWidth * 1.2,
+            onComplete = function()
+            if(options.next) then options.next() end
+            end
+        })
+        end
+    })
+end
+
+--------------------------------------------------------------------------------
+
 return Game
