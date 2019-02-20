@@ -35,6 +35,16 @@ end
 --------------------------------------------------------------------------------
 
 local function event(category, action, label)
+  if(_G.SIMULATOR or App.ENV == 'development') then
+    _G.log('analytics skipped.')
+    _G.log({
+      category,
+      action,
+      label
+    })
+    return
+  end
+
   local data = ""
   data = data .. "v="     .. params.version
   data = data .. "&tid="  .. params.trackingId
