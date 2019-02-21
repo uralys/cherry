@@ -37,6 +37,14 @@ function User:load()
   if (self.onLoad) then
     self:onLoad() -- from extension
   end
+
+  self:tryToSync()
+end
+
+function User:tryToSync()
+  if(self.sync and self:mustSync()) then
+    self:sync()
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -145,6 +153,15 @@ end
 function User:switchToProfile(i)
   self.savedData.currentUser = i
   self:save()
+end
+
+function User:setSync(state)
+  self.savedData.sync = state
+  self:save()
+end
+
+function User:mustSync()
+  return self.savedData.sync ~= true
 end
 
 function User:getUser(i)

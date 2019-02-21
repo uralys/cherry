@@ -242,6 +242,7 @@ fetchBoard = function(field)
   http.ifNetworkConnection(
     function()
       message:destroy()
+      App.user:tryToSync()
 
       fetchLeaderboard(field, function()
         fetchRank(field, function()
