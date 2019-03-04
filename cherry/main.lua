@@ -15,11 +15,16 @@ require 'cherry.libs.table'
 _G.composer = _G.composer or require 'composer'
 
 -- app
-_G.App     = require 'cherry.core.app'
-_G.Router  = require 'cherry.core.router'
+_G.App = require 'cherry.core.app'
+_G.Router = require 'cherry.core.router'
 
 -- engine
-_G.Camera  = require 'cherry.engine.camera'
+_G.Camera = require 'cherry.engine.camera'
 _G.Effects = require 'cherry.engine.effects'
-_G.Game    = require 'cherry.engine.game'
-_G.Sound   = require 'cherry.engine.sound'
+_G.Game = require 'cherry.engine.game'
+_G.Sound = require 'cherry.engine.sound'
+
+--------------------------------------------------------------------------------
+
+_G.W = display.contentWidth
+_G.H = display.contentHeight
