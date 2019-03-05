@@ -60,9 +60,13 @@ end
 
 --------------------------------------------------------------------------------
 
-function Timer:refresh()
+function Timer:toString()
   local _, sec, ms = Time.getMinSecMillis(self.currentMillis)
-  self.text:setValue(sec .. "'" .. ms)
+  return sec .. "'" .. ms
+end
+
+function Timer:refresh()
+  self.text:setValue(self:toString())
 end
 
 function Timer:start()
@@ -74,7 +78,7 @@ function Timer:step()
   self.lastTime = system.getTimer()
   self.currentDelay =
     timer.performWithDelay(
-    40,
+    50,
     function()
       local elapsedTime = system.getTimer() - self.lastTime
       self.currentMillis = self.currentMillis + elapsedTime
@@ -99,7 +103,7 @@ end
 --------------------------------------------------------------------------------
 
 function Timer:destroy()
-  display.remove(self.text)
+  self.text:destroy()
 end
 
 --------------------------------------------------------------------------------
