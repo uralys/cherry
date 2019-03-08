@@ -226,6 +226,10 @@ function NamePicker:createInputText()
   local function textListener( event )
     if ( event.phase == 'editing' ) then
       self.text = event.text
+      if(#self.text > 20) then
+        self.text = self.text:sub(1, 20)
+        self.inputText.text = self.text
+      end
       self:refreshAction()
     end
   end
