@@ -202,10 +202,6 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 
 - [Phantoms](http://www.uralys.com/projects/phantoms/) released on November 2015 as the actual source for
 
-## game/ui assets
-
-https://www.garagegames.com/community/resources/view/23092
-
 ## [todo] Doc to provide
 
 ##### waiting for the doc, read the code
