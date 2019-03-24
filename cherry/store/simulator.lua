@@ -7,11 +7,11 @@ local Text = require 'cherry.components.text'
 
 --------------------------------------------------------------------------------
 
-local SimulatorStore = {}
+local SimulatorShop = {}
 
 --------------------------------------------------------------------------------
 
-function SimulatorStore:initialize()
+function SimulatorShop:initialize()
   _G.log('[store][initialize] simulator fake store.')
   self.initialized = true
   self.products = {
@@ -34,14 +34,14 @@ end
 
 --------------------------------------------------------------------------------
 
-function SimulatorStore:getProductId(nbGems)
+function SimulatorShop:getProductId(nbGems)
   local id = 'uralys.kodo.gems.' .. nbGems
   return id
 end
 
 --------------------------------------------------------------------------------
 
-function SimulatorStore:buy(productId)
+function SimulatorShop:buy(productId)
   native.setActivityIndicator(true)
   timer.performWithDelay(
     500,
@@ -53,7 +53,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function SimulatorStore:showTestStore(id)
+function SimulatorShop:showTestStore(id)
   native.setActivityIndicator(false)
   self.display.alpha = 0
 
@@ -146,4 +146,4 @@ end
 
 --------------------------------------------------------------------------------
 
-return SimulatorStore
+return SimulatorShop

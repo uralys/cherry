@@ -4,16 +4,16 @@ local analytics = require 'cherry.libs.analytics'
 
 --------------------------------------------------------------------------------
 
-local GoogleStore = {}
+local GoogleShop = {}
 
 --------------------------------------------------------------------------------
 
-function GoogleStore:getProductId(nbGems)
+function GoogleShop:getProductId(nbGems)
   local id = 'uralys.kodo.gems.' .. nbGems
   return id
 end
 
-function GoogleStore:getGemsFromId(id)
+function GoogleShop:getGemsFromId(id)
   local nbGems = id:split('uralys.kodo.gems.')[2]
   return tonumber(nbGems)
 end
@@ -24,12 +24,13 @@ end
 
 --------------------------------------------------------------------------------
 
-function GoogleStore:initialize()
-  _G.log('[store][initialize] plugging google appStore...')
+function GoogleShop:initialize()
+  _G.log('[shop][initialize] plugging Google appStore...')
   local function storeTransaction(event)
     local transaction = event.transaction
     _G.log(
-      '--> callback storeTransaction | transaction.state:' .. transaction.state
+      '[shop] --> callback storeTransaction | transaction.state:' ..
+        transaction.state
     )
     native.setActivityIndicator(false)
 
@@ -41,7 +42,7 @@ function GoogleStore:initialize()
       self.nbGemsToAdd = self:getGemsFromId(id)
       self.yFrom = self.yFrom or self.TOP -- on restore no buy button was pressed
 
-      analytics.event('store', transaction.state, id)
+      analytics.event('shop', transaction.state, id)
 
       if (isConsumable(id)) then
         self.appStore.consumePurchase(id)
@@ -49,7 +50,7 @@ function GoogleStore:initialize()
         self:addGems()
       end
     elseif (transaction.state == 'cancelled') then
-      analytics.event('store', 'cancelled', App.user:deviceId())
+      analytics.event('shop', 'cancelled', App.user:deviceId())
       self:cancelTransaction(transaction)
     elseif (transaction.state == 'failed') then
       local info =
@@ -58,15 +59,15 @@ function GoogleStore:initialize()
           ' | error:[' ..
             transaction.errorString .. '] user:' .. App.user:deviceId()
 
-      analytics.event('store', 'failed', info)
+      analytics.event('shop', 'failed', info)
       self:cancelTransaction(transaction)
     elseif (transaction.state == 'consumed') then
-      analytics.event('store', 'consumed', App.user:deviceId())
+      analytics.event('shop', 'consumed', App.user:deviceId())
       self:addGems()
     else
       local unknownType = transaction and transaction.state or 'no-state'
       analytics.event(
-        'store',
+        'shop',
         'unknown-transaction-' .. unknownType,
         App.user:deviceId()
       )
@@ -82,12 +83,12 @@ end
 
 --------------------------------------------------------------------------------
 
-function GoogleStore:buy(productId)
+function GoogleShop:buy(productId)
   native.setActivityIndicator(true)
-  _G.log('[store][buy] google PURCHASING...[' .. productId .. ']')
+  _G.log('[shop][buy] google PURCHASING...[' .. productId .. ']')
   self.appStore.purchase(productId)
 end
 
 --------------------------------------------------------------------------------
 
-return GoogleStore
+return GoogleShop
