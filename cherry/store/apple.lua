@@ -36,27 +36,31 @@ function AppleShop:initialize()
 
     if (transaction.state == 'purchased' or transaction.state == 'restored') then
       local id = transaction.productIdentifier
+      _G.log('--->>> purchased: ' .. id)
       self.buying = false
-      self.nbGemsToAdd = self.getGemsFromId(id)
+      self.nbGemsToAdd = self:getGemsFromId(id)
       self.yFrom = self.yFrom or self.TOP -- on restore no buy button was pressed
 
       analytics.event('shop', transaction.state, id)
       self:addGems()
     elseif (transaction.state == 'cancelled') then
+      _G.log('--->>> cancelled')
       analytics.event('shop', 'cancelled', App.user:deviceId())
       self:cancelTransaction(transaction)
     elseif (transaction.state == 'failed') then
-      analytics.event(
-        'shop',
-        'failed',
+      _G.log('--->>> failed')
+      local info =
         'gems: ' ..
-          self.nbGemsToAdd ..
-            ' | error:[' ..
-              transaction.errorString .. '] user:' .. App.user:deviceId()
-      )
+        self.nbGemsToAdd ..
+          ' | error:[' ..
+            transaction.errorString .. '] user:' .. App.user:deviceId()
+
+      _G.log({info})
+      analytics.event('shop', 'failed', info)
       self:cancelTransaction(transaction)
     else
       local unknownType = transaction and transaction.state or 'no-state'
+      _G.log('--->>> unknownType:' .. unknownType)
       analytics.event(
         'shop',
         'unknown-transaction-' .. unknownType,
@@ -67,11 +71,8 @@ function AppleShop:initialize()
     self.appStore.finishTransaction(transaction)
   end
 
-  native.setActivityIndicator(true)
   self.appStore = require('store')
   self.appStore.init(storeTransaction)
-
-  native.setActivityIndicator(false)
   self:loadProducts()
 end
 
