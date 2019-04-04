@@ -9,9 +9,8 @@ local params
 
 --------------------------------------------------------------------------------
 
-local function init(version, trackingId, deviceId, gameName, gameVersion)
+local function init(trackingId, deviceId, gameName, gameVersion)
   params = {
-    version = version,
     trackingId = trackingId,
     clientId = deviceId,
     gameName = gameName,
@@ -32,13 +31,7 @@ local function screenview(page)
     return
   end
 
-  -- http://www.google-analytics.com/collect?an=Coorpacademy&av=1.1.13&cid=119999&ea=testA&ec=testC&el=testL&ev=testEV&ni=0&t=event&tid=UA-49366530-56&uid=123456
-  -- http://www.google-analytics.com/collect?v=1&cid=119999&ea=testA&ec=testC&t=event&tid=UA-49366530-56
-
-  -- http://www.google-analytics.com/collect?an=Coorpacademy&av=1.1.13&v=1&cid=119999&ea=testOK2&ec=testC&t=event&tid=UA-49366530-56&el=testL&uid=3456789
-
-  local data = ''
-  data = data .. 'v=' .. params.version
+  local data = 'v=1'
   data = data .. '&tid=' .. params.trackingId
   data = data .. '&cid=' .. params.clientId
   data = data .. '&t=' .. 'screenview'
@@ -64,8 +57,7 @@ local function event(category, action, label)
     return
   end
 
-  local data = ''
-  data = data .. 'v=' .. params.version
+  local data = 'v=1'
   data = data .. '&tid=' .. params.trackingId
   data = data .. '&cid=' .. params.clientId
   data = data .. '&t=' .. 'event'

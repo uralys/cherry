@@ -56,7 +56,6 @@ local App = {
 
   FACEBOOK_PAGE_ID = '379432705492888',
   FACEBOOK_PAGE = 'https://www.facebook.com/uralys',
-  ANALYTICS_VERSION = 1,
   ANALYTICS_TRACKING_ID = 'UA-XXXXX-XX',
   -----------------------------------------
 
@@ -130,7 +129,6 @@ function App:ready()
   Background:init(App.background)
 
   analytics.init(
-    self.ANALYTICS_VERSION,
     self.ANALYTICS_TRACKING_ID,
     self.user:deviceId(),
     self.name,
