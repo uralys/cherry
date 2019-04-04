@@ -103,7 +103,7 @@ function Icon:text(options)
         text     = options.value,
         x        = 0,
         y        = 0,
-        font     = options.font or _G.FONT,
+        font     = options.font or _G.FONTS.default,
         fontSize = options.fontSize or 65
     })
 

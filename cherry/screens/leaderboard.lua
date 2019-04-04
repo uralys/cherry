@@ -113,7 +113,7 @@ local function displayBoard(field)
             x = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 30,
             y = lineY,
             color = color,
-            font = _G.FONT,
+            font = _G.FONTS.default,
             fontSize = 45,
             anchorX = 0,
             grow = true
@@ -137,7 +137,7 @@ local function displayBoard(field)
             x = BOARD_CENTER_X - BOARD_WIDTH * 0.5 + 120,
             y = lineY,
             color = color,
-            font = _G.FONT,
+            font = _G.FONTS.default,
             fontSize = 45,
             anchorX = 0,
             grow = true
@@ -161,7 +161,7 @@ local function displayBoard(field)
             x = BOARD_CENTER_X + BOARD_WIDTH * 0.5 - 30,
             y = lineY,
             color = color,
-            font = _G.FONT,
+            font = _G.FONTS.default,
             fontSize = 45,
             anchorX = 1,
             grow = true
@@ -213,7 +213,7 @@ local function displayRank(field)
     {
       parent = board.rankComponent,
       value = boardData[field.name].rank,
-      font = _G.FONT,
+      font = _G.FONTS.default,
       fontSize = 50,
       x = -BOARD_WIDTH / 2 + 30,
       y = 0,
@@ -226,7 +226,7 @@ local function displayRank(field)
     {
       parent = board.rankComponent,
       value = App.user:name(),
-      font = _G.FONT,
+      font = _G.FONTS.default,
       fontSize = 50,
       x = -BOARD_WIDTH / 2 + 120,
       y = 0,
@@ -239,7 +239,7 @@ local function displayRank(field)
     {
       parent = board.rankComponent,
       value = App.user:getBestScore(field.name),
-      font = _G.FONT,
+      font = _G.FONTS.default,
       fontSize = 50,
       x = BOARD_WIDTH / 2 - 30,
       y = 0,
@@ -260,7 +260,7 @@ fetchBoard = function(field)
     {
       parent = App.hud,
       value = 'Connecting...',
-      font = _G.FONT,
+      font = _G.FONTS.default,
       fontSize = 40,
       x = display.contentWidth * 0.5,
       y = display.contentHeight * 0.5
@@ -425,7 +425,7 @@ local function drawButton(num)
       parent = button,
       y = -50,
       text = field.label,
-      font = _G.FONT,
+      font = _G.FONTS.default,
       fontSize = 40
     }
   )

@@ -165,7 +165,7 @@ function Options:drawActions(view)
       x = buttonPosition(VERSION_POSITION),
       y = 0,
       color = 1,
-      font = _G.FONT,
+      font = _G.FONTS.default,
       fontSize = 40
     }
   )

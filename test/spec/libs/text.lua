@@ -43,7 +43,7 @@ describe('[text]', function()
         curveSize  = curveSize,
         x          = 0,
         y          = 0,
-        font       = _G.FONT,
+        font       = _G.FONTS.default,
         fontSize   = 50
     })
 

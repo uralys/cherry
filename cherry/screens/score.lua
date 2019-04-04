@@ -69,7 +69,7 @@ function Score:displayResult(board, bg)
         board,
         'Thanks for playing.',
         0, 0,
-        _G.FONT, 85
+        _G.FONTS.default, 85
     )
 
     animation.grow(text)

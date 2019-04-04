@@ -95,7 +95,7 @@ function LevelCounter:createProgressBar(options)
     anchorX  = 1,
     x        = 0,
     y        = 0,
-    font     = _G.FONT,
+    font     = _G.FONTS.default,
     fontSize = 34,
     grow     = true
   })
@@ -133,7 +133,7 @@ function LevelCounter:createStarCounter()
     value    = '0',
     x        = 0,
     y        = 0,
-    font     = _G.FONT,
+    font     = _G.FONTS.default,
     fontSize = 30,
     grow     = true
   })

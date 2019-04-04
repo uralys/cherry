@@ -14,7 +14,7 @@ function Text:create(options)
   local text = _.defaults(options, {
     x        = 0,
     y        = 0,
-    font     = _G.FONT,
+    font     = _G.FONTS.default,
     color    = '#ffffff',
     fontSize = 40
   })
@@ -53,7 +53,7 @@ function Text:render()
   self.currentValue = TextUtils.simple({
     parent   = self.display,
     text     = self.value,
-    font     = self.font or _G.FONT,
+    font     = self.font or _G.FONTS.default,
     fontSize = self.fontSize or 55,
     x        = 0,
     y        = 0,

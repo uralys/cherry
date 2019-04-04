@@ -20,14 +20,15 @@ local App = {
   -- 'production', 'development', 'editor'
   ENV = 'development',
   -----------------------------------------
-
-  font = 'cherry/assets/PatrickHand-Regular.ttf',
+  fonts = {
+    default = 'cherry/assets/PatrickHand-Regular.ttf'
+  },
+  -----------------------------------------
   background = {
     light = 'cherry/assets/images/background-light.jpg',
     dark = 'cherry/assets/images/background-dark.jpg'
   },
   -----------------------------------------
-
   images = {
     blurBG = 'cherry/assets/images/overlay-blur.png',
     star = 'cherry/assets/images/gui/items/star.icon.png',
@@ -39,26 +40,21 @@ local App = {
     greenGem = 'cherry/assets/images/gui/items/gem.green.png'
   },
   -----------------------------------------
-
   xGravity = 0,
   yGravity = 0,
   -----------------------------------------
-
   usePhysics = false,
   useNamePicker = true,
   hasTutorial = false,
   -----------------------------------------
-
   extension = {
     game = demo
   },
   -----------------------------------------
-
   FACEBOOK_PAGE_ID = '379432705492888',
   FACEBOOK_PAGE = 'https://www.facebook.com/uralys',
   ANALYTICS_TRACKING_ID = 'UA-XXXXX-XX',
   -----------------------------------------
-
   display = display.newGroup(),
   hud = display.newGroup()
 }
@@ -170,7 +166,7 @@ function App:setup()
   _G.IOS = system.getInfo('platformName') == 'iPhone OS'
   _G.ANDROID = system.getInfo('platformName') == 'Android'
   _G.SIMULATOR = system.getInfo('environment') == 'simulator'
-  _G.FONT = App.font
+  _G.FONTS = App.fonts
 
   ----------------------------------------------------------------------------
 

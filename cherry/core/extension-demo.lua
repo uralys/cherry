@@ -13,7 +13,7 @@ local function onStart ()
         text     = 'Cherry !',
         x        = 0,
         y        = 0,
-        font     = _G.FONT,
+        font     = _G.FONTS.default,
         fontSize = 45
     })
 

@@ -240,7 +240,7 @@ function NamePicker:createInputText()
     BOARD_WIDTH - 100, 80
   )
 
-  self.inputText.font = native.newFont( _G.FONT, 40 )
+  self.inputText.font = native.newFont( _G.FONTS.default, 40 )
   self.inputText.text = self.text
 
   self.inputText:addEventListener( 'userInput', textListener )

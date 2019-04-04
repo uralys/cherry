@@ -189,7 +189,7 @@ function Chapters:hellBarEntrance(options)
         y        = 0,
         width    = panel.width * 0.4,
         height   = panel.height * 0.45,
-        font     = _G.FONT,
+        font     = _G.FONTS.default,
         fontSize = App:adaptToRatio(10),
     })
 
@@ -371,7 +371,7 @@ function Chapters:summary(options)
             y        = textY,
             width    = panel.width * 0.5,
             height   = panel.height * 0.38,
-            font     = _G.FONT,
+            font     = _G.FONTS.default,
             fontSize = App:adaptToRatio(12)
         })
 

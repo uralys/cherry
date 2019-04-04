@@ -17,7 +17,7 @@ function Counter:create(options)
     x         = 0,
     y         = 0,
     iconScale = 1,
-    font      = _G.FONT,
+    font      = _G.FONTS.default,
     fontSize  = 45,
     value     = '0',
     icon      = 'cherry/assets/images/gui/items/gem.green.png',

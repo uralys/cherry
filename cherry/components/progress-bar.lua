@@ -201,7 +201,7 @@ function ProgressBar:addText()
     value    = '',
     x        = 0,
     y        = 0,
-    font     = _G.FONT,
+    font     = _G.FONTS.default,
     fontSize = self.progress.height*0.7,
   })
 end

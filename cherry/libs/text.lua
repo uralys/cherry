@@ -125,7 +125,7 @@ function Text.appearFromSides(leftMessage, rightMessage, options)
         text     = leftMessage,
         x        = - display.contentWidth * 0.5,
         y        = options.y,
-        font     = _G.FONT,
+        font     = _G.FONTS.default,
         fontSize = options.fontSize,
         color    = options.color
     })
@@ -135,7 +135,7 @@ function Text.appearFromSides(leftMessage, rightMessage, options)
         text     = rightMessage,
         x        = display.contentWidth * 1.5,
         y        = options.y,
-        font     = _G.FONT,
+        font     = _G.FONTS.default,
         fontSize = options.fontSize,
         color    = options.color
     })

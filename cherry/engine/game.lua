@@ -151,7 +151,7 @@ function Game:displayText(options)
   )
 
   local introText =
-    display.newText(App.hud, options.text, 0, 0, _G.FONT, options.fontSize)
+    display.newText(App.hud, options.text, 0, 0, _G.FONTS.default, options.fontSize)
 
   introText:setFillColor(255)
   introText.x = display.contentWidth * 0.1

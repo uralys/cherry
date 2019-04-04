@@ -205,7 +205,7 @@ function Level:buildNum()
         self.level,
         self.bg.x,
         self.bg.y - 10,
-        _G.FONT,
+        _G.FONTS.default,
         60
     );
 

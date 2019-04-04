@@ -32,7 +32,7 @@ function Banner:large(options)
         curveSize  = curveSize,
         x          = 0,
         y          = curveSize*0.965,
-        font       = _G.FONT,
+        font       = _G.FONTS.default,
         fontSize   = options.fontSize or 10
     })
 
@@ -68,7 +68,7 @@ function Banner:simple(options)
         curveSize  = curveSize,
         x          = 0,
         y          = curveSize*0.985,
-        font       = _G.FONT,
+        font       = _G.FONTS.default,
         fontSize   = options.fontSize or 10
     })
 

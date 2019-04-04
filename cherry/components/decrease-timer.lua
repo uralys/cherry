@@ -17,7 +17,7 @@ function Timer:create(options)
     {
       x = 0,
       y = 0,
-      font = _G.FONT,
+      font = _G.FONTS.default,
       color = '#ffffff',
       fontSize = 40,
       align = 'center',

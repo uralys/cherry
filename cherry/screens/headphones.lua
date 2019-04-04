@@ -27,7 +27,7 @@ function scene:create( event )
         x        = display.contentWidth * 0.5,
         y        = display.contentHeight * 0.5,
         text     = 'You should use headphones for a complete experience',
-        font     = _G.FONT,
+        font     = _G.FONTS.default,
         fontSize = App:adaptToRatio(15),
         width    = display.contentWidth * 0.4
     })

@@ -36,7 +36,7 @@ function Button:round(options)
         text     = options.label or '',
         x        = 0,
         y        = 0,
-        font     = _G.FONT,
+        font     = _G.FONTS.default,
         fontSize = 60
     });
 
