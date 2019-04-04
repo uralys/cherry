@@ -32,7 +32,7 @@ function Router:openScreen(id, class, params)
         params = params
     }
     self:resetScreen()
-    analytics.pageview(id)
+    analytics.screenview(id)
 
     Router.view = id
     _G.log('[Router] ---> ' .. Router.view )

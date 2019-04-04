@@ -15,7 +15,7 @@ describe('[analytics]', function()
     stub(_G.http, 'post')
 
     analytics.init('plop', 'plup', 'plip', 'ploup', 'plep')
-    analytics.pageview('page')
+    analytics.screenview('page')
 
     assert.stub(_G.http.post).was.called(1)
     assert.stub(_G.http.post).was.called_with(
