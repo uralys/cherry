@@ -382,7 +382,7 @@ local function drawBackArrow()
       y = 50,
       scale = 0.7,
       action = function()
-        Router:open(Router.HOME)
+        Router:open(App.screens.HOME)
       end
     }
   )

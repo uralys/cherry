@@ -46,6 +46,7 @@ local App = {
   usePhysics = false,
   useNamePicker = true,
   hasTutorial = false,
+  showHeadphonesScreen = true,
   -----------------------------------------
   extension = {
     game = demo
@@ -140,17 +141,21 @@ function App:ready()
     _G.log('--------------------------------')
     _G.Router:open(_G.Router.PLAYGROUND)
   else
-    local nextView = _G.Router.HOME
+    local nextView = App.screens.HOME
     if (self.user:isNew() and App.hasTutorial) then
       nextView = _G.Router.PLAYGROUND
     end
 
-    _G.Router:open(
-      _G.Router.HEADPHONES,
-      {
-        nextView = nextView
-      }
-    )
+    if (self.showHeadphonesScreen) then
+      _G.Router:open(
+        _G.Router.HEADPHONES,
+        {
+          nextView = nextView
+        }
+      )
+    else
+      Router:open(nextView)
+    end
   end
 end
 
