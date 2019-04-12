@@ -204,6 +204,8 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 
 ## [todo] Doc to provide
 
+- screens : HOME required
+
 ##### waiting for the doc, read the code
 
 - Look in app.App to see what you may override with `App:start(options)`

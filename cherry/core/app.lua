@@ -24,6 +24,13 @@ local App = {
     default = 'cherry/assets/PatrickHand-Regular.ttf'
   },
   -----------------------------------------
+  screens = {
+    HOME = 'home',
+    LEADERBOARD = 'leaderboard',
+    PLAYGROUND = 'playground',
+    HEADPHONES = 'headphones'
+  },
+  -----------------------------------------
   background = {
     light = 'cherry/assets/images/background-light.jpg',
     dark = 'cherry/assets/images/background-dark.jpg'
@@ -64,9 +71,11 @@ local App = {
 
 function App:start(options)
   options = options or {}
+  local screens = _.extend(App.screens, options.screens)
   local images = _.extend(App.images, options.images)
   App = _.extend(App, options)
   App.images = images
+  App.screens = screens
 
   _G = _.extend(_G, options.globals)
 
