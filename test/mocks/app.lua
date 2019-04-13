@@ -6,6 +6,12 @@ local App = {
   end,
   width = 640,
   height = 1280,
+  screens = {
+    HOME = 'home',
+    LEADERBOARD = 'leaderboard',
+    PLAYGROUND = 'playground',
+    HEADPHONES = 'headphones'
+  },
   images = {
     star = 'items/star.icon.png',
     heart = 'items/heart.png',

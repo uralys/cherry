@@ -15,6 +15,7 @@ end
 
 function scene:show(event)
   if (event.phase == 'did') then
+    _G.log('on show')
   end
 end
 
@@ -22,6 +23,7 @@ end
 
 function scene:hide(event)
   if (event.phase == 'did') then
+    _G.log('on hide')
   end
 end
 

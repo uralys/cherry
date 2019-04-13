@@ -148,16 +148,16 @@ function App:ready()
   elseif (App.EDITOR_TESTING or App.LEVEL_TESTING) then
     _G.log(' --> forced playground')
     _G.log('--------------------------------')
-    _G.Router:open(_G.Router.PLAYGROUND)
+    _G.Router:open(App.screens.PLAYGROUND)
   else
     local nextView = App.screens.HOME
     if (self.user:isNew() and App.hasTutorial) then
-      nextView = _G.Router.PLAYGROUND
+      nextView = App.screens.PLAYGROUND
     end
 
     if (self.showHeadphonesScreen) then
       _G.Router:open(
-        _G.Router.HEADPHONES,
+        App.screens.HEADPHONES,
         {
           nextView = nextView
         }
