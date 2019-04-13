@@ -205,6 +205,8 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 ## [todo] Doc to provide
 
 - screens : HOME required
+- App.hud: empty between screens | on front
+- App.display: common between screens | on back
 
 ##### waiting for the doc, read the code
 

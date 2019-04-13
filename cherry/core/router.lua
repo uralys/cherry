@@ -42,8 +42,14 @@ end
 
 function Router:open(id, params)
   local class
+  local ok =
+    pcall(
+    function()
+      require('src.screens.' .. id)
+    end
+  )
 
-  if (table.contains(App.screens, id)) then
+  if (ok) then
     class = 'src.screens.' .. id
   else
     class = 'cherry.screens.' .. id
