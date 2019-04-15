@@ -28,3 +28,7 @@ _G.Sound = require 'cherry.engine.sound'
 
 _G.W = display.contentWidth
 _G.H = display.contentHeight
+
+--------------------------------------------------------------------------------
+-- https://docs.coronalabs.com/tutorial/media/extendAnchors/index.html#extending-anchor-points-1
+display.setDefault('isAnchorClamped', false)
