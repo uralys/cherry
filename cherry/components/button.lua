@@ -2,6 +2,7 @@
 
 local _ = require 'cherry.libs.underscore'
 local animation = require 'cherry.libs.animation'
+local colorize = require 'cherry.libs.colorize'
 local gesture = require 'cherry.libs.gesture'
 local file = _G.file or require 'cherry.libs.file'
 local Text = require 'cherry.components.text'
@@ -141,6 +142,8 @@ function Button:text(options)
           color = '#ffffff'
         }
       ),
+      anchorX = 0.5,
+      anchorY = 0.5,
       x = 0,
       y = 0
     }
@@ -150,9 +153,25 @@ function Button:text(options)
   options.parent:insert(button)
   button.x = options.x
   button.y = options.y
+  button.anchorChildren = true
+  button.anchorX = options.anchorX
+  button.anchorY = options.anchorY
 
-  local bg = display.newImage(button, options.bg.image)
-  bg:scale(options.bg.xScale, options.bg.yScale)
+  if (options.bg.color) then
+    local bg =
+      display.newRoundedRect(
+      button,
+      0,
+      0,
+      options.bg.width,
+      options.bg.height,
+      options.bg.cornerRadius
+    )
+    bg:setFillColor(colorize(options.bg.color))
+  else
+    local bg = display.newImage(button, options.bg.image)
+    bg:scale(options.bg.xScale, options.bg.yScale)
+  end
 
   Text:create(
     {
