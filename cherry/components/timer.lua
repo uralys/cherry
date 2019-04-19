@@ -80,10 +80,19 @@ function Timer:step()
     timer.performWithDelay(
     50,
     function()
-      local elapsedTime = system.getTimer() - self.lastTime
-      self.currentMillis = self.currentMillis + elapsedTime
-      self:refresh()
-      self:step()
+      pcall(
+        function()
+          if (not self.currentDelay) then
+            -- stopped meanwhile
+            return
+          end
+
+          local elapsedTime = system.getTimer() - self.lastTime
+          self.currentMillis = self.currentMillis + elapsedTime
+          self:refresh()
+          self:step()
+        end
+      )
     end
   )
 end
@@ -103,6 +112,7 @@ end
 --------------------------------------------------------------------------------
 
 function Timer:destroy()
+  self:stop()
   self.text:destroy()
 end
 
