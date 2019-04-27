@@ -53,7 +53,7 @@ function Options:drawLeaderboardButton(view)
       y = LEADERBOARD_BUTTON_Y,
       scale = .7,
       action = function()
-        Router:open(Router.LEADERBOARD)
+        Router:open(App.screens.LEADERBOARD)
       end
     }
   )

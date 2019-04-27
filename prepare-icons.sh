@@ -31,8 +31,11 @@ convert "$iosBase" -resize '120x120'    -unsharp 1x4 "$xcassetsPath/Icon-60@2x.p
 convert "$iosBase" -resize '180x180'    -unsharp 1x4 "$xcassetsPath/Icon-60@3x.png"
 convert "$iosBase" -resize '76x76'      -unsharp 1x4 "$xcassetsPath/Icon-76.png"
 convert "$iosBase" -resize '152x152'    -unsharp 1x4 "$xcassetsPath/Icon-76@2x.png"
+convert "$iosBase" -resize '120x120'    -unsharp 1x4 "$xcassetsPath/Icon-120.png"
+convert "$iosBase" -resize '152x152'    -unsharp 1x4 "$xcassetsPath/Icon-152.png"
 convert "$iosBase" -resize '167x167'    -unsharp 1x4 "$xcassetsPath/Icon-167.png"
 convert "$iosBase" -resize '1024x1024'  -unsharp 1x4 "$xcassetsPath/Icon-1024.png"
+echo "created iOS icons in $xcassetsPath/"
 
 ## -----------------------------------------------------------------------------
 echo 'creating android icons...'
@@ -42,5 +45,6 @@ convert "$androidBase" -resize '72x72'     -unsharp 1x4 "$androidPath/Icon-hdpi.
 convert "$androidBase" -resize '96x96'     -unsharp 1x4 "$androidPath/Icon-xhdpi.png"
 convert "$androidBase" -resize '144x144'   -unsharp 1x4 "$androidPath/Icon-xxhdpi.png"
 convert "$androidBase" -resize '192x192'   -unsharp 1x4 "$androidPath/Icon-xxxhdpi.png"
+echo "created iOS icons in $androidPath/"
 
 echo 'done!'

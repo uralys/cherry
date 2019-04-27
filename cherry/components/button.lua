@@ -118,7 +118,9 @@ function Button:icon(options)
 end
 --------------------------------------------------------------------------------
 
-function Button:text(options)
+-- if options.bg = false --> only text button
+-- if options.bg is not defined --> default bg is rectangle
+function Button:create(options)
   options = options or {}
   options =
     _.defaults(
@@ -131,6 +133,7 @@ function Button:text(options)
           image = 'cherry/assets/images/gui/buttons/rectangle.png',
           xScale = 1,
           yScale = 1
+          -- color = if defined, colorize bg
         }
       ),
       text = _.defaults(
@@ -157,20 +160,25 @@ function Button:text(options)
   button.anchorX = options.anchorX
   button.anchorY = options.anchorY
 
-  if (options.bg.color) then
-    local bg =
-      display.newRoundedRect(
-      button,
-      0,
-      0,
-      options.bg.width,
-      options.bg.height,
-      options.bg.cornerRadius
-    )
-    bg:setFillColor(colorize(options.bg.color))
-  else
-    local bg = display.newImage(button, options.bg.image)
-    bg:scale(options.bg.xScale, options.bg.yScale)
+  local bg
+  if (options.bg) then
+    if (options.bg.width) then
+      bg =
+        display.newRoundedRect(
+        button,
+        0,
+        0,
+        options.bg.width,
+        options.bg.height,
+        options.bg.cornerRadius
+      )
+    else
+      bg = display.newImage(button, options.bg.image)
+      bg:scale(options.bg.xScale, options.bg.yScale)
+    end
+    if (options.bg.color) then
+      bg:setFillColor(colorize(options.bg.color))
+    end
   end
 
   Text:create(
