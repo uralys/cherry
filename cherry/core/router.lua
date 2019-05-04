@@ -33,8 +33,8 @@ function Router:openScreen(id, class, params)
   analytics.screenview(id)
 
   Router.view = id
-  _G.log('[Router] ---> ' .. Router.view)
 
+  _G.logOneLine({'[Router:openScreen]', id = id, class = class})
   _G.composer.gotoScene(class, options)
 end
 

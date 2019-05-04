@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/chrisdugne/cherry.svg?branch=master)](https://travis-ci.com/chrisdugne/cherry)
 [![codecov](https://codecov.io/gh/chrisdugne/cherry/branch/master/graph/badge.svg)](https://codecov.io/gh/chrisdugne/cherry)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-green.svg?colorB=3cc712)](LICENSE)
-[![GitHub release](https://img.shields.io/github/release/chrisdugne/cherry.svg)](Release)
+[![GitHub release](https://img.shields.io/github/release/chrisdugne/cherry.svg)](https://github.com/chrisdugne/cherry/releases)
 
 Cherry is a starter for `CoronaSDK App` to help building your game.
 

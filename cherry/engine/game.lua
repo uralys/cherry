@@ -87,7 +87,7 @@ end
 --------------------------------------------------------------------------------
 
 function Game:start()
-  _G.isTutorial = App.user:isNew()
+  _G.isTutorial = App.user:isNew() and not _G['test-level']
   self:reset()
 
   if (self.load) then
@@ -121,7 +121,7 @@ function Game:stop(noScore)
 
   if (not noScore) then
     Screen:showBands()
-    if (not App.user:name()) then
+    if (not App.user:name() and App.useNamePicker) then
       App.namePicker:display(App.score.display)
     else
       App.score:display()
@@ -151,7 +151,14 @@ function Game:displayText(options)
   )
 
   local introText =
-    display.newText(App.hud, options.text, 0, 0, _G.FONTS.default, options.fontSize)
+    display.newText(
+    App.hud,
+    options.text,
+    0,
+    0,
+    _G.FONTS.default,
+    options.fontSize
+  )
 
   introText:setFillColor(255)
   introText.x = display.contentWidth * 0.1

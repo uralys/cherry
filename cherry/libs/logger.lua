@@ -14,3 +14,7 @@ _G.log = _G.log or function(stuff, ...)
       print(prefix, stuff, unpack(args))
     end
   end
+
+_G.logOneLine = function(stuff)
+  _G.log(stuff, {newline = ''})
+end
