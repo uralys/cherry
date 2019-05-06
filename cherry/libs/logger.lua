@@ -3,7 +3,7 @@ local unpack = table.unpack or unpack
 _G.log = _G.log or function(stuff, ...)
     local args = {...}
     local prefix = ''
-    if (App.name) then
+    if (App and App.name) then
       prefix = '[' .. App.name .. ']'
     end
 
