@@ -9,16 +9,26 @@ local AppleShop = {}
 --------------------------------------------------------------------------------
 
 function AppleShop:getProductId(nbGems)
-  local id = 'uralys.kodo.gems.' .. nbGems
-  if (nbGems == 100) then
-    id = id .. 'w'
-  end -- ^%$# review + uniqueid
-  return id
+  if (App.iap.ios) then
+    return App.iap.ios[nbGems]
+  else
+    return App.iap[nbGems]
+  end
 end
 
 function AppleShop:getGemsFromId(id)
-  local nbGems = id:split('uralys.kodo.gems.')[2]:split('w')[1]
-  return tonumber(nbGems)
+  local t
+  if (App.iap.ios) then
+    t = App.iap.ios
+  else
+    t = App.iap
+  end
+
+  for nbGems, _id in pairs(t) do
+    if (_id == id) then
+      return nbGems
+    end
+  end
 end
 
 --------------------------------------------------------------------------------

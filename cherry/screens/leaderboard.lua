@@ -68,6 +68,7 @@ local function fetchRank(field, next)
   local url =
     App.API_GATEWAY_URL ..
     '/rank/' .. App.name .. '/' .. field.name .. '/' .. score
+
   http.get(
     url,
     function(aws)
@@ -315,7 +316,7 @@ refreshBoard = function(field)
   if (not isBoardFetched) then
     fetchBoard(field)
   else
-    if (Router.view ~= Router.LEADERBOARD) then
+    if (Router.view ~= App.screens.LEADERBOARD) then
       return
     end
 

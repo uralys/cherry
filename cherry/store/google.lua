@@ -9,13 +9,15 @@ local GoogleShop = {}
 --------------------------------------------------------------------------------
 
 function GoogleShop:getProductId(nbGems)
-  local id = 'uralys.kodo.gems.' .. nbGems
-  return id
+  return App.iap[nbGems]
 end
 
 function GoogleShop:getGemsFromId(id)
-  local nbGems = id:split('uralys.kodo.gems.')[2]
-  return tonumber(nbGems)
+  for nbGems, _id in pairs(App.iap) do
+    if (_id == id) then
+      return nbGems
+    end
+  end
 end
 
 local function isConsumable(id)
