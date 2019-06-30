@@ -91,6 +91,7 @@ function App:start(options)
   _G.log(options.globals)
   _G.log('--------------------------------')
 
+  self:listenSystemEvents()
   self:deviceSetup()
   self:setup()
   self:loadSettings()
@@ -247,6 +248,25 @@ function App:deviceSetup()
     Runtime:removeEventListener('key', onKeyEvent)
     Runtime:addEventListener('key', onKeyEvent)
   end
+end
+
+--------------------------------------------------------------------------------
+
+function App:listenSystemEvents()
+  local onSystemEvent = function(event)
+    local eventType = event.type
+
+    if (eventType == 'applicationOpen' or eventType == 'applicationStart') then
+      _G.log({eventType, launchArgs = _G.launchArgs})
+      local startupUrl = _G.launchArgs and _G.launchArgs.url or event.url
+      if (startupUrl) then
+        _G.log('start with:', startupUrl)
+      end
+    end
+  end
+
+  _G.log('Listening system events...')
+  Runtime:addEventListener('system', onSystemEvent)
 end
 
 --------------------------------------------------------------------------------
