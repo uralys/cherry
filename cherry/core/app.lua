@@ -123,11 +123,10 @@ end
 --------------------------------------------------------------------------------
 
 function App:ready()
+  self.namePicker = NamePicker:new()
   self.game = Game:new(App.extension.game)
   self.user = User:new(App.extension.user)
   self.user:load()
-
-  self.namePicker = NamePicker:new()
 
   self.score = Score:new(App.extension.score)
   self.sound = Sound:init(App.extension.sound)

@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-local _           = require 'cherry.libs.underscore'
+local _ = require 'cherry.libs.underscore'
 local generateUID = require 'cherry.libs.generate-uid'
 local toVersionNum = require 'cherry.libs.version-number'
 local file = _G.file or require 'cherry.libs.file'
@@ -12,9 +12,9 @@ local User = {}
 --------------------------------------------------------------------------------
 
 function User:new(extension)
-  local user = _.extend({}, extension);
-  setmetatable(user, { __index = User })
-  return user;
+  local user = _.extend({}, extension)
+  setmetatable(user, {__index = User})
+  return user
 end
 
 --------------------------------------------------------------------------------
@@ -27,11 +27,11 @@ end
 -- end
 --
 function User:load()
-  self.savedData = file.loadUserData('savedData.json');
+  self.savedData = file.loadUserData('savedData.json')
 
   -- preparing data
-  if(not self.savedData) then
-    self:resetSavedData()
+  if (not self.savedData) then
+    self:createSavedData()
   end
 
   if (self.onLoad) then
@@ -42,19 +42,20 @@ function User:load()
 end
 
 function User:tryToSync()
-  if(self.sync and self:mustSync()) then
+  if (self.sync and self:mustSync()) then
     self:sync()
   end
 end
 
 --------------------------------------------------------------------------------
--- 'resetSavedData' should be for admin/test only
-function User:resetSavedData()
+
+function User:createSavedData()
   local previousSavedData = self.savedData
 
   self.savedData = {
     version = toVersionNum(App.version),
-    deviceId = (previousSavedData ~= nil and previousSavedData.deviceId) or generateUID(),
+    deviceId = (previousSavedData ~= nil and previousSavedData.deviceId) or
+      generateUID(),
     tutorial = false,
     options = {
       sound = true,
@@ -64,10 +65,10 @@ function User:resetSavedData()
     users = {
       {}
     }
-  };
+  }
 
-  if (self.onResetSavedData) then
-    self:onResetSavedData(previousSavedData) -- from extension
+  if (self.onCreateSavedData) then
+    self:onCreateSavedData(previousSavedData) -- from extension
   end
 
   self:save()
@@ -81,19 +82,20 @@ function User:saveSoundSettings(soundOff)
 end
 
 function User:isSoundOff()
-  return not self.savedData.options.sound;
+  return not self.savedData.options.sound
 end
 
 function User:id()
-  return self.savedData.users[self.savedData.currentUser].id;
+  return self.savedData.users[self.savedData.currentUser].id
 end
 
 function User:name()
-  return self.savedData.users[self.savedData.currentUser].name;
+  return self.savedData.users[self.savedData.currentUser].name
 end
 
 function User:newProfile(name)
-  if(self.savedData.users[self.savedData.currentUser].name) then
+  _G.log('newProfile', name)
+  if (self.savedData.users[self.savedData.currentUser].name) then
     self.savedData.currentUser = #self.savedData.users + 1
   else
     self.savedData.currentUser = 1
@@ -104,11 +106,16 @@ function User:newProfile(name)
     gameUserData = self:extendNewUser() -- from extension
   end
 
-  local newUser = _.extend({
-    id = generateUID(),
-    name = name
-  }, gameUserData)
+  local newUser =
+    _.extend(
+    {
+      id = generateUID(),
+      name = name
+    },
+    gameUserData
+  )
 
+  _G.log({newUser})
   self.savedData.users[self.savedData.currentUser] = newUser
 
   self:save()
@@ -177,7 +184,9 @@ end
 
 function User:getBestScore(field)
   local user = self.savedData.users[self.savedData.currentUser]
-  if(not user.bestScores) then return nil end
+  if (not user.bestScores) then
+    return nil
+  end
   return user.bestScores[field]
 end
 
