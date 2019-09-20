@@ -53,7 +53,7 @@ local App = {
   usePhysics = false,
   useNamePicker = true,
   hasTutorial = false,
-  showHeadphonesScreen = true,
+  showHeadphonesScreen = false,
   -----------------------------------------
   extension = {
     game = demo

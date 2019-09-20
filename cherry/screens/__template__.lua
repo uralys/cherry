@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 
 local composer = require 'composer'
+local _ = require 'cherry.libs.underscore'
 
 --------------------------------------------------------------------------------
 
@@ -13,9 +14,14 @@ end
 
 --------------------------------------------------------------------------------
 
+function scene:resetView()
+end
+
+--------------------------------------------------------------------------------
+
 function scene:show(event)
   if (event.phase == 'did') then
-    _G.log('on show')
+    self:resetView()
   end
 end
 
@@ -23,7 +29,7 @@ end
 
 function scene:hide(event)
   if (event.phase == 'did') then
-    _G.log('on hide')
+    _G.log('hide')
   end
 end
 

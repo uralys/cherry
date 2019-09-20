@@ -17,6 +17,7 @@ function Text:create(options)
     {
       x = 0,
       y = 0,
+      grow = false,
       font = _G.FONTS.default,
       color = '#ffffff',
       fontSize = 40

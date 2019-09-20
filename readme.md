@@ -186,6 +186,14 @@ To display your `_G.log()` use:
 > make test verbose=true
 ```
 
+To add tests to your game, use the mocks provided by Cherry:
+
+```sh
+mkdir test
+cd test
+ln -s ../../../Cherry/test/mocks mocks
+```
+
 ## BSD License
 
 You may use Cherry or a part of it in a free or commercial game or app, providing you follow the [BSD](http://www.linfo.org/bsdlicense.html) crediting requirements, provided in the project [LICENSE](https://github.com/chrisdugne/cherry/blob/master/LICENSE)

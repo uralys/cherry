@@ -261,6 +261,19 @@ _currentStage.setFocus = function(self, focus)
 end
 
 display = {
+  newCircle = function(parent, x, y, radius)
+    local circle = newDisplayObject()
+    circle.x = x
+    circle.y = y
+    circle.contentBounds = {
+      xMin = x - radius,
+      xMax = x + radius,
+      yMin = y - radius,
+      yMax = y + radius
+    }
+    parent:insert(circle)
+    return circle
+  end,
   newRect = function(x, y, width, height)
     local rect = newDisplayObject()
     rect.x = x
@@ -292,7 +305,7 @@ display = {
         table.remove(group.children, rem)
       end
     end
-    group.removeSelf = function()
+    group.removeSelf = function(self)
       for i = #group.children, 1, -1 do
         group.children[i]:removeSelf()
         table.remove(group.children, i)
