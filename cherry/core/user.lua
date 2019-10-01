@@ -19,7 +19,7 @@ end
 
 --------------------------------------------------------------------------------
 
--- exemple extention.onLoad:
+-- example extention.onLoad:
 -- function User:onLoad()
 --   if(self.savedData.version < 20000) then
 --     manually update self.savedData

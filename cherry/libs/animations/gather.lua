@@ -1,6 +1,5 @@
 --------------------------------------------------------------------------------
 
-local Group = require 'cherry.libs.group'
 local isArray = require 'cherry.libs.is-array'
 
 --------------------------------------------------------------------------------
@@ -33,7 +32,7 @@ local function gather(movables, options)
     local stageX, stageY = movable:localToContent(0, 0)
 
     local x, y = newParent:contentToLocal(stageX, stageY)
-    Group.destroy(movable)
+    display.remove(movable)
 
     local c
     if (options.createElement) then
@@ -68,7 +67,7 @@ local function gather(movables, options)
           if (options.onStepComplete) then
             options.onStepComplete(num)
           end
-          Group.destroy(c)
+          display.remove(c)
         end
       }
     )
