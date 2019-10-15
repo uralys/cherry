@@ -1,4 +1,4 @@
-local function isArray (objects)
+local function isArray(objects)
   local isNotObject = getmetatable(objects) == nil
   local isTable = type(objects) == 'table'
   local result = isNotObject and isTable

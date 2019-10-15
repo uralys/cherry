@@ -14,25 +14,23 @@ local isArray = require 'cherry.libs.is-array'
 --  ?onComplete,
 --  ?onStepComplete
 -- } = options
-local function gather(movables, options)
-  if (not isArray(movables)) then
-    movables = {movables}
+local function gather(stageCoordinates, options)
+  if (not isArray(stageCoordinates)) then
+    stageCoordinates = {stageCoordinates}
   end
   local newParent = options.newParent
 
   local TIME = options.stepTime or 600
 
   if (options.onComplete) then
-    local totalTime = TIME - 50 + #movables * 50
+    local totalTime = TIME - 50 + #stageCoordinates * 50
     timer.performWithDelay(totalTime, options.onComplete)
   end
 
-  for num = 1, #movables do
-    local movable = movables[num]
-    local stageX, stageY = movable:localToContent(0, 0)
-
+  for num = 1, #stageCoordinates do
+    local stageX = stageCoordinates[num].stageX
+    local stageY = stageCoordinates[num].stageY
     local x, y = newParent:contentToLocal(stageX, stageY)
-    display.remove(movable)
 
     local c
     if (options.createElement) then
