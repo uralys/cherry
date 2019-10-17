@@ -1,12 +1,11 @@
 --------------------------------------------------------------------------------
 
-local _     = require 'cherry.libs.underscore'
-local group = require 'cherry.libs.group'
+local _ = require 'cherry.libs.underscore'
 
 local Camera = {
   options = {},
   display = display.newGroup(),
-  zoom    = 1
+  zoom = 1
 }
 
 --------------------------------------------------------------------------------
@@ -33,7 +32,8 @@ end
 --------------------------------------------------------------------------------
 
 function Camera:empty()
-  group.empty(self.display)
+  display.remove(self.display)
+  self.display = display.newGroup()
 end
 
 --------------------------------------------------------------------------------
@@ -64,62 +64,64 @@ function Camera:center()
   self.display.y = INIT_Y
 
   -- reset then apply
-    self.display.xScale = 1
-    self.display.yScale = 1
-    self.display:scale(self.zoom, self.zoom)
+  self.display.xScale = 1
+  self.display.yScale = 1
+  self.display:scale(self.zoom, self.zoom)
+end
+
+--------------------------------------------------------------------------------
+
+function Camera:start(options)
+  self.options = _.extend(self.options, options)
+  transition.cancel(self.display)
+  self.display.alpha = 1
+  App.hud:toFront()
+
+  self.moveDisplay = function()
+    if (self.shakeCount % shakePeriod == 0) then
+      self.display.x = self.display.x0 + math.random(-xShake, xShake)
+      self.display.y = self.display.y0 + math.random(-yShake, yShake)
+    end
+    self.shakeCount = self.shakeCount + 1
   end
 
-  --------------------------------------------------------------------------------
-
-  function Camera:start(options)
-    self.options = _.extend(self.options, options)
-    transition.cancel(self.display)
-    self.display.alpha = 1
-    App.hud:toFront()
-
-    self.moveDisplay = function()
-      if(self.shakeCount % shakePeriod == 0 ) then
-        self.display.x = self.display.x0 + math.random( -xShake, xShake )
-        self.display.y = self.display.y0 + math.random( -yShake, yShake )
-      end
-      self.shakeCount = self.shakeCount + 1
-    end
-
-    self.startShake = function()
-      self.display.x0 = self.display.x
-      self.display.y0 = self.display.y
-      self.shakeCount = 0
-      Runtime:addEventListener( 'enterFrame', self.moveDisplay )
-    end
-
-    self.stopShake = function()
-      Runtime:removeEventListener( 'enterFrame', self.moveDisplay )
-      self.display.x = INIT_X
-      self.display.y = INIT_Y
-      self.shaking = false
-    end
+  self.startShake = function()
+    self.display.x0 = self.display.x
+    self.display.y0 = self.display.y
+    self.shakeCount = 0
+    Runtime:addEventListener('enterFrame', self.moveDisplay)
   end
 
-  function Camera:shake()
-    if(self.shaking) then
-      timer.cancel(self.shaking)
-      self.stopShake()
-    end
+  self.stopShake = function()
+    Runtime:removeEventListener('enterFrame', self.moveDisplay)
+    self.display.x = INIT_X
+    self.display.y = INIT_Y
+    self.shaking = false
+  end
+end
 
-    self.startShake()
-    self.shaking = timer.performWithDelay(250, self.stopShake)
+function Camera:shake()
+  if (self.shaking) then
+    timer.cancel(self.shaking)
+    self.stopShake()
   end
 
-  function Camera:stop()
-    transition.to (self.display, {
+  self.startShake()
+  self.shaking = timer.performWithDelay(250, self.stopShake)
+end
+
+function Camera:stop()
+  transition.to(
+    self.display,
+    {
       alpha = 0,
       time = 500,
       xScale = 0.01,
       yScale = 0.01
-    })
-  end
+    }
+  )
+end
 
-  --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-  return Camera
-
+return Camera

@@ -3,7 +3,6 @@
 local _ = require 'cherry.libs.underscore'
 local colorize = require 'cherry.libs.colorize'
 local gesture = require 'cherry.libs.gesture'
-local group = require 'cherry.libs.group'
 
 --------------------------------------------------------------------------------
 
@@ -122,7 +121,8 @@ function Background:hideBlur()
       alpha = 0,
       time = 300,
       onComplete = function()
-        group.destroy(self.blurBG)
+        display.remove(self.blurBG)
+        self.blurBG = nil
       end
     }
   )

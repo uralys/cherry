@@ -3,7 +3,6 @@
 local Background = require 'cherry.components.background'
 local Screen = require 'cherry.components.screen'
 local Effects = require 'cherry.engine.effects'
-local group = require 'cherry.libs.group'
 local _ = require 'cherry.libs.underscore'
 
 --------------------------------------------------------------------------------
@@ -48,7 +47,9 @@ end
 --------------------------------------------------------------------------------
 
 function Game:reset()
-  group.empty(App.hud)
+  display.remove(App.hud)
+  App.hud = display.newGroup()
+
   if (self.onReset) then
     self:onReset()
   end -- from extension

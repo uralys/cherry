@@ -2,7 +2,6 @@
 
 local _ = require 'cherry.libs.underscore'
 local analytics = require 'cherry.libs.analytics'
-local group = require 'cherry.libs.group'
 local Screen = require 'cherry.components.screen'
 local Effects = require 'cherry.engine.effects'
 
@@ -16,7 +15,9 @@ local Router = {
 
 function Router:resetScreen()
   Effects:stop(true)
-  group.empty(App.hud)
+  display.remove(App.hud)
+  App.hud = display.newGroup()
+
   Effects:start()
   if (Screen.reset) then
     Screen:reset()

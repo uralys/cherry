@@ -17,9 +17,11 @@ expose(
     _G.FONTS = {default = ''}
 
     _G.easing = {}
-    _G.timer = {performWithDelay = function(time, func)
+    _G.timer = {
+      performWithDelay = function(time, func)
         func()
-      end}
+      end
+    }
 
     _G.DEBUG = os.getenv('DEBUG') -- make busted verbose=true
 

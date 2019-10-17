@@ -1,7 +1,6 @@
 --------------------------------------------------------------------------------
 
 local _ = require 'cherry.libs.underscore'
-local group = require 'cherry.libs.group'
 local Panel = require 'cherry.components.panel'
 local Text = require 'cherry.components.text'
 
@@ -65,7 +64,8 @@ function SimulatorShop:showTestStore(id)
   local _close = function()
     self.display.alpha = 1
     self.buying = false
-    group.destroy(testScore)
+    display.remove(testScore)
+    testScore = nil
   end
 
   Panel:vertical(

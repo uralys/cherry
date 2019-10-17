@@ -3,7 +3,6 @@
 local _ = require 'cherry.libs.underscore'
 local colorize = require 'cherry.libs.colorize'
 local gesture = require 'cherry.libs.gesture'
-local group = require 'cherry.libs.group'
 local http = require 'cherry.libs.http'
 local Background = require 'cherry.components.background'
 local Button = require 'cherry.components.button'
@@ -185,11 +184,11 @@ local function resetView()
     end
 
     if (board.rankComponent) then
-      group.destroy(board.rankComponent)
+      display.remove(board.rankComponent)
       board.rankComponent = nil
     end
 
-    group.destroy(board)
+    display.remove(board)
     board = nil
   end
 end

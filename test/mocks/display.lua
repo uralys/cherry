@@ -307,7 +307,9 @@ display = {
     end
     group.removeSelf = function(self)
       for i = #group.children, 1, -1 do
-        group.children[i]:removeSelf()
+        if (group.children[i].removeself) then
+          group.children[i]:removeSelf()
+        end
         table.remove(group.children, i)
       end
       group = {}
@@ -391,9 +393,15 @@ display = {
 
     newText.x = options.x
     newText.y = options.y
+    newText.align = options.align or 'center'
     newText.text = options.text
     newText.font = options.font
     newText.fontSize = options.fontSize
+
+    if (options.width) then
+      newText.width = options.width
+    end
+
     options.parent:insert(newText)
     return newText
   end,
@@ -414,8 +422,6 @@ display = {
     return newText
   end,
   remove = function(displayObject)
-    assert(displayObject.parent, 'no parent set!')
-    displayObject.parent:remove(displayObject)
     displayObject:removeSelf()
   end,
   setDefault = function()

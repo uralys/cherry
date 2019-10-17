@@ -3,7 +3,6 @@
 local _ = require 'cherry.libs.underscore'
 local animation = require 'cherry.libs.animation'
 local colorize = require 'cherry.libs.colorize'
-local group = require 'cherry.libs.group'
 local gesture = require 'cherry.libs.gesture'
 local Background = require 'cherry.components.background'
 local Banner = require 'cherry.components.banner'
@@ -119,7 +118,15 @@ function NamePicker:createTextBoard(next)
         y = -self.textBoard.panel.height * 0.5 + 10,
         action = function()
           native.setKeyboardFocus(nil)
-          group.destroy(self.textBoard, true)
+
+          animation.easeHide(
+            self.textBoard,
+            function()
+              display.remove(self.textBoard)
+              self.textBoard = nil
+            end
+          )
+
           self:createPlayersBoard(next)
         end
       }
@@ -160,7 +167,14 @@ function NamePicker:createPlayersBoard(next)
   local previousUsersAreDisplayed = self:addPreviousUsers(next)
 
   local openTextBox = function()
-    group.destroy(self.playersBoard, true)
+    animation.easeHide(
+      self.playersBoard,
+      function()
+        display.remove(self.playersBoard)
+        self.playersBoard = nil
+      end
+    )
+
     self:createTextBoard(next)
   end
 
@@ -184,8 +198,22 @@ end
 --------------------------------------------------------------------------------
 
 function NamePicker:close(next)
-  group.destroy(self.textBoard, true)
-  group.destroy(self.playersBoard, true)
+  animation.easeHide(
+    self.textBoard,
+    function()
+      display.remove(self.textBoard)
+      self.textBoard = nil
+    end
+  )
+
+  animation.easeHide(
+    self.playersBoard,
+    function()
+      display.remove(self.playersBoard)
+      self.playersBoard = nil
+    end
+  )
+
   Background:hideBlur()
   if (next) then
     next()

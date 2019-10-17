@@ -166,7 +166,7 @@ function animation.easeHide(object, next, time)
     {
       xScale = 0.01,
       yScale = 0.01,
-      time = time or 450,
+      time = time or 150,
       transition = easing.inCubic,
       onComplete = function()
         if (next) then
