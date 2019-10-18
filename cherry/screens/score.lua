@@ -119,7 +119,7 @@ function Score:display()
   )
 
   self:displayResult(board, bg)
-  animation.easeDisplay(board)
+  animation.pop(board)
 end
 
 --------------------------------------------------------------------------------

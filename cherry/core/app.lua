@@ -64,7 +64,16 @@ local App = {
   ANALYTICS_TRACKING_ID = 'UA-XXXXX-XX',
   -----------------------------------------
   display = display.newGroup(),
-  hud = display.newGroup()
+  hud = display.newGroup(),
+  -----------------------------------------
+  resetDisplay = function()
+    display.remove(App.display)
+    App.display = display.newGroup()
+  end,
+  resetHUD = function()
+    display.remove(App.hud)
+    App.hud = display.newGroup()
+  end
 }
 
 --------------------------------------------------------------------------------

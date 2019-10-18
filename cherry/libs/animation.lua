@@ -88,18 +88,15 @@ end
 
 --------------------------------------------------------
 
-function animation.easeDisplay(object, scale)
-  local scaleTo = scale or object.xScale or 1
-  object.xScale = 0.2
-  object.yScale = 0.2
-
-  return transition.to(
+function animation.pop(object, options)
+  transition.from(
     object,
     {
-      xScale = scaleTo,
-      yScale = scaleTo,
-      time = 350,
-      transition = easing.outCubic
+      xScale = 0.01,
+      yScale = 0.01,
+      time = options.time or 350,
+      delay = options.delay or 0,
+      transition = options.easing or easing.outBack
     }
   )
 end
