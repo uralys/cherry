@@ -265,7 +265,7 @@ function NamePicker:createBoard(options)
     }
   )
 
-  animation.easeDisplay(board)
+  animation.pop(board)
   board:toFront()
   return board
 end
