@@ -3,7 +3,6 @@
 local _ = require 'cherry.libs.underscore'
 local analytics = require 'cherry.libs.analytics'
 local Screen = require 'cherry.components.screen'
-local Effects = require 'cherry.engine.effects'
 
 --------------------------------------------------------------------------------
 
@@ -14,11 +13,7 @@ local Router = {
 --------------------------------------------------------------------------------
 
 function Router:resetScreen()
-  Effects:stop(true)
-  display.remove(App.hud)
-  App.hud = display.newGroup()
-
-  Effects:start()
+  App.resetLayers()
   if (Screen.reset) then
     Screen:reset()
   end
@@ -43,7 +38,7 @@ end
 
 function Router:open(id, params)
   local class
-  local ok =
+  local ok, errorMsg =
     pcall(
     function()
       require('src.screens.' .. id)
@@ -53,6 +48,11 @@ function Router:open(id, params)
   if (ok) then
     class = 'src.screens.' .. id
   else
+    if (App.ENV == 'development') then
+      _G.log('---> info DEV: router fallback cause:')
+      _G.log({errorMsg})
+    end
+
     class = 'cherry.screens.' .. id
   end
 

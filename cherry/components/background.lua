@@ -18,6 +18,24 @@ function Background:lighten()
   self:setDarkBGAplha(0)
 end
 
+function Background:toFront()
+  self.bg:toFront()
+  if (self.darkBG) then
+    self.darkBG:toFront()
+  end
+end
+
+function Background:toBack()
+  self.bg:toBack()
+  if (self.darkBG) then
+    self.darkBG:toBack()
+  end
+end
+
+function Background:lighten()
+  self:setDarkBGAplha(0)
+end
+
 function Background:setDarkBGAplha(alpha)
   transition.to(
     self.darkBG,
@@ -41,11 +59,9 @@ function Background:init(options)
     }
   )
 
-  App.display:toBack()
-
   if (options.color) then
-    local rect = display.newRect(App.display, W / 2, H / 2, W, H)
-    rect:setFillColor(colorize(options.color))
+    self.bg = display.newRect(W / 2, H / 2, W, H)
+    self.bg:setFillColor(colorize(options.color))
   else
     local lightImage = options.light
     local darkImage = options.dark
@@ -54,7 +70,6 @@ function Background:init(options)
 
     self.bg =
       display.newImageRect(
-      App.display,
       lightImage,
       display.contentWidth,
       display.contentHeight
@@ -67,7 +82,6 @@ function Background:init(options)
 
     self.darkBG =
       display.newImageRect(
-      App.display,
       darkImage,
       display.contentWidth,
       display.contentHeight
