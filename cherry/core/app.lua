@@ -63,16 +63,21 @@ local App = {
   FACEBOOK_PAGE = 'https://www.facebook.com/uralys',
   ANALYTICS_TRACKING_ID = 'UA-XXXXX-XX',
   -----------------------------------------
-  display = display.newGroup(),
+  -- layers (+ BG and stage)
+  transversalBackLayer = display.newGroup(),
+  transversalFrontLayer = display.newGroup(),
   hud = display.newGroup(),
   -----------------------------------------
-  resetDisplay = function()
-    display.remove(App.display)
-    App.display = display.newGroup()
+  resetLayers = function()
+    App.transversalBackLayer:toBack()
+    Background:toBack()
+    App.transversalFrontLayer:toFront()
+    App.resetHUD()
   end,
   resetHUD = function()
     display.remove(App.hud)
     App.hud = display.newGroup()
+    App.hud:toFront()
   end
 }
 
