@@ -84,7 +84,9 @@ local function newDisplayObject()
   _displayObject.toBack = function()
   end
   _displayObject.toFront = function()
-    assert(_displayObject.parent, 'no parent set!')
+    if (not _displayObject.parent) then
+      return
+    end
     local c = _displayObject.parent:remove(_displayObject)
     table.insert(c, _displayObject)
   end

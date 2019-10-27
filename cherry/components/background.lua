@@ -80,6 +80,14 @@ function Background:init(options)
       self.bg.fill.effect.intensity = options.desaturate
     end
 
+    if (options.blur) then
+      self.bg.fill.effect = 'filter.blurGaussian'
+      self.bg.fill.effect.horizontal.blurSize = 20
+      self.bg.fill.effect.horizontal.sigma = 70
+      self.bg.fill.effect.vertical.blurSize = 20
+      self.bg.fill.effect.vertical.sigma = 70
+    end
+
     self.darkBG =
       display.newImageRect(
       darkImage,
