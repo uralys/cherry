@@ -181,7 +181,8 @@ function Button:create(options)
     end
   end
 
-  Text:create(
+  button.text =
+    Text:create(
     {
       parent = button,
       x = 0,
@@ -189,7 +190,8 @@ function Button:create(options)
       value = options.text.value,
       font = options.text.font,
       fontSize = options.text.fontSize,
-      color = options.text.color
+      color = options.text.color,
+      align = options.text.align
     }
   )
 

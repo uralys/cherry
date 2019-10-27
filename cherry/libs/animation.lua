@@ -89,11 +89,12 @@ end
 --------------------------------------------------------
 
 function animation.pop(object, options)
+  options = options or {}
   transition.from(
     object,
     {
-      xScale = 0.01,
-      yScale = 0.01,
+      xScale = 0.001,
+      yScale = 0.001,
       time = options.time or 350,
       delay = options.delay or 0,
       transition = options.easing or easing.outBack
