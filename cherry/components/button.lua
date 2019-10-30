@@ -198,29 +198,31 @@ function Button:create(options)
   local SCALE = 0.8
   local scaleFrom = 1
 
-  gesture.onTap(
-    button,
-    function()
-      if (button.locked) then
-        return
-      end
-      button.locked = true
-      animation.touchEffect(
-        button,
-        {
-          scaleTo = SCALE,
-          scaleFrom = scaleFrom,
-          onComplete = function()
-            if (button.scale) then
-              button:scale(scaleFrom / SCALE, scaleFrom / SCALE)
-              button.locked = false
-              timer.performWithDelay(10, options.action)
+  if (options.action) then
+    gesture.onTap(
+      button,
+      function()
+        if (button.locked) then
+          return
+        end
+        button.locked = true
+        animation.touchEffect(
+          button,
+          {
+            scaleTo = SCALE,
+            scaleFrom = scaleFrom,
+            onComplete = function()
+              if (button.scale) then
+                button:scale(scaleFrom / SCALE, scaleFrom / SCALE)
+                button.locked = false
+                timer.performWithDelay(10, options.action)
+              end
             end
-          end
-        }
-      )
-    end
-  )
+          }
+        )
+      end
+    )
+  end
 
   return button
 end

@@ -13,7 +13,7 @@ local Router = {
 --------------------------------------------------------------------------------
 
 function Router:resetScreen()
-  App.resetLayers()
+  App.reorderLayers()
   if (Screen.reset) then
     Screen:reset()
   end
