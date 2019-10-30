@@ -68,7 +68,7 @@ local App = {
   transversalFrontLayer = display.newGroup(),
   hud = display.newGroup(),
   -----------------------------------------
-  resetLayers = function()
+  reorderLayers = function()
     App.transversalBackLayer:toBack()
     Background:toBack()
     App.transversalFrontLayer:toFront()
