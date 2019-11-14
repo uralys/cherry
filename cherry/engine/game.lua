@@ -3,6 +3,7 @@
 local Background = require 'cherry.components.background'
 local Screen = require 'cherry.components.screen'
 local Effects = require 'cherry.engine.effects'
+local colorize = require 'cherry.libs.colorize'
 local _ = require 'cherry.libs.underscore'
 
 --------------------------------------------------------------------------------
@@ -151,6 +152,7 @@ function Game:displayText(options)
     options or {},
     {
       text = '',
+      color = '#ffffff',
       fontSize = 145,
       y = display.contentHeight * 0.5
     }
@@ -166,7 +168,7 @@ function Game:displayText(options)
     options.fontSize
   )
 
-  introText:setFillColor(255)
+  introText:setFillColor(colorize(options.color))
   introText.x = display.contentWidth * 0.1
   introText.y = options.y
   introText.alpha = 0

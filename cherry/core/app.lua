@@ -121,6 +121,7 @@ function App:loadSettings()
 
   -----------------------------')
 
+  App.RESET_USER = settings['reset-user']
   App.SOUND_OFF = settings.silent
   App.EDITOR_TESTING = settings.editor
   App.EDITOR_PLAY = settings.play

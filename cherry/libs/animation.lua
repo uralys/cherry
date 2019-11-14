@@ -90,6 +90,7 @@ end
 
 function animation.pop(object, options)
   options = options or {}
+  transition.cancel(object)
   transition.from(
     object,
     {

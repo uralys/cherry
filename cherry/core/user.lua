@@ -30,7 +30,7 @@ function User:load()
   self.savedData = file.loadUserData('savedData.json')
 
   -- preparing data
-  if (not self.savedData) then
+  if (not self.savedData or App.RESET_USER) then
     self:createSavedData()
   end
 
@@ -54,7 +54,8 @@ function User:createSavedData()
 
   self.savedData = {
     version = toVersionNum(App.version),
-    deviceId = (previousSavedData ~= nil and previousSavedData.deviceId) or
+    deviceId = (previousSavedData ~= nil and previousSavedData.deviceId and
+      not App.RESET_USER) or
       generateUID(),
     tutorial = false,
     options = {
