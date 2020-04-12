@@ -19,7 +19,21 @@ hererocks:
 rocks:
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} dkjson
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luacov
+
+	# deps to luacheck...not auto installed ?
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} argparse
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luafilesystem
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luacheck
+
+
+	# deps to busted...not auto installed ?
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} lua_cliargs
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luasystem
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} say
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luassert
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} lua-term
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} penlight
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} mediator_lua
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} busted
 
 luacheck:
