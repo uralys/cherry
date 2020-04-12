@@ -48,12 +48,16 @@ function Router:open(id, params)
   if (ok) then
     class = 'src.screens.' .. id
   else
-    if (App.ENV == 'development') then
-      _G.log('---> info DEV: router fallback cause:')
-      _G.log({errorMsg})
-    end
-
     class = 'cherry.screens.' .. id
+    if (App.ENV == 'development') then
+      _G.log(
+        '[Router:' ..
+          id ..
+            '] Fallback to default "' ..
+              class ..
+                '": ' .. errorMsg:split('not found')[1] .. 'was not found'
+      )
+    end
   end
 
   self:openScreen(id, class, params)
