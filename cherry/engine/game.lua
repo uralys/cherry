@@ -54,6 +54,7 @@ function Game:reset()
   if (self.onReset) then
     self:onReset()
   end -- from extension
+
   Camera:empty()
   self:resetState()
   self:resetElements()
@@ -83,7 +84,7 @@ function Game:run()
   if (_G.CBE) then
     Effects:restart()
   end
-  print('Game runs!')
+  print('Game runs.')
 end
 
 --------------------------------------------------------------------------------
@@ -116,6 +117,8 @@ function Game:stop(noScore)
   if (not self.isRunning) then
     return
   end
+
+  print('Game stops.')
   self.isRunning = false
 
   ------------------------------------------
@@ -141,6 +144,7 @@ function Game:stop(noScore)
   if (_G.CBE) then
     Effects:stop(true)
   end
+
   Camera:stop()
 end
 

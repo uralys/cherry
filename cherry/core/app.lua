@@ -51,7 +51,7 @@ local App = {
   yGravity = 0,
   -----------------------------------------
   usePhysics = false,
-  useNamePicker = true,
+  useNamePicker = false,
   hasTutorial = false,
   showHeadphonesScreen = false,
   -----------------------------------------
@@ -108,13 +108,19 @@ function App:start(options)
   self:deviceSetup()
   self:setup()
   self:loadSettings()
-  self:ready()
+
+  _G.log('✅ settings are ready.')
+  _G.log('--------------------------------')
+
+  self:create()
+  _G.log('✅ App is running.')
+  _G.log('--------------------------------')
 end
 
 --------------------------------------------------------------------------------
 
 function App:loadSettings()
-  _G.log('---------- SETTINGS ------------')
+  _G.log('Loading settings...')
   local path = 'env/' .. App.ENV .. '.json'
   local settings = file.load(path)
   _G = _.extend(_G, settings)
@@ -138,7 +144,8 @@ end
 
 --------------------------------------------------------------------------------
 
-function App:ready()
+function App:create()
+  _G.log('creating app...')
   self.namePicker = NamePicker:new()
   self.game = Game:new(App.extension.game)
   self.user = User:new(App.extension.user)
@@ -247,6 +254,8 @@ function App:deviceSetup()
       notifications.subscribe(topic)
       _G.log('    Subscribed to topic ' .. topic)
     end
+  else
+    _G.log('  no pushSubscriptions.')
   end
 
   ----------------------------------------------------------------------------

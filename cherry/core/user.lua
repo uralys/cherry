@@ -11,6 +11,9 @@ local User = {}
 
 --------------------------------------------------------------------------------
 
+--- available extension:
+---   onLoad
+---   onCreateSavedData
 function User:new(extension)
   local user = _.extend({}, extension)
   setmetatable(user, {__index = User})
@@ -19,7 +22,7 @@ end
 
 --------------------------------------------------------------------------------
 
--- example extention.onLoad:
+-- example extension.onLoad:
 -- function User:onLoad()
 --   if(self.savedData.version < 20000) then
 --     manually update self.savedData
@@ -27,6 +30,7 @@ end
 -- end
 --
 function User:load()
+  _G.log('[debug] user load')
   self.savedData = file.loadUserData('savedData.json')
 
   -- preparing data
@@ -42,6 +46,7 @@ function User:load()
 end
 
 function User:tryToSync()
+  _G.log('[debug] user tryToSync')
   if (self.sync and self:mustSync()) then
     self:sync()
   end
@@ -50,6 +55,7 @@ end
 --------------------------------------------------------------------------------
 
 function User:createSavedData()
+  _G.log('[debug] user createSavedData')
   local previousSavedData = self.savedData
 
   self.savedData = {
@@ -125,6 +131,7 @@ end
 --------------------------------------------------------------------------------
 
 function User:save()
+  _G.log('[debug] user save')
   file.save(self.savedData, 'savedData.json')
 end
 
@@ -164,6 +171,7 @@ function User:switchToProfile(i)
 end
 
 function User:setSync(state)
+  _G.log('[debug] user setSync', state)
   self.savedData.sync = state
   self:save()
 end
@@ -177,6 +185,7 @@ function User:getUser(i)
 end
 
 function User:onTutorialDone()
+  _G.log('[debug] user onTutorialDone')
   self.savedData.tutorial = true
   self:save()
 end
@@ -184,6 +193,7 @@ end
 --------------------------------------------------------------------------------
 
 function User:getBestScore(field)
+  _G.log('[debug] user getBestScore')
   local user = self.savedData.users[self.savedData.currentUser]
   if (not user.bestScores) then
     return nil
