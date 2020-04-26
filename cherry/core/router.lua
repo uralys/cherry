@@ -30,7 +30,7 @@ function Router:openScreen(id, class, params)
 
   Router.view = id
 
-  _G.logOneLine({'[Router:openScreen]', id = id, class = class})
+  _G.logOneLine({'[🛤  Router:openScreen]', id = id, class = class})
   _G.composer.gotoScene(class, options)
 end
 

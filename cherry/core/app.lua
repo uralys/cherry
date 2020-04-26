@@ -15,10 +15,16 @@ local App = {
   name = 'Uralys',
   cherryVersion = _G.CHERRY_VERSION,
   version = '0.0.1',
-  IOS_ID = 'XXXXX',
   -----------------------------------------
   -- 'production', 'development', 'editor'
   ENV = 'development',
+  -----------------------------------------
+  FACEBOOK_PAGE_ID = '379432705492888',
+  FACEBOOK_PAGE = 'https://www.facebook.com/uralys',
+  ANALYTICS_TRACKING_ID = nil, --'UA-XXXXX-XX',
+  IOS_ID = nil,
+  API_GATEWAY_URL = nil,
+  API_GATEWAY_KEY = nil,
   -----------------------------------------
   fonts = {
     default = 'cherry/assets/PatrickHand-Regular.ttf'
@@ -59,10 +65,6 @@ local App = {
     game = demo
   },
   -----------------------------------------
-  FACEBOOK_PAGE_ID = '379432705492888',
-  FACEBOOK_PAGE = 'https://www.facebook.com/uralys',
-  ANALYTICS_TRACKING_ID = 'UA-XXXXX-XX',
-  -----------------------------------------
   -- layers (+ BG and stage)
   transversalBackLayer = display.newGroup(),
   transversalFrontLayer = display.newGroup(),
@@ -95,13 +97,13 @@ function App:start(options)
 
   _G.log('--------------------------------')
   _G.log(App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
-  _G.log('Cherry: ' .. App.cherryVersion)
+  _G.log('🍒 Cherry: ' .. App.cherryVersion)
   _G.log(_G._VERSION)
   _G.log('--------------------------------')
-  _G.log('extensions:')
+  _G.log('🔌 extensions:')
   _G.log(App.extension, {depth = 1})
   _G.log('--------------------------------')
-  _G.log('globals:')
+  _G.log('🌐 globals:')
   _G.log(options.globals)
   _G.log('--------------------------------')
 
@@ -113,14 +115,14 @@ function App:start(options)
   _G.log('--------------------------------')
 
   self:create()
-  _G.log('✅ App is running.')
+  _G.log('🎉 App is running.')
   _G.log('--------------------------------')
 end
 
 --------------------------------------------------------------------------------
 
 function App:loadSettings()
-  _G.log('Loading settings...')
+  _G.log('👨‍🚀 Loading settings...')
   local path = 'env/' .. App.ENV .. '.json'
   local settings = file.load(path)
   _G = _.extend(_G, settings)
@@ -145,30 +147,43 @@ end
 --------------------------------------------------------------------------------
 
 function App:create()
-  _G.log('creating app...')
-  self.namePicker = NamePicker:new()
+  _G.log('👨‍🚀 creating app...')
   self.game = Game:new(App.extension.game)
+  _G.log('  ✅ App.game')
   self.user = User:new(App.extension.user)
   self.user:load()
+  _G.log('  ✅ App.user')
 
   self.score = Score:new(App.extension.score)
+  _G.log('  ✅ App.score')
   self.sound = Sound:init(App.extension.sound)
+  _G.log('  ✅ App.sound')
+
+  if (self.useNamePicker) then
+    self.namePicker = NamePicker:new()
+    _G.log('  ✅ App.namePicker')
+  end
 
   Background:init(App.background)
+  _G.log('  ✅ Background')
 
-  analytics.init(
-    self.ANALYTICS_TRACKING_ID,
-    self.user:deviceId(),
-    self.name,
-    self.version
-  )
+  if (self.ANALYTICS_TRACKING_ID) then
+    analytics.init(
+      self.ANALYTICS_TRACKING_ID,
+      self.user:deviceId(),
+      self.name,
+      self.version
+    )
+    _G.log('  ✅ Initialized analytics')
+  end
 
+  _G.log('  Preparing first view...')
   if (App.VIEW_TESTING) then
-    _G.log(' --> forced view : ' .. App.VIEW_TESTING)
+    _G.log('🐛 VIEW_TESTING --> forced view : ' .. App.VIEW_TESTING)
     _G.log('--------------------------------')
     _G.Router:open(App.VIEW_TESTING)
   elseif (App.EDITOR_TESTING or App.LEVEL_TESTING) then
-    _G.log(' --> forced playground')
+    _G.log('🐛 EDITOR_TESTING or LEVEL_TESTING --> forced playground')
     _G.log('--------------------------------')
     _G.Router:open(App.screens.PLAYGROUND)
   else
@@ -195,7 +210,7 @@ end
 --------------------------------------------------------------------------------
 
 function App:setup()
-  _G.log('Application setup...')
+  _G.log('👨‍🚀 Application setup...')
 
   ----------------------------------------------------------------------------
 
@@ -240,7 +255,7 @@ local function onKeyEvent(event)
 end
 
 function App:deviceSetup()
-  _G.log('Device setup...')
+  _G.log('👨‍🚀 Device setup...')
 
   if (self.pushSubscriptions) then
     _G.log('  Setting up FCM:')
@@ -255,7 +270,7 @@ function App:deviceSetup()
       _G.log('    Subscribed to topic ' .. topic)
     end
   else
-    _G.log('  no pushSubscriptions.')
+    _G.log('  (no pushSubscriptions)')
   end
 
   ----------------------------------------------------------------------------
