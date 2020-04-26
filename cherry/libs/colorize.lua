@@ -1,4 +1,14 @@
-return function(hexCode)
+return function(_hexCode)
+  local hexCode = _hexCode
+
+  if (#hexCode == 4) then
+    hexCode =
+      _hexCode:sub(1, 2) ..
+      _hexCode:sub(2, 2) ..
+        _hexCode:sub(3, 3) ..
+          _hexCode:sub(3, 3) .. _hexCode:sub(4, 4) .. _hexCode:sub(4, 4)
+  end
+
   local hexR = hexCode:sub(2, 3)
   local hexG = hexCode:sub(4, 5)
   local hexB = hexCode:sub(6, 7)
