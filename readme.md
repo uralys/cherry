@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-green.svg?colorB=3cc712)](LICENSE)
 [![GitHub release](https://img.shields.io/github/release/chrisdugne/cherry.svg)](https://github.com/chrisdugne/cherry/releases)
 
-Cherry is a starter for `CoronaSDK App` to help building your game.
+Cherry is a starter for `Solar2D` apps to help building your game.
 
 - [Introduction](#introduction-to-cherry)
 - [Usage](#usage)
