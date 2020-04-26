@@ -2,7 +2,6 @@
 
 local Background = require 'cherry.components.background'
 local Screen = require 'cherry.components.screen'
-local Effects = require 'cherry.engine.effects'
 local colorize = require 'cherry.libs.colorize'
 local _ = require 'cherry.libs.underscore'
 
@@ -18,6 +17,7 @@ function Game:new(extension)
     extension,
     {
       isRunning = false,
+      camera = nil,
       preset = {}, -- may be used to set a preset data during `resetState`
       state = {},
       elements = {}
@@ -29,18 +29,66 @@ function Game:new(extension)
 end
 
 --------------------------------------------------------------------------------
+-- these should be implemented by extension
 
 function Game:initialState()
   return {}
 end
+
 function Game:resetState()
   self.state = self:initialState()
 end
+
+function Game:resetElements()
+  self.elements = {}
+end
+
+--------------------------------------------------------------------------------
+
 function Game:getState()
   return self.state
 end
-function Game:resetElements()
-  self.elements = {}
+
+--------------------------------------------------------------------------------
+
+function Game:resetCamera()
+  if (self.camera) then
+    display.remove(self.camera)
+  end
+
+  self.camera = display.newGroup()
+  App.reorderLayers()
+end
+
+function Game:removeCamera()
+  transition.to(
+    self.camera,
+    {
+      alpha = 0,
+      time = 500,
+      xScale = 0.01,
+      yScale = 0.01,
+      x = W / 2,
+      y = H / 2,
+      onComplete = function()
+        display.remove(self.camera)
+      end
+    }
+  )
+end
+
+function Game:growCamera()
+  transition.from(
+    self.camera,
+    {
+      alpha = 0,
+      time = 500,
+      xScale = 0.01,
+      yScale = 0.01,
+      x = W / 2,
+      y = H / 2
+    }
+  )
 end
 
 --------------------------------------------------------------------------------
@@ -48,19 +96,19 @@ end
 --------------------------------------------------------------------------------
 
 function Game:reset()
-  display.remove(App.hud)
-  App.hud = display.newGroup()
-
   if (self.onReset) then
     self:onReset()
   end -- from extension
 
-  Camera:empty()
   self:resetState()
   self:resetElements()
+  self:resetCamera()
+
   App.score:reset()
   self.preset = {} -- by now preset should have been used to init state and can be reset
 end
+
+--------------------------------------------------------------------------------
 
 function Game:run()
   self.isRunning = true
@@ -71,19 +119,13 @@ function Game:run()
     _G.physics.setGravity(App.xGravity, App.yGravity)
   end
 
-  Camera:resetZoom()
-  Camera:center()
-  Camera:start()
-
+  self:growCamera()
   Background:darken()
 
   if (self.onRun) then
     self:onRun()
   end -- from extension
 
-  if (_G.CBE) then
-    Effects:restart()
-  end
   print('Game runs.')
 end
 
@@ -140,12 +182,8 @@ function Game:stop(noScore)
 
   ------------------------------------------
 
+  self:removeCamera()
   Background:lighten()
-  if (_G.CBE) then
-    Effects:stop(true)
-  end
-
-  Camera:stop()
 end
 
 --------------------------------------------------------------------------------

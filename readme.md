@@ -98,6 +98,17 @@ A typical tree should be :
 
 ## Using Cherry
 
+### Layers
+
+from back to front:
+
+- `Background`: global to the app, not reset by Router
+- `App.transversalBackLayer`: global to the app, not reset by Router
+- `self.view`: local to current composer view
+- `App.transversalFrontLayer`: global to the app, not reset by Router
+- `App.hud`: local to each view, reset by Router
+  Game.elements use `App.hud` as parent, and allow cross callbacks.
+
 ### Adding a new Screen
 
 A `Screen` implements the [Composer](https://docs.coronalabs.com/daily/api/library/composer/index.html) library.
