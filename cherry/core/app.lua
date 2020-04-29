@@ -26,6 +26,8 @@ local App = {
   API_GATEWAY_URL = nil,
   API_GATEWAY_KEY = nil,
   -----------------------------------------
+  extension = {},
+  -----------------------------------------
   fonts = {
     default = 'cherry/assets/PatrickHand-Regular.ttf'
   },
