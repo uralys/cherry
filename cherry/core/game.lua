@@ -102,8 +102,8 @@ function Game:reset()
   end -- from extension
 
   self:resetState()
-  self:resetElements()
   self:resetCamera()
+  self:resetElements()
 
   App.score:reset()
   self.preset = {} -- by now preset should have been used to init state and can be reset
