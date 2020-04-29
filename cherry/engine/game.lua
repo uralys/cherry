@@ -1,7 +1,6 @@
 --------------------------------------------------------------------------------
 
 local Background = require 'cherry.components.background'
-local Screen = require 'cherry.components.screen'
 local colorize = require 'cherry.libs.colorize'
 local _ = require 'cherry.libs.underscore'
 
@@ -50,6 +49,8 @@ function Game:getState()
 end
 
 --------------------------------------------------------------------------------
+--      CAMERA
+--------------------------------------------------------------------------------
 
 function Game:resetCamera()
   if (self.camera) then
@@ -91,7 +92,8 @@ function Game:growCamera()
   )
 end
 
---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------- END
+-- START
 -- game.start --> reset, load?, run
 --------------------------------------------------------------------------------
 
@@ -153,93 +155,28 @@ function Game:start()
   end
 end
 
-------------------------------------------
+--------------------------------------------------------------------------------
+-- END
+--------------------------------------------------------------------------------
 
-function Game:stop(noScore)
+function Game:exit()
   if (not self.isRunning) then
     return
   end
 
-  print('Game stops.')
+  print('Game exit.')
   self.isRunning = false
 
   ------------------------------------------
 
-  if (self.onStop) then
-    self:onStop(noScore)
+  if (self.onExit) then
+    self:onExit()
   end -- from extension
-
-  ------------------------------------------
-
-  if (not noScore) then
-    Screen:showBands()
-    if (not App.user:name() and App.useNamePicker) then
-      App.namePicker:display(App.score.display)
-    else
-      App.score:display()
-    end
-  end
 
   ------------------------------------------
 
   self:removeCamera()
   Background:lighten()
-end
-
---------------------------------------------------------------------------------
-
-function Game:displayText(options)
-  options =
-    _.defaults(
-    options or {},
-    {
-      text = '',
-      color = '#ffffff',
-      fontSize = 145,
-      y = display.contentHeight * 0.5
-    }
-  )
-
-  local introText =
-    display.newText(
-    App.hud,
-    options.text,
-    0,
-    0,
-    _G.FONTS.default,
-    options.fontSize
-  )
-
-  introText:setFillColor(colorize(options.color))
-  introText.x = display.contentWidth * 0.1
-  introText.y = options.y
-  introText.alpha = 0
-
-  transition.to(
-    introText,
-    {
-      time = 500,
-      alpha = 1,
-      x = display.contentWidth * 0.5,
-      transition = easing.outBounce,
-      onComplete = function()
-        transition.to(
-          introText,
-          {
-            time = 300,
-            alpha = 0,
-            delay = options.persistTime or 600,
-            x = display.contentWidth * 1.2,
-            onComplete = function()
-              if (options.next) then
-                options.next()
-              end
-            end
-          }
-        )
-      end
-    }
-  )
 end
 
 --------------------------------------------------------------------------------

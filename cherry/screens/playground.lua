@@ -15,7 +15,7 @@ end
 
 function scene:hide(event)
   if (event.phase == 'did') then
-    App.game:stop()
+    App.game:exit()
   end
 end
 
