@@ -3,10 +3,10 @@
 local Background = require 'cherry.components.background'
 local analytics = require 'cherry.libs.analytics'
 local _ = require 'cherry.libs.underscore'
-local demo = require 'cherry.core.extension-demo'
+local Game = require 'cherry.core.game'
 local User = require 'cherry.core.user'
-local Score = require 'cherry.screens.score'
-local NamePicker = require 'cherry.screens.name-picker'
+local Score = require 'cherry.core.score'
+local Sound = require 'cherry.core.sound'
 local file = _G.file or require 'cherry.libs.file'
 
 --------------------------------------------------------------------------------
@@ -60,10 +60,6 @@ local App = {
   useNamePicker = false,
   hasTutorial = false,
   showHeadphonesScreen = false,
-  -----------------------------------------
-  extension = {
-    game = demo
-  },
   -----------------------------------------
   -- layers (+ BG and stage)
   transversalBackLayer = display.newGroup(),
@@ -160,6 +156,7 @@ function App:create()
   _G.log('  ✅ App.sound')
 
   if (self.useNamePicker) then
+    local NamePicker = require 'cherry.extensions.name-picker'
     self.namePicker = NamePicker:new()
     _G.log('  ✅ App.namePicker')
   end

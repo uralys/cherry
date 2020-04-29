@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-_G.CHERRY_VERSION = '3.2.0'
+_G.CHERRY_VERSION = '3.5.0'
 --------------------------------------------------------------------------------
 -- debug
 require 'cherry.libs.logger'
@@ -17,10 +17,6 @@ _G.composer = _G.composer or require 'composer'
 -- app
 _G.App = require 'cherry.core.app'
 _G.Router = require 'cherry.core.router'
-
--- engine
-_G.Game = require 'cherry.engine.game'
-_G.Sound = require 'cherry.engine.sound'
 
 --------------------------------------------------------------------------------
 
