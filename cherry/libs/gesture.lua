@@ -4,7 +4,9 @@ local gesture = {}
 
 --------------------------------------------------------------------------------
 
-function gesture.onTouch(object, action)
+function gesture.onTouch(object, action, _options)
+  local options = _options or {}
+
   if (object.removeOnTouch) then
     object.removeOnTouch()
   end
@@ -18,7 +20,7 @@ function gesture.onTouch(object, action)
       -- display.getCurrentStage():setFocus( nil )
       action(event)
     end
-    return true
+    return not options.touchThrough -- default return true
   end
 
   object:addEventListener('touch', touch)
@@ -40,7 +42,9 @@ end
 
 --------------------------------------------------------------------------------
 
-function gesture.onTap(object, action)
+function gesture.onTap(object, action, _options)
+  local options = _options or {}
+
   if (object.removeOnTap) then
     object.removeOnTap()
   end
@@ -52,7 +56,7 @@ function gesture.onTap(object, action)
     -- elseif event.phase == 'ended' or event.phase == 'cancelled' then
     -- display.getCurrentStage():setFocus( nil )
     end
-    return true
+    return not options.touchThrough -- default return true
   end
 
   object:addEventListener('touch', tap)
