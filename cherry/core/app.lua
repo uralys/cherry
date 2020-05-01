@@ -234,10 +234,6 @@ function App:setup()
   if (_G.IOS or _G.SIMULATOR) then
     display.setStatusBar(display.HiddenStatusBar)
   end
-
-  ----------------------------------------------------------------------------
-
-  self.aspectRatio = display.pixelHeight / display.pixelWidth
 end
 
 --------------------------------------------------------------------------------
@@ -310,14 +306,6 @@ function App:deviceNotification(text, secondsFromNow, id)
     system.scheduleNotification(secondsFromNow, options)
 
   _G.log('scheduled : ', self.deviceNotifications[id])
-end
-
---------------------------------------------------------------------------------
--- API
---------------------------------------------------------------------------------
-
-function App:adaptToRatio(value)
-  return value * self.aspectRatio * self.aspectRatio
 end
 
 --------------------------------------------------------------------------------
