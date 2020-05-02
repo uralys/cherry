@@ -74,7 +74,7 @@ function Chapters:buy(num)
     self:draw(self.options)
   end
 
-  if (_G.SIMULATOR or _G.ENV == 'development') then
+  if (_G.SIMULATOR or App.env.name == 'development') then
     App.user:bought(num)
     self:draw(self.options)
     return

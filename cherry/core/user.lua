@@ -64,6 +64,7 @@ function User:createSavedData()
       not App.RESET_USER) or
       generateUID(),
     tutorial = false,
+    sync = true,
     options = {
       sound = true,
       soundVolume = 1

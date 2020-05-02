@@ -61,8 +61,10 @@ function Game:resetCamera()
 end
 
 function Game:removeCamera()
+  local camera = self.camera
+
   transition.to(
-    self.camera,
+    camera,
     {
       alpha = 0,
       time = 500,
@@ -71,7 +73,8 @@ function Game:removeCamera()
       x = W / 2,
       y = H / 2,
       onComplete = function()
-        display.remove(self.camera)
+        display.remove(camera)
+        camera = nil
       end
     }
   )
@@ -115,7 +118,7 @@ function Game:run()
   self.isRunning = true
 
   if (_G.usePhysics) then
-    _G.log('activated physics')
+    _G.log('🕹  activated physics')
     _G.physics.start()
     _G.physics.setGravity(App.xGravity, App.yGravity)
   end
@@ -127,14 +130,14 @@ function Game:run()
     self:onRun()
   end -- from extension
 
-  print('Game runs.')
+  print('🕹  Game runs.')
 end
 
 --------------------------------------------------------------------------------
 
 function Game:start()
   if (self.isRunning) then
-    _G.log('Game is already running.')
+    _G.log('🕹  Game is already running.')
     return
   end
 
@@ -146,7 +149,7 @@ function Game:start()
     if (success) then
       self:run()
     else
-      print('could not load properly')
+      print('🕹  could not load properly')
       self:onLoadFailed()
     end
   else
@@ -156,18 +159,18 @@ end
 
 --------------------------------------------------------------------------------
 
-function Game:exit()
+function Game:stop()
   if (not self.isRunning) then
     return
   end
 
-  print('Game exit.')
+  print('🕹  Game stops.')
   self.isRunning = false
 
   ------------------------------------------
 
-  if (self.onExit) then
-    self:onExit()
+  if (self.onStop) then
+    self:onStop()
   end -- from extension
 
   ------------------------------------------

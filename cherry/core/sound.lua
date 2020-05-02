@@ -13,7 +13,7 @@ function Sound:init(extension)
     _.defaults(
     extension or {},
     {
-      isOff = App.user:isSoundOff() or App.SOUND_OFF,
+      isOff = App.user:isSoundOff() or App.env.SOUND_OFF,
       themes = {},
       sfx = {},
       options = {},
@@ -113,7 +113,7 @@ end
 --------------------------------------------------------------------------------
 
 function Sound:effect(effect)
-  if (self.isOff or App.SOUND_OFF) then
+  if (self.isOff or App.env.SOUND_OFF) then
     return
   end
 
@@ -123,7 +123,7 @@ end
 function Sound:play(track)
   self:stop()
 
-  if (self.isOff or App.SOUND_OFF) then
+  if (self.isOff or App.env.SOUND_OFF) then
     return
   end
 

@@ -1,15 +1,15 @@
 local attachPushSubscriptions = function(pushSubscriptions)
   if (not pushSubscriptions) then
-    _G.log('  no pushSubscriptions.')
+    _G.log('> no pushSubscriptions.')
     return
   end
 
   ------------------
 
   if (_G.SIMULATOR) then
-    _G.log('  [🖥  SIMULATOR no pushSubscriptions.')
+    _G.log('[🖥  SIMULATOR] no pushSubscriptions.')
     for _, topic in pairs(pushSubscriptions) do
-      _G.log('    ✅ found topic ' .. topic)
+      _G.log('  ✅ found topic ' .. topic)
     end
     return
   end

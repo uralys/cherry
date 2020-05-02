@@ -7,7 +7,7 @@ local Game = require 'cherry.core.game'
 local User = require 'cherry.core.user'
 local Score = require 'cherry.core.score'
 local Sound = require 'cherry.core.sound'
-local file = _G.file or require 'cherry.libs.file'
+local defaultEnv = require 'cherry.core.env'
 
 --------------------------------------------------------------------------------
 
@@ -22,8 +22,7 @@ local App = {
   cherryVersion = _G.CHERRY_VERSION,
   version = '0.0.1',
   -----------------------------------------
-  -- 'production', 'development', 'editor'
-  ENV = 'development',
+  env = defaultEnv,
   -----------------------------------------
   FACEBOOK_PAGE_ID = '379432705492888',
   FACEBOOK_PAGE = 'https://www.facebook.com/uralys',
@@ -90,144 +89,18 @@ local App = {
 
 --------------------------------------------------------------------------------
 
-function App:start(options)
-  options = options or {}
+local function applyOptions(_options)
+  local options = _options or {}
+
+  local env = _.extend(App.env, options.env)
   local screens = _.extend(App.screens, options.screens)
   local images = _.extend(App.images, options.images)
+
   App = _.extend(App, options)
-  App.images = images
+
+  App.env = env
   App.screens = screens
-
-  _G = _.extend(_G, options.globals)
-
-  _G.log('--------------------------------')
-  _G.log(App.name .. ' [ ' .. App.ENV .. ' | ' .. App.version .. ' ] ')
-  _G.log('🍒 Cherry: ' .. App.cherryVersion)
-  _G.log(_G._VERSION)
-  _G.log('--------------------------------')
-  _G.log('🔌 extensions:')
-  _G.log(App.extension, {depth = 1})
-  _G.log('--------------------------------')
-  _G.log('🌐 globals:')
-  _G.log(options.globals)
-  _G.log('--------------------------------')
-
-  self:setup()
-  self:loadSettings()
-
-  attachPushSubscriptions(App.pushSubscriptions)
-  attachBackButtonListener()
-
-  _G.log('✅ settings are ready.')
-  _G.log('--------------------------------')
-
-  self:create()
-  _G.log('🎉 App is running.')
-  _G.log('--------------------------------')
-end
-
---------------------------------------------------------------------------------
-
-function App:loadSettings()
-  _G.log('👨‍🚀 Loading settings...')
-  local path = 'env/' .. App.ENV .. '.json'
-  local settings = file.load(path)
-  _G = _.extend(_G, settings)
-
-  -----------------------------')
-
-  App.RESET_USER = settings['reset-user']
-  App.SHOW_TOUCHABLES = settings['show-touchables']
-  App.SOUND_OFF = settings.silent
-  App.EDITOR_TESTING = settings.editor
-  App.EDITOR_PLAY = settings.play
-  App.VIEW_TESTING = settings['view-testing']
-  App.LEVEL_TESTING = settings['level-testing']
-
-  if (App.LEVEL_TESTING) then
-    App.TESTING_CHAPTER = App.LEVEL_TESTING.chapter
-    App.TESTING_LEVEL = App.LEVEL_TESTING.level
-    App.TESTING_STEPS = App.LEVEL_TESTING.step
-  end
-end
-
---------------------------------------------------------------------------------
-
-function App:create()
-  _G.log('👨‍🚀 creating app...')
-  self.game = Game:new(App.extension.game)
-  _G.log('  ✅ App.game')
-  self.user = User:new(App.extension.user)
-  self.user:load()
-  _G.log('  ✅ App.user')
-
-  self.score = Score:new(App.extension.score)
-  _G.log('  ✅ App.score')
-  self.sound = Sound:init(App.extension.sound)
-  _G.log('  ✅ App.sound')
-
-  if (self.useNamePicker) then
-    local NamePicker = require 'cherry.extensions.name-picker'
-    self.namePicker = NamePicker:new()
-    _G.log('  ✅ App.namePicker')
-  end
-
-  Background:init(App.background)
-  _G.log('  ✅ Background')
-
-  if (self.ANALYTICS_TRACKING_ID) then
-    analytics.init(
-      self.ANALYTICS_TRACKING_ID,
-      self.user:deviceId(),
-      self.name,
-      self.version
-    )
-    _G.log('  ✅ Initialized analytics')
-  end
-
-  _G.log('  Preparing first view...')
-  if (App.VIEW_TESTING) then
-    _G.log('🐛 VIEW_TESTING --> forced view : ' .. App.VIEW_TESTING)
-    _G.log('--------------------------------')
-    _G.Router:open(App.VIEW_TESTING)
-  elseif (App.EDITOR_TESTING or App.LEVEL_TESTING) then
-    _G.log('🐛 EDITOR_TESTING or LEVEL_TESTING --> forced playground')
-    _G.log('--------------------------------')
-    _G.Router:open(App.screens.PLAYGROUND)
-  else
-    local nextView = App.screens.HOME
-    if (self.user:isNew() and App.hasTutorial) then
-      nextView = App.screens.PLAYGROUND
-    end
-
-    if (self.showHeadphonesScreen) then
-      _G.Router:open(
-        App.screens.HEADPHONES,
-        {
-          nextView = nextView
-        }
-      )
-    else
-      Router:open(nextView)
-    end
-  end
-end
-
---------------------------------------------------------------------------------
--- Setup
---------------------------------------------------------------------------------
-
-function App:setup()
-  _G.log('👨‍🚀 Application setup...')
-
-  ----------------------------------------------------------------------------
-
-  _G.IOS = system.getInfo('platformName') == 'iPhone OS'
-  _G.ANDROID = system.getInfo('platformName') == 'Android'
-  _G.SIMULATOR = system.getInfo('environment') == 'simulator'
-  _G.FONTS = App.fonts
-
-  ----------------------------------------------------------------------------
+  App.images = images
 
   App.colors =
     _.defaults(
@@ -240,6 +113,13 @@ function App:setup()
 
   ----------------------------------------------------------------------------
 
+  _G.IOS = system.getInfo('platformName') == 'iPhone OS'
+  _G.ANDROID = system.getInfo('platformName') == 'Android'
+  _G.SIMULATOR = system.getInfo('environment') == 'simulator'
+  _G.FONTS = App.fonts
+
+  ----------------------------------------------------------------------------
+
   if (_G.IOS or _G.SIMULATOR) then
     display.setStatusBar(display.HiddenStatusBar)
   end
@@ -247,27 +127,88 @@ end
 
 --------------------------------------------------------------------------------
 
-function App:deviceNotification(text, secondsFromNow, id)
-  _G.log(
-    '----> deviceNotification : [' ..
-      id .. '] --> ' .. text .. ' (' .. secondsFromNow .. ')'
-  )
+local function createApp()
+  _G.log('👨‍🚀 creating app...')
+  App.game = Game:new(App.extension.game)
+  _G.log('  ✅ App.game')
+  App.user = User:new(App.extension.user)
+  App.user:load()
+  _G.log('  ✅ App.user')
 
-  local options = {
-    alert = text,
-    badge = 1
-  }
+  App.score = Score:new(App.extension.score)
+  _G.log('  ✅ App.score')
+  App.sound = Sound:init(App.extension.sound)
+  _G.log('  ✅ App.sound')
 
-  if (self.deviceNotifications[id]) then
-    _G.log('cancelling device notification : ', self.deviceNotifications[id])
-    system.cancelNotification(self.deviceNotifications[id])
+  if (App.useNamePicker) then
+    local NamePicker = require 'cherry.extensions.name-picker'
+    App.namePicker = NamePicker:new()
+    _G.log('  ✅ App.namePicker')
   end
 
-  _G.log('scheduling : ', id, secondsFromNow)
-  self.deviceNotifications[id] =
-    system.scheduleNotification(secondsFromNow, options)
+  Background:init(App.background)
+  _G.log('  ✅ Background')
 
-  _G.log('scheduled : ', self.deviceNotifications[id])
+  if (App.ANALYTICS_TRACKING_ID) then
+    analytics.init(
+      App.ANALYTICS_TRACKING_ID,
+      App.user:deviceId(),
+      App.name,
+      App.version
+    )
+    _G.log('  ✅ Initialized analytics')
+  end
+
+  _G.log('  Preparing first view...')
+  if (_G.VIEW_TESTING) then
+    _G.log('🐛 VIEW_TESTING --> forced view : ' .. _G.VIEW_TESTING)
+    _G.log('--------------------------------')
+    Router:open(_G.VIEW_TESTING)
+  elseif (_G.EDITOR_TESTING or _G.LEVEL_TESTING) then
+    _G.log('🐛 EDITOR_TESTING or LEVEL_TESTING --> forced playground')
+    _G.log('--------------------------------')
+    Router:open(App.screens.PLAYGROUND)
+  else
+    local nextView = App.screens.HOME
+    if (App.user:isNew() and App.hasTutorial) then
+      nextView = App.screens.PLAYGROUND
+    end
+
+    if (App.showHeadphonesScreen) then
+      Router:open(
+        App.screens.HEADPHONES,
+        {
+          nextView = nextView
+        }
+      )
+    else
+      Router:open(nextView)
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+function App.start(options)
+  _G.log('--------------------------------')
+  _G.log('🍒 Cherry: ' .. App.cherryVersion)
+  _G.log(' > ' .. _G._VERSION) -- Lua version
+
+  applyOptions(options)
+
+  _G.log('--------------------------------')
+  _G.log(App.name .. ' [ ' .. App.version .. ' | ' .. App.env.name .. ' ] ')
+  _G.log('--------------------------------')
+  _G.log('🔌 extensions:')
+  _G.log(App.extension, {depth = 1})
+  attachPushSubscriptions(App.pushSubscriptions)
+  attachBackButtonListener()
+  _G.log('--------------------------------')
+
+  createApp()
+
+  _G.log('🎉 App is running.')
+  _G.log('--------------------------------')
 end
 
 --------------------------------------------------------------------------------
