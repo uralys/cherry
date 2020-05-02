@@ -11,6 +11,12 @@ local file = _G.file or require 'cherry.libs.file'
 
 --------------------------------------------------------------------------------
 
+local attachPushSubscriptions = require 'cherry.extensions.push-subscriptions'
+local attachBackButtonListener =
+  require 'cherry.extensions.back-button-listener'
+
+--------------------------------------------------------------------------------
+
 local App = {
   name = 'Uralys',
   cherryVersion = _G.CHERRY_VERSION,
@@ -27,6 +33,7 @@ local App = {
   API_GATEWAY_KEY = nil,
   -----------------------------------------
   extension = {},
+  deviceNotifications = {},
   -----------------------------------------
   fonts = {
     default = 'cherry/assets/PatrickHand-Regular.ttf'
@@ -105,9 +112,11 @@ function App:start(options)
   _G.log(options.globals)
   _G.log('--------------------------------')
 
-  self:deviceSetup()
   self:setup()
   self:loadSettings()
+
+  attachPushSubscriptions(App.pushSubscriptions)
+  attachBackButtonListener()
 
   _G.log('✅ settings are ready.')
   _G.log('--------------------------------')
@@ -233,53 +242,6 @@ function App:setup()
 
   if (_G.IOS or _G.SIMULATOR) then
     display.setStatusBar(display.HiddenStatusBar)
-  end
-end
-
---------------------------------------------------------------------------------
-
-local function onKeyEvent(event)
-  local phase = event.phase
-  local keyName = event.keyName
-
-  if ('back' == keyName and phase == 'up') then
-    _G.log('back button is not handled')
-  end
-
-  return true
-end
-
-function App:deviceSetup()
-  _G.log('👨‍🚀 Device setup...')
-
-  if (self.pushSubscriptions) then
-    _G.log('  Setting up FCM:')
-    local notifications = require('plugin.notifications.v2')
-    _G.log('    Closed previous notifications.')
-    notifications.cancelNotification()
-    _G.log('    Registering to notifications...')
-    notifications.registerForPushNotifications({useFCM = true})
-
-    for _, topic in pairs(self.pushSubscriptions) do
-      notifications.subscribe(topic)
-      _G.log('    Subscribed to topic ' .. topic)
-    end
-  else
-    _G.log('  (no pushSubscriptions)')
-  end
-
-  ----------------------------------------------------------------------------
-  -- prepare notifications for this session
-  -- these notifications can be removed as long as the App is ON
-
-  self.deviceNotifications = {}
-
-  ----------------------------------------------------------------------------
-  --- ANDROID BACK BUTTON
-
-  if (_G.ANDROID) then
-    Runtime:removeEventListener('key', onKeyEvent)
-    Runtime:addEventListener('key', onKeyEvent)
   end
 end
 

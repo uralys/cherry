@@ -122,13 +122,5 @@ describe(
         _G.log(App.deviceNotifications)
       end
     )
-
-    it(
-      'should calculate value depending on screen ratio',
-      function()
-        local newValue = App:adaptToRatio(100)
-        assert.are.equal(newValue, 316.36551111111111823)
-      end
-    )
   end
 )

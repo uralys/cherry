@@ -1,9 +1,12 @@
-to subscribe to push notifications from FCM, add the list of topics within `App.options`
-```
-  pushSubscriptions = {'news', 'quest'},
+# push notifications
+
+to subscribe to push notifications from FCM, add the list of topics within `App:start(options)`:
+
+```lua
+  options = {pushSubscriptions = {'news', 'quest'}}
 ```
 
-to listen and interact to notifications add
+to listen and interact to notifications add a listener:
 
 ```lua
 local function notificationListener( event )
@@ -24,5 +27,4 @@ end
 
 _G.log('Listening...')
 Runtime:addEventListener( 'notification', notificationListener )
-
 ```
