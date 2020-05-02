@@ -7,7 +7,7 @@ env variables are placed within `App.env`.
 - `SHOW_TOUCHABLES = false`
 - `SOUND_OFF = false`
 
-Override them in your `App:start(options)`
+Override them in your `App.start(options)`
 
 ```lua
 {options = {env = {"SOUND_OFF": true}}}
@@ -48,5 +48,5 @@ then require your `env` to set the chosen one in your start options:
 
 ```lua
 local env = require 'src/env.lua'
-App:start({env = env.PRODUCTION})
+App.start({env = env.PRODUCTION})
 ```

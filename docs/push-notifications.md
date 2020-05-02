@@ -1,6 +1,6 @@
 # push notifications
 
-to subscribe to push notifications from FCM, add the list of topics within `App:start(options)`:
+to subscribe to push notifications from FCM, add the list of topics within `App.start(options)`:
 
 ```lua
   options = {pushSubscriptions = {'news', 'quest'}}

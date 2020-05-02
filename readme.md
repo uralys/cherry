@@ -45,7 +45,7 @@ require 'src.app'
 
 ```lua
 -- src/app.lua
-App:start({
+App.start({
   name    = 'YourGame',
   version = '1.0',
 })
@@ -229,7 +229,7 @@ You may use Cherry or a part of it in a free or commercial game or app, providin
 
 ##### waiting for the doc, read the code
 
-- Look in app.App to see what you may override with `App:start(options)`
+- Look in app.App to see what you may override with `App.start(options)`
 - Look in engine.Game to see what you may override with `Game:YourStuff()`
 
 ##### core

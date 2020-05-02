@@ -60,6 +60,10 @@ local App = {
     verticalPanel = 'cherry/assets/images/gui/panels/panel.vertical.png',
     greenGem = 'cherry/assets/images/gui/items/gem.green.png'
   },
+  colors = {
+    '#7f00ff',
+    '#ff00ff'
+  },
   -----------------------------------------
   xGravity = 0,
   yGravity = 0,
@@ -101,15 +105,6 @@ local function applyOptions(_options)
   App.env = env
   App.screens = screens
   App.images = images
-
-  App.colors =
-    _.defaults(
-    App.colors or {},
-    {
-      '#7f00ff',
-      '#ff00ff'
-    }
-  )
 
   ----------------------------------------------------------------------------
 

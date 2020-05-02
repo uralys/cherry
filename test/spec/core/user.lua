@@ -44,6 +44,7 @@ describe(
               sound = true,
               soundVolume = 1
             },
+            sync = true,
             tutorial = false,
             currentUser = 1,
             users = {
