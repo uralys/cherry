@@ -130,7 +130,7 @@ function Game:run()
     self:onRun()
   end -- from extension
 
-  print('🕹  Game runs.')
+  _G.log('🕹  Game runs. 💚')
 end
 
 --------------------------------------------------------------------------------
@@ -149,7 +149,7 @@ function Game:start()
     if (success) then
       self:run()
     else
-      print('🕹  could not load properly')
+      _G.log('🕹  could not load properly')
       self:onLoadFailed()
     end
   else
@@ -164,7 +164,7 @@ function Game:stop()
     return
   end
 
-  print('🕹  Game stops.')
+  _G.log('🕹 ❌ Game stops.')
   self.isRunning = false
 
   ------------------------------------------
