@@ -1,12 +1,6 @@
 local system = {
-  pathForFile = function (name, folder)
+  pathForFile = function(name, folder)
     return './' .. name
-  end,
-  scheduleNotification = function (secondsFromNow, options)
-    return 'scheduled.'.. options.alert
-  end,
-  cancelNotification = function (id)
-    return true
   end,
   getTimer = function()
     return '1234'
@@ -14,10 +8,10 @@ local system = {
 }
 
 system.switchPlatform = function(platform)
-  system.getInfo = function (info)
-    if(info == 'platformName') then
+  system.getInfo = function(info)
+    if (info == 'platformName') then
       return platform
-    elseif(info == 'environment') then
+    elseif (info == 'environment') then
       return 'simulator'
     end
   end

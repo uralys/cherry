@@ -1,4 +1,4 @@
-local notifications = require('plugin.notifications.v2')
+local notifications = _G.notifications or require('plugin.notifications.v2')
 
 -- doc https://docs.coronalabs.com/plugin/notifications-v2/scheduleNotification.html
 
