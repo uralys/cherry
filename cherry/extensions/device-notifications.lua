@@ -1,6 +1,10 @@
+local notifications = require('plugin.notifications.v2')
+
+-- doc https://docs.coronalabs.com/plugin/notifications-v2/scheduleNotification.html
+
 local function deviceNotification(text, secondsFromNow, id)
   _G.log(
-    '----> deviceNotification : [' ..
+    '📱  deviceNotification : [' ..
       id .. '] --> ' .. text .. ' (' .. secondsFromNow .. ')'
   )
 
@@ -10,15 +14,14 @@ local function deviceNotification(text, secondsFromNow, id)
   }
 
   if (App.deviceNotifications[id]) then
-    _G.log('cancelling device notification : ', App.deviceNotifications[id])
-    system.cancelNotification(App.deviceNotifications[id])
+    _G.log('📱 cancelling device notification : ', App.deviceNotifications[id])
+    notifications.cancelNotification(App.deviceNotifications[id])
   end
 
-  _G.log('scheduling : ', id, secondsFromNow)
   App.deviceNotifications[id] =
-    system.scheduleNotification(secondsFromNow, options)
+    notifications.scheduleNotification(secondsFromNow, options)
 
-  _G.log('scheduled : ', App.deviceNotifications[id])
+  _G.log('📱  device notification scheduled: ', id, secondsFromNow)
 end
 
 --------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ local function onKeyEvent(event)
   local keyName = event.keyName
 
   if ('back' == keyName and phase == 'up') then
-    _G.log('[backButtonListener] back button extension todo')
+    native.requestExit()
   end
 
   return true
