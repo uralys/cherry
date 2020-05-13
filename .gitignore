@@ -1,2 +1,5 @@
 luacov.report.out
 .rocks
+
+# osx
+*.DS_Store
