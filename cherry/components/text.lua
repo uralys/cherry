@@ -17,6 +17,8 @@ function Text:create(options)
     {
       x = 0,
       y = 0,
+      anchorX = 0.5,
+      anchorY = 0.5,
       grow = false,
       font = _G.FONTS.default,
       color = '#ffffff',
@@ -34,6 +36,9 @@ function Text:create(options)
 
   text.display.x = text.x
   text.display.y = text.y
+
+  text.display.anchorX = text.anchorX
+  text.display.anchorY = text.anchorY
 
   if (options.onTap) then
     gesture.onTap(text.display, options.onTap)

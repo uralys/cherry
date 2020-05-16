@@ -115,9 +115,7 @@ local function applyOptions(_options)
 
   ----------------------------------------------------------------------------
 
-  if (_G.IOS or _G.SIMULATOR) then
-    display.setStatusBar(display.HiddenStatusBar)
-  end
+  display.setStatusBar(display.HiddenStatusBar)
 end
 
 --------------------------------------------------------------------------------
@@ -126,24 +124,39 @@ local function createApp()
   _G.log('👨‍🚀 creating app...')
   App.game = Game:new(App.extension.game)
   _G.log('  ✅ App.game')
+
+  ------------
+
   App.user = User:new(App.extension.user)
   App.user:load()
   _G.log('  ✅ App.user')
+
+  ------------
 
   App.score = Score:new(App.extension.score)
   _G.log('  ✅ App.score')
   App.sound = Sound:init(App.extension.sound)
   _G.log('  ✅ App.sound')
 
+  ------------
+
   if (App.useNamePicker) then
     local NamePicker = require 'cherry.extensions.name-picker'
     App.namePicker = NamePicker:new()
     _G.log('  ✅ App.namePicker')
+  else
+    if (not App.user:name()) then
+      App.user:newProfile('no-name-profile')
+      _G.log('  ✅ Game with only 1 profile. Profile created')
+    end
   end
+
+  ------------
 
   Background:init(App.background)
   _G.log('  ✅ Background')
 
+  ------------
   if (App.ANALYTICS_TRACKING_ID) then
     analytics.init(
       App.ANALYTICS_TRACKING_ID,

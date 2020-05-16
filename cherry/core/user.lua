@@ -30,7 +30,6 @@ end
 -- end
 --
 function User:load()
-  _G.log('[debug] user load')
   self.savedData = file.loadUserData('savedData.json')
 
   -- preparing data
@@ -46,7 +45,6 @@ function User:load()
 end
 
 function User:tryToSync()
-  _G.log('[debug] user tryToSync')
   if (self.sync and self:mustSync()) then
     self:sync()
   end
@@ -55,7 +53,6 @@ end
 --------------------------------------------------------------------------------
 
 function User:createSavedData()
-  _G.log('[debug] user createSavedData')
   local previousSavedData = self.savedData
 
   self.savedData = {
@@ -101,8 +98,9 @@ function User:name()
   return self.savedData.users[self.savedData.currentUser].name
 end
 
+--------------------------------------------------------------------------------
+
 function User:newProfile(name)
-  _G.log('newProfile', name)
   if (self.savedData.users[self.savedData.currentUser].name) then
     self.savedData.currentUser = #self.savedData.users + 1
   else
@@ -123,7 +121,6 @@ function User:newProfile(name)
     gameUserData
   )
 
-  _G.log({newUser})
   self.savedData.users[self.savedData.currentUser] = newUser
 
   self:save()
@@ -132,7 +129,6 @@ end
 --------------------------------------------------------------------------------
 
 function User:save()
-  _G.log('[debug] user save')
   file.save(self.savedData, 'savedData.json')
 end
 
@@ -172,7 +168,6 @@ function User:switchToProfile(i)
 end
 
 function User:setSync(state)
-  _G.log('[debug] user setSync', state)
   self.savedData.sync = state
   self:save()
 end
@@ -186,7 +181,6 @@ function User:getUser(i)
 end
 
 function User:onTutorialDone()
-  _G.log('[debug] user onTutorialDone')
   self.savedData.tutorial = true
   self:save()
 end
@@ -194,7 +188,6 @@ end
 --------------------------------------------------------------------------------
 
 function User:getBestScore(field)
-  _G.log('[debug] user getBestScore')
   local user = self.savedData.users[self.savedData.currentUser]
   if (not user.bestScores) then
     return nil
