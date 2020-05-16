@@ -14,7 +14,7 @@ install: clean hererocks rocks
 
 hererocks:
 	hererocks ${rocksDir} -r^ --lua=5.1
-	source ${rocksDir}/bin/activate
+	. ${rocksDir}/bin/activate
 
 rocks:
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} dkjson
