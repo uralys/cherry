@@ -30,7 +30,7 @@ end
 -- end
 --
 function User:load()
-  self.savedData = file.loadUserData('savedData.json')
+  self.savedData = file.loadFromStorage('savedData.json')
 
   -- preparing data
   if (not self.savedData or App.RESET_USER) then
