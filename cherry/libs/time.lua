@@ -1,10 +1,15 @@
 --------------------------------------------------------------------------------
 
-local Time = {}
+local socket = require 'socket'
 
 --------------------------------------------------------------------------------
 
-function Time.getMinSec(seconds)
+local function getTimeMs()
+  local plop = '' .. socket.gettime() * 1000
+  return tonumber(plop:split('%.')[1])
+end
+
+local function getMinSec(seconds)
   local min = math.floor(seconds / 60)
   local sec = seconds - min * 60
 
@@ -15,7 +20,7 @@ function Time.getMinSec(seconds)
   return tostring(min), tostring(sec)
 end
 
-function Time.getMinSecMillis(millis)
+local function getMinSecMillis(millis)
   local min = math.floor(millis / 60000)
   local sec = math.floor((millis - min * 60 * 1000) / 1000)
   local ms = math.floor(millis - min * 60 * 1000 - sec * 1000)
@@ -35,4 +40,8 @@ end
 
 --------------------------------------------------------------------------------
 
-return Time
+return {
+  getTimeMs = getTimeMs,
+  getMinSec = getMinSec,
+  getMinSecMillis = getMinSecMillis
+}
