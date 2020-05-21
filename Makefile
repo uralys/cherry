@@ -10,7 +10,8 @@ ifeq ($(verbose), true)
 	export DEBUG := true
 endif
 
-install: clean hererocks rocks
+# CI does not use this install, this is for local purpose
+install: clean hererocks rocks test
 
 hererocks:
 	hererocks ${rocksDir} -r^ --lua=5.1
