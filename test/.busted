@@ -6,9 +6,8 @@ return {
     verbose = true
   },
   tests = {
-    ROOT = {"./test"},
-    lpath = "./cherry/?.lua;./test/?.lua",
-    pattern = ".lua"
+    ROOT = {'./test'},
+    lpath = './cherry/?.lua;./test/?.lua',
+    pattern = '.lua'
   }
 }
-
