@@ -1,3 +1,10 @@
+################################################################################
+## generates all icons for iOS and Android
+## requires https://www.imagemagick.org/script/index.php
+## to enable "convert"
+## OSX: brew install imagemagick
+################################################################################
+
 #!/bin/sh
 iosBase=$PWD/Corona/assets/brand/logo-1024-ios.png
 androidBase=$PWD/Corona/assets/brand/logo-1024-android.png
