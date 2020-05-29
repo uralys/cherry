@@ -22,6 +22,7 @@ rocks:
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luacov
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luacheck
 	@${rocksDir}/bin/luarocks install --tree ${rocksDir} busted
+	@${rocksDir}/bin/luarocks install --tree ${rocksDir} luasocket
 
 luacheck:
 	@${rocksDir}/bin/luacheck .
