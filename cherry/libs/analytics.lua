@@ -3,9 +3,8 @@
 --------------------------------------------------------------------------------
 
 local http = _G.http or require 'cherry.libs.http'
-
 local ANALYTICS_URL = 'http://www.google-analytics.com/collect'
-local params
+local params = nil
 
 --------------------------------------------------------------------------------
 
@@ -21,7 +20,7 @@ end
 --------------------------------------------------------------------------------
 
 local function screenview(page)
-  if (_G.SIMULATOR or App.ENV == 'development') then
+  if (_G.SIMULATOR or App.ENV == 'development' or params == nil) then
     return
   end
 
@@ -39,7 +38,7 @@ end
 --------------------------------------------------------------------------------
 
 local function event(category, action, label)
-  if (_G.SIMULATOR or App.ENV == 'development') then
+  if (_G.SIMULATOR or App.ENV == 'development' or params == nil) then
     return
   end
 
