@@ -25,8 +25,12 @@ stds.cherry = {
     'string',
     'table',
     'unpack',
+    'FULL_W',
+    'FULL_H',
     'W',
-    'H'
+    'H',
+    'TOP',
+    'BOTTOM'
   }
 }
 

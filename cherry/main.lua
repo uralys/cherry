@@ -20,8 +20,19 @@ _G.Router = require 'cherry.core.router'
 
 --------------------------------------------------------------------------------
 
-_G.W = display.contentWidth
-_G.H = display.contentHeight
+_G.FULL_W = display.contentWidth
+_G.FULL_H = display.contentHeight
+
+_G.W = display.safeActualContentWidth
+_G.H = display.safeActualContentHeight
+
+_G.TOP = display.safeScreenOriginY
+_G.BOTTOM = display.safeScreenOriginY + display.safeActualContentHeight
+
+-- local safeArea = display.newRect(W / 2, TOP + H / 2, W, H)
+-- local colorize = require 'cherry.libs.colorize'
+-- safeArea:setFillColor(colorize('#fff'))
+-- safeArea.alpha = 0.2
 
 --------------------------------------------------------------------------------
 -- https://docs.coronalabs.com/tutorial/media/extendAnchors/index.html#extending-anchor-points-1

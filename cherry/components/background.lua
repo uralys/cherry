@@ -60,7 +60,7 @@ function Background:init(options)
   )
 
   if (options.color) then
-    self.bg = display.newRect(W / 2, H / 2, W, H)
+    self.bg = display.newRect(FULL_W / 2, FULL_H / 2, FULL_W, FULL_H)
     self.bg:setFillColor(colorize(options.color))
   else
     local lightImage = options.light
