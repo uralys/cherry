@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 _G.CHERRY_VERSION = '3.7.0'
 --------------------------------------------------------------------------------
+
 -- debug
 require 'cherry.libs.logger'
 require 'cherry.libs.test-rect'
@@ -9,6 +10,12 @@ require 'cherry.libs.test-rect'
 require 'cherry.libs.math'
 require 'cherry.libs.string'
 require 'cherry.libs.table'
+
+--------------------------------------------------------------------------------
+
+local time = require 'cherry.libs.time'
+local seed = time.getTimeMs()
+math.randomseed(seed)
 
 --------------------------------------------------------------------------------
 -- corona

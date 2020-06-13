@@ -15,7 +15,6 @@ local function shuffleArray(array)
 
   for i = #array, 1, -1 do
     local j = math.floor(math.random() * i) + 1
-    print(i, j)
     local temp = array[i]
     array[i] = array[j]
     array[j] = temp
