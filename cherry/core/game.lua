@@ -130,7 +130,7 @@ function Game:run()
     self:onRun()
   end -- from extension
 
-  _G.log('🕹  Game runs. 💚')
+  _G.log('🕹  Game runs 💚')
 end
 
 --------------------------------------------------------------------------------
@@ -164,7 +164,7 @@ function Game:stop()
     return
   end
 
-  _G.log('🕹 ❌ Game stops.')
+  _G.log('🕹  Game stops ✅')
   self.isRunning = false
 
   ------------------------------------------
