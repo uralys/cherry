@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-local Text = require 'cherry.libs.text'
+local Text = require 'cherry.components.text'
 local Button = require 'cherry.components.button'
 local Screen = require 'cherry.components.screen'
 
@@ -158,14 +158,12 @@ function Options:drawActions(view)
   self:drawPrivacyButton()
 
   self.version =
-    Text.simple(
+    Text:create(
     {
       parent = self.actions,
-      text = App.version,
+      value = App.version,
       x = buttonPosition(VERSION_POSITION),
       y = 0,
-      color = 1,
-      font = _G.FONTS.default,
       fontSize = 40
     }
   )
@@ -191,7 +189,7 @@ function Options:openActions()
   transition.to(
     self.actions,
     {
-      x = initActionX - OPTION_BUTTONS_GAP / 2 - self.version.width -
+      x = initActionX - OPTION_BUTTONS_GAP / 2 - self.version.display.width -
         (nbOptionButtons * OPTION_BUTTONS_GAP),
       time = ANIMATION_TIME,
       transition = easing.inOutBack,
