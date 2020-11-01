@@ -59,7 +59,7 @@ function User:createSavedData()
     version = toVersionNum(App.version),
     deviceId = (previousSavedData ~= nil and previousSavedData.deviceId and
       not App.RESET_USER) or
-      generateUID(),
+      generateUID('player'),
     tutorial = false,
     sync = true,
     options = {
@@ -115,7 +115,7 @@ function User:newProfile(name)
   local newUser =
     _.extend(
     {
-      id = generateUID(),
+      id = generateUID('player'),
       name = name
     },
     gameUserData
