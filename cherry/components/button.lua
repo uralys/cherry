@@ -159,6 +159,7 @@ function Button:create(options)
   button.anchorChildren = true
   button.anchorX = options.anchorX
   button.anchorY = options.anchorY
+  button.action = options.action
 
   local bg
   if (options.bg) then
@@ -198,7 +199,7 @@ function Button:create(options)
   local SCALE = 0.8
   local scaleFrom = 1
 
-  if (options.action) then
+  if (button.action) then
     gesture.onTap(
       button,
       function()
@@ -215,7 +216,7 @@ function Button:create(options)
               if (button.scale) then
                 button:scale(scaleFrom / SCALE, scaleFrom / SCALE)
                 button.locked = false
-                timer.performWithDelay(10, options.action)
+                timer.performWithDelay(10, button.action)
               end
             end
           }

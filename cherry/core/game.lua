@@ -140,6 +140,7 @@ function Game:start()
     _G.log('🕹  Game is already running.')
     return
   end
+  _G.log('🕹  Game is starting...')
 
   _G.isTutorial = App.user:isNew() and not _G['test-level']
   self:reset()
