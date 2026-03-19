@@ -160,7 +160,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function Game:stop()
+function Game:stop(userExit)
   if (not self.isRunning) then
     return
   end
@@ -171,13 +171,22 @@ function Game:stop()
   ------------------------------------------
 
   if (self.onStop) then
-    self:onStop()
+    self:onStop(userExit)
   end -- from extension
 
   ------------------------------------------
 
   self:removeCamera()
   Background:lighten()
+
+  if (self.afterStop) then
+    timer.performWithDelay(
+      600,
+      function()
+        self:afterStop(userExit)
+      end
+    )
+  end
 end
 
 --------------------------------------------------------------------------------

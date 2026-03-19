@@ -136,6 +136,7 @@ function Chapters:prepareBoard(options)
       gap = display.contentHeight * 0.05,
       handleHeight = display.contentHeight * 0.07,
       horizontalScrollDisabled = true,
+      verticalScrollDisabled = true,
       hideBackground = true
     }
   )

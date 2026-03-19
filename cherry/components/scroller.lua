@@ -1,15 +1,5 @@
 --------------------------------------------------------------------------------
--- DOC to desc
--- vertical scroller
--- can insert on the fly
--- handle resize/visibility
--- handle listening
--- install component
--- install assets
---------------------------------------------------------------------------------
---- todo :
--- remove child
--- test button home to insert profile on the fly
+
 local Scroller = {
   children = {}
 }
@@ -17,11 +7,10 @@ local Scroller = {
 --------------------------------------------------------------------------------
 
 local widget = widget or require('widget')
-local defaultGap = 0
 
-local IDLE = 0
-local RESET = 1
-local THRESHOLD = 10
+local SCROLL_SPEED = 40
+local LERP_FACTOR = 0.15
+local LERP_THRESHOLD = 0.5
 
 --------------------------------------------------------------------------------
 -- API
@@ -29,8 +18,9 @@ local THRESHOLD = 10
 
 function Scroller:new(options)
   self.options = options
+  self.options.gap = self.options.gap or 0
+  self.children = {}
 
-  self:reset()
   self:prepareScrollView()
   self:scrollbarBase()
   self:scrollbarHandle()
@@ -41,28 +31,19 @@ end
 --------------------------------------------------------------------------------
 
 function Scroller:destroy()
-  local function destroy()
-    if (self.scrollView ~= nil) then
+  self:disableMouseScroll()
+
+  pcall(function()
+    if self.scrollView then
       self.scrollView:removeSelf()
       self.scrollView = nil
     end
-    if (self.scrollbar ~= nil) then
+    if self.scrollbar then
       self.scrollbar:removeSelf()
       self.scrollbar = nil
     end
     self:removeChildren()
-  end
-
-  pcall(destroy)
-end
-
---------------------------------------------------------------------------------
-
-function Scroller:reset()
-  self.handleWatcher = IDLE
-  self.scrolling = false
-  self.children = {}
-  self.options.gap = self.options.gap or defaultGap
+  end)
 end
 
 --------------------------------------------------------------------------------
@@ -83,15 +64,13 @@ end
 function Scroller:remove(child)
   local index = 1
   for k in pairs(self.children) do
-    if (self.children[k] == child) then
+    if self.children[k] == child then
       break
     end
-
     index = index + 1
   end
 
   table.remove(self.children, index)
-
   self:refreshHandle()
   self:refreshContentHeight()
   display.remove(child)
@@ -106,6 +85,8 @@ function Scroller:removeChildren()
 end
 
 --------------------------------------------------------------------------------
+-- Scrollbar display
+--------------------------------------------------------------------------------
 
 function Scroller:hideScrollbar()
   self.scrollbar.base.alpha = 0
@@ -116,10 +97,6 @@ function Scroller:showScrollbar()
   self.scrollbar.base.alpha = 1
   self.scrollbar.handle.alpha = 1
 end
-
---------------------------------------------------------------------------------
--- Display elements
---------------------------------------------------------------------------------
 
 function Scroller:prepareScrollView()
   self.scrollView =
@@ -132,22 +109,16 @@ function Scroller:prepareScrollView()
       scrollWidth = 0,
       scrollHeight = 0,
       horizontalScrollDisabled = self.options.horizontalScrollDisabled,
+      verticalScrollDisabled = self.options.verticalScrollDisabled,
       hideBackground = self.options.hideBackground,
       hideScrollBar = true,
-      backgroundColor = self.options.backgroundColor or {0, 0, 0, 0.5},
-      listener = function(event)
-        self:listen(event)
-      end
+      backgroundColor = self.options.backgroundColor or {0, 0, 0, 0.5}
     }
   )
 
   self.currentScrollHeight = 0
-  self.currentScrollWidth = 0
-
   self.options.parent:insert(self.scrollView)
 end
-
---------------------------------------------------------------------------------
 
 function Scroller:scrollbarBase()
   self.scrollbar = display.newGroup()
@@ -167,8 +138,6 @@ function Scroller:scrollbarBase()
   self.scrollbar.base.y = self.options.height * 0.5
 end
 
---------------------------------------------------------------------------------
-
 function Scroller:scrollbarHandle()
   self.scrollbar.handle =
     display.newImageRect(
@@ -185,20 +154,19 @@ function Scroller:refreshHandle()
   local totalHeight = self:contentHeight()
   local height
 
-  if (totalHeight == 0) then
+  if totalHeight == 0 then
     self:hideScrollbar()
     return
   end
 
-  -- the handle height may be fixed as option.handleHeight
-  if (self.options.handleHeight) then
+  if self.options.handleHeight then
     height = self.options.handleHeight
     self:showScrollbar()
   else
     local ratio = self.options.height / totalHeight
     height = self.scrollbar.base.height * ratio
 
-    if (ratio > 1) then
+    if ratio > 1 then
       self:hideScrollbar()
     else
       self:showScrollbar()
@@ -208,16 +176,14 @@ function Scroller:refreshHandle()
   self.scrollbar.handle.height = height
   self.scrollbar.handle.min =
     self.scrollbar.base.y - self.scrollbar.base.height * 0.5 + height * 0.5
-
   self.scrollbar.handle.max =
     self.scrollbar.handle.min + self.scrollbar.base.height - height
-
   self.scrollbar.handle.x = 0
   self.scrollbar.handle.y = self.scrollbar.handle.min
 end
 
 --------------------------------------------------------------------------------
--- Refreshing the scrollbar height depending on the content
+-- Content height
 --------------------------------------------------------------------------------
 
 function Scroller:refreshContentHeight()
@@ -231,16 +197,11 @@ function Scroller:contentHeight()
   for _, child in pairs(self.children) do
     height = height + child.height + self.options.gap
   end
-
   return height
 end
 
---------------------------------------------------------------------------------
--- Handle positioning
---------------------------------------------------------------------------------
-
 function Scroller:setRatio()
-  if (self.scrollbar.handle.max) then
+  if self.scrollbar.handle.max then
     local scrollbarHeight =
       self.scrollbar.handle.max - self.scrollbar.handle.min
     local scrollableHeight = self.currentScrollHeight - self.options.height
@@ -249,92 +210,143 @@ function Scroller:setRatio()
 end
 
 --------------------------------------------------------------------------------
+-- Handle positioning
+--------------------------------------------------------------------------------
 
 function Scroller:syncHandlePosition()
-  -- sync is cancelled if the scrollview was destroyed
-  local destroyed = not self.scrollView or self.scrollView._view.y == nil
-  if (destroyed) then
-    self:unbind()
-    self:reset()
+  if not self.scrollView or self.scrollView._view.y == nil then
     return
   end
 
   self.scrollbar.handle.y =
     -self.scrollView._view.y * self.scrollableRatio + self.scrollbar.handle.min
 
-  if (self.scrollbar.handle.y > self.scrollbar.handle.max) then
+  if self.scrollbar.handle.y > self.scrollbar.handle.max then
     self.scrollbar.handle.y = self.scrollbar.handle.max
   end
 
-  if (self.scrollbar.handle.y < self.scrollbar.handle.min) then
+  if self.scrollbar.handle.y < self.scrollbar.handle.min then
     self.scrollbar.handle.y = self.scrollbar.handle.min
   end
 end
 
 --------------------------------------------------------------------------------
+-- Mouse scroll + draggable handle
+--------------------------------------------------------------------------------
 
-function Scroller:bind(event)
-  local alreadyBound = self.handleWatcher and (self.handleWatcher ~= IDLE)
-  if (alreadyBound) then
-    return
+function Scroller:clampContentY(y)
+  local minY = -(self.currentScrollHeight - self.options.height)
+  if y > 0 then y = 0 end
+  if y < minY then y = minY end
+  return y
+end
+
+function Scroller:stopLerp()
+  if self.lerpListener then
+    Runtime:removeEventListener('enterFrame', self.lerpListener)
+    self.lerpListener = nil
   end
+  self.targetY = nil
+end
 
-  self.handleWatcher = RESET
+function Scroller:startLerp()
+  if self.lerpListener then return end
 
-  local watch = function()
-    self:syncHandlePosition()
-    if (not self.scrollbar) then
+  local function onFrame()
+    if not self.scrollView or not self.targetY then
+      self:stopLerp()
       return
     end
 
-    local handleHasMoved = self.previousHandleY ~= self.scrollbar.handle.y
-    self.previousHandleY = self.scrollbar.handle.y
+    local currentY = self.scrollView._view.y
+    local newY = currentY + (self.targetY - currentY) * LERP_FACTOR
 
-    if (handleHasMoved) then
-      self.handleWatcher = RESET
-    else
-      if ((not self.scrolling) and (self.handleWatcher > THRESHOLD)) then
-        self:unbind()
-      else
-        self.handleWatcher = self.handleWatcher + 1
-      end
+    if math.abs(newY - self.targetY) < LERP_THRESHOLD then
+      newY = self.targetY
+      self:stopLerp()
+    end
+
+    self.scrollView._view.y = newY
+
+    if not self.draggingHandle and self.scrollableRatio then
+      self:syncHandlePosition()
     end
   end
 
-  Runtime:addEventListener('enterFrame', watch)
-
-  return function()
-    self.handleWatcher = IDLE
-    Runtime:removeEventListener('enterFrame', watch)
-  end
+  self.lerpListener = onFrame
+  Runtime:addEventListener('enterFrame', onFrame)
 end
 
-function Scroller:unbind()
-  self._unbind()
+function Scroller:handleToContentY(handleY)
+  local handle = self.scrollbar.handle
+  local ratio = (handleY - handle.min) / (handle.max - handle.min)
+  local scrollableHeight = self.currentScrollHeight - self.options.height
+  return -ratio * scrollableHeight
 end
 
-function Scroller:setUnbind(_unbind)
-  self._unbind = _unbind
-end
+function Scroller:enableMouseScroll()
+  if self.mouseScrollEnabled then return end
+  self.mouseScrollEnabled = true
 
---------------------------------------------------------------------------------
+  self.onMouseWheel = function(event)
+    if not self.scrollView then return end
 
-function Scroller:listen(event)
-  if (event.phase == 'began') then
-    self.scrolling = true
-    local _unbind = self:bind()
-    if (_unbind) then
-      self:setUnbind(_unbind)
+    if not self.targetY then
+      self.targetY = self.scrollView._view.y
     end
-  elseif (event.phase == 'ended') then
-    self.scrolling = false
 
-  -- https://github.com/chrisdugne/phantoms/issues/37
-  -- if(self.onBottomReached) then
-  --     self.onBottomReached()
-  -- end
+    self.targetY = self:clampContentY(self.targetY - event.scrollY * SCROLL_SPEED)
+    self:startLerp()
   end
-  return true
+
+  self.onHandleDrag = function(event)
+    local handle = event.target
+
+    if event.phase == 'began' then
+      display.getCurrentStage():setFocus(handle)
+      handle.markY = handle.y
+      handle.dragging = true
+      self.draggingHandle = true
+
+    elseif event.phase == 'moved' and handle.dragging then
+      local newHandleY = handle.markY + (event.y - event.yStart)
+      if newHandleY < handle.min then newHandleY = handle.min end
+      if newHandleY > handle.max then newHandleY = handle.max end
+      handle.y = newHandleY
+
+      self.targetY = self:handleToContentY(newHandleY)
+      self:startLerp()
+
+    elseif event.phase == 'ended' or event.phase == 'cancelled' then
+      display.getCurrentStage():setFocus(nil)
+      handle.dragging = false
+      self.draggingHandle = false
+    end
+
+    return true
+  end
+
+  Runtime:addEventListener('mouse', self.onMouseWheel)
+
+  if self.scrollbar and self.scrollbar.handle then
+    self.scrollbar.handle:addEventListener('touch', self.onHandleDrag)
+  end
+end
+
+function Scroller:disableMouseScroll()
+  if not self.mouseScrollEnabled then return end
+  self.mouseScrollEnabled = false
+
+  Runtime:removeEventListener('mouse', self.onMouseWheel)
+
+  if self.scrollbar and self.scrollbar.handle then
+    self.scrollbar.handle:removeEventListener('touch', self.onHandleDrag)
+  end
+
+  self:stopLerp()
+  self.onMouseWheel = nil
+  self.onHandleDrag = nil
+  self.draggingHandle = false
 end
 
 --------------------------------------------------------------------------------

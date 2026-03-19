@@ -89,6 +89,9 @@ end
 --------------------------------------------------------
 
 function animation.pop(object, options)
+  if (type(options) == 'number') then
+    options = {time = options}
+  end
   options = options or {}
   transition.cancel(object)
   transition.from(
@@ -106,6 +109,10 @@ end
 function animation.bounce(objects, options)
   if (not isArray(objects)) then
     objects = {objects}
+  end
+
+  if (type(options) == 'number') then
+    options = {scaleTo = options}
   end
 
   options = options or {}

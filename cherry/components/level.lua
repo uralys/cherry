@@ -150,7 +150,7 @@ end
 
 function Level:bounceGems()
     for i = 1, #self.gems do
-        animation.bounce(self.gems[i], 0.26)
+        animation.bounce(self.gems[i], {scaleTo = 0.26})
     end
 end
 
