@@ -178,7 +178,7 @@ function Chapters:hellBarEntrance(options)
     {
       parent = hellbar,
       width = self.width * 0.83,
-      height = display.contentHeight * 0.35,
+      height = display.contentHeight * 0.28,
       status = 'off'
     }
   )
@@ -240,6 +240,8 @@ end
 function Chapters:drawCustomImage(options, panel, parent)
   local house =
     display.newImage(parent, options.customImage, -panel.width * 0.31, 0)
+
+  house:scale(0.8, 0.8)
 
   if (self:isDisabled(options)) then
     house.fill.effect = 'filter.desaturate'
@@ -310,7 +312,7 @@ function Chapters:drawOpenChapter(options, panel, parent)
       parent = parent,
       x = panel.width * 0.04,
       y = -panel.height * 0.21,
-      scale = 0.75,
+      scale = 0.6,
       value = App.user:chapterGems(App.user.profile, options.chapter)
     }
   )
@@ -321,7 +323,7 @@ function Chapters:drawOpenChapter(options, panel, parent)
       parent = parent,
       x = panel.width * 0.04,
       y = panel.height * 0.2,
-      scale = 0.75,
+      scale = 0.6,
       value = App.score:chapterStars(options.chapter)
     }
   )
@@ -360,7 +362,7 @@ function Chapters:summary(options)
     {
       parent = summary,
       width = self.width * 0.83,
-      height = display.contentHeight * 0.4,
+      height = display.contentHeight * 0.32,
       status = status
     }
   )
